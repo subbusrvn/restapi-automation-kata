@@ -2,6 +2,8 @@ package com.booking.stepdefinitions;
 
 import com.booking.config.ConfigManager;
 import com.booking.context.TestContext;
+import com.booking.models.auth.AuthRequest;
+import com.booking.models.auth.AuthResponse;
 import com.booking.services.AuthService;
 import com.booking.utils.TokenManager;
 import io.cucumber.java.en.*;
@@ -39,11 +41,21 @@ public class AuthSteps {
 
     @Given("a user is logged into the booking system")
     public void user_is_logged_in() {
-
-        Response response = authService.login(
+// Create AuthRequest object with username & password
+        AuthRequest request = new AuthRequest(
                 ConfigManager.getProperty("valid.username"),
                 ConfigManager.getProperty("valid.password")
         );
+// Call AuthService with the AuthRequest model
+        Response response = authService.login(request);
+// Store response in TestContext
+
+        AuthResponse authResponse = response.as(AuthResponse.class);
+        context.setResponse(response);
+        response = authService.login(request);
+        context.setResponse(response);
+        context.set("authResponse", authResponse);
+
 
         Assert.assertEquals(200, response.getStatusCode());
 
@@ -57,10 +69,15 @@ public class AuthSteps {
     @When("the user logs in again with the same credentials")
     public void user_logs_in_second_time() {
 
-        Response response = authService.login(
+        // Build the AuthRequest using the POJO model
+        AuthRequest request = new AuthRequest(
                 ConfigManager.getProperty("valid.username"),
                 ConfigManager.getProperty("valid.password")
         );
+
+        // Call the login service
+        response = authService.login(request);
+        context.setResponse(response);
 
         Assert.assertEquals(200, response.getStatusCode());
         String token2 = response.jsonPath().getString("token");
@@ -135,21 +152,33 @@ public class AuthSteps {
             default:
                 throw new RuntimeException("Unknown user type: " + userType);
         }
+        // Use AuthRequest model to get the payload
+        AuthRequest request = new AuthRequest(username, password);
+        Response response = authService.login(request);
 
-        context.setResponse(authService.login(username, password));
+        // Store in TestContext
+        context.setResponse(response);
     }
 
     @When("a client submits a login request in an unsupported format")
     public void sendLoginWithInvalidContentType() {
-        response = authService.loginWithInvalidContentType();
+        AuthRequest request = new AuthRequest(
+                ConfigManager.getProperty("valid.username"),
+                ConfigManager.getProperty("valid.password")
+        );
+        Response response = authService.loginWithInvalidContentType(request); // pass string
+        context.setResponse(response);
+
     }
 
     @When("login with valid credentials")
     public void submit_valid_login() {
-        response = authService.login(
+        AuthRequest request = new AuthRequest(
                 ConfigManager.getProperty("valid.username"),
                 ConfigManager.getProperty("valid.password")
         );
+        Response response = authService.login(request);
+        context.setResponse(response);
     }
 
     @When("the user logs out")
@@ -179,12 +208,13 @@ public class AuthSteps {
 
     @Then("the system should reject the request")
     public void verifyUnsupportedMediaType() {
+        Response response = context.getResponse(); // get response from context
         Assert.assertEquals(415, response.getStatusCode());
     }
 
     @Then("the system should return a token")
     public void verify_token_exists() {
-
+        Response response = context.getResponse(); // get response from context
         token = response.jsonPath().getString("token");
         System.out.println("Response: " + response.asString());
         System.out.println("Token value is " + token);
@@ -194,18 +224,20 @@ public class AuthSteps {
 
     @Then("the token format should be alphanumeric")
     public void verify_token_format() {
+        Response response = context.getResponse(); // get response from context
         Assert.assertTrue("Token is not alphanumeric: " + token, token.matches("^[a-zA-Z0-9]+$")
         );
     }
 
     @Then("the token length should be greater than 10 characters")
     public void verify_token_length() {
-
+        Response response = context.getResponse(); // get response from context
         Assert.assertTrue("Token too short", token.length() > 10);
     }
 
     @Then("Content-Type is genearted in the header")
     public void is_cookie_Genearted_InHeader() {
+        Response response = context.getResponse();
         String contentType = response.getHeader("Content-Type");
         System.out.println("Content-Type Value is: "+contentType);
 
