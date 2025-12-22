@@ -1,6 +1,7 @@
 package com.booking.context;
 
 import com.booking.config.ConfigManager;
+import com.booking.models.booking.BookingRequest;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -8,7 +9,16 @@ import java.util.Map;
 
 public class TestContext {
     private Response response;
+    private BookingRequest bookingRequest;
     public static final String baseUri = ConfigManager.getProperty("base_url");
+
+    public BookingRequest getBookingRequest() {
+        return bookingRequest;
+    }
+
+    public void setBookingRequest(BookingRequest bookingRequest) {
+        this.bookingRequest = bookingRequest;
+    }
 
     public Response getResponse() {
 
