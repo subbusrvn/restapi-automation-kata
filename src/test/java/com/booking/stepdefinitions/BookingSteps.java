@@ -20,10 +20,11 @@ public class BookingSteps {
         this.testContext = testContext;
         this.bookingService = new BookingService();
     }
+
     @Given("rooms are available for booking")
     public void rooms_are_available_for_booking() {
-            System.out.println("Assuming rooms are available for booking.");
-        }
+        System.out.println("Assuming rooms are available for booking.");
+    }
 
     @When("a guest tries to book a room with {string}")
     public void submit_booking_request(String dataset) {
@@ -34,17 +35,30 @@ public class BookingSteps {
         Response response = bookingService.createBooking(request);
         testContext.setResponse(response);
     }
+
     @Then("the booking request should be {string}")
     public void booking_should_be(String bookingoutcome) {
 
-        Response response = testContext.getResponse();
+        {
 
-        if ("created".equalsIgnoreCase(bookingoutcome)) {
-            Assert.assertEquals(201, response.getStatusCode());
-            Assert.assertNotNull(response.jsonPath().get("bookingid"));
-        } else {
-            Assert.assertEquals(400, response.getStatusCode());
+            Response response = testContext.getResponse();
+            int actualStatusCode = response.getStatusCode();
+            int expectedStatusCode;
+
+            if ("created".equalsIgnoreCase(bookingoutcome)) {
+                expectedStatusCode = 201;
+                System.out.println("Expected Status Code: " + expectedStatusCode +
+                        ", Actual Status Code: " + actualStatusCode);
+                Assert.assertEquals(expectedStatusCode, actualStatusCode);
+                Assert.assertNotNull(response.jsonPath().get("bookingid"));
+            } else {
+                expectedStatusCode = 400;
+                System.out.println("Expected Status Code: " + expectedStatusCode +
+                        ", Actual Status Code: " + actualStatusCode);
+                Assert.assertEquals(expectedStatusCode, actualStatusCode);
+                System.out.println("Response Body:\n" + response.getBody().prettyPrint());
+            }
         }
-    }
 
+    }
 }

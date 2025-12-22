@@ -6,7 +6,7 @@ public class BookingRequest {
     private int roomid;
     private String firstname;
     private String lastname;
-    private boolean depositpaid;
+    private Boolean depositpaid;
     private BookingDates bookingdates;
     private String email;
     private String phone;
@@ -38,11 +38,13 @@ public class BookingRequest {
         this.lastname = lastname;
     }
 
-    public boolean isDepositpaid() {
+    public Boolean getDepositpaid() {
+
         return depositpaid;
     }
 
-    public void setDepositpaid(boolean depositpaid) {
+    public void setDepositpaid(Boolean depositpaid) {
+
         this.depositpaid = depositpaid;
     }
 

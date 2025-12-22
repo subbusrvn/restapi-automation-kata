@@ -75,3 +75,17 @@ Feature: Hotel Room Booking Management
       | DATES_CHECKIN_NULL                 | rejected             |
       | DATES_CHECKOUT_NULL                | rejected             |
       | DATES_TOO_LONG_STAY                | created              |
+
+  Scenario Outline: Guest books a room based on deposit paid flag
+    Given rooms are available for booking
+    When a guest tries to book a room with "<dataset>"
+    Then the booking request should be "<bookingoutcome>"
+
+    Examples:
+      | dataset             | bookingoutcome |
+      | DEPOSIT_TRUE        | created        |
+      | DEPOSIT_FALSE       | created        |
+      | DEPOSIT_MISSING     | rejected       |
+      | DEPOSIT_STRING      | rejected       |
+      | DEPOSIT_NUMBER      | rejected       |
+      | DEPOSIT_INVALID     | rejected       |
