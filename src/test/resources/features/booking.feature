@@ -104,3 +104,18 @@ Feature: Hotel Room Booking Management
       | DEPOSIT_STRING      | rejected       |
       | DEPOSIT_NUMBER      | rejected       |
       | DEPOSIT_INVALID     | rejected       |
+
+  Scenario Outline: Guest books a room with various phone number
+    Given rooms are available for booking
+    When a guest tries to book a room with "<dataset>"
+    Then the booking request should be "<bookingoutcome>"
+
+    Examples:
+      | dataset                    | bookingoutcome |
+      | PHONE_VALID_MIN_LENGTH_11  | created        |
+      | PHONE_VALID_MAX_LENGTH_21  | created        |
+      | PHONE_TOO_SHORT            | rejected       |
+      | PHONE_TOO_LONG             | rejected       |
+      | PHONE_EMPTY                | rejected       |
+      # | PHONE_ALPHANUMERIC       | rejected       | This case will be validated in the front end
+      # | PHONE_SPECIAL_CHARS      | rejected       | This case will be validated in the front end
