@@ -3,7 +3,7 @@ package com.booking.models.booking;
 
 public class BookingRequest {
 
-    private int roomid;
+    private String roomid;
     private String firstname;
     private String lastname;
     private Boolean depositpaid;
@@ -14,13 +14,8 @@ public class BookingRequest {
     public BookingRequest() {}
 
     // getters & setters
-    public int getRoomid() {
-        return roomid;
-    }
-
-    public void setRoomid(int roomid) {
-        this.roomid = roomid;
-    }
+    public String getRoomid() { return roomid; }
+    public void setRoomid(String roomid) { this.roomid = roomid; }
 
     public String getFirstname() {
         return firstname;

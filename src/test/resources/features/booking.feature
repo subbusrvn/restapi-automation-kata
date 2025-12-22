@@ -1,5 +1,20 @@
 Feature: Hotel Room Booking Management
 
+  Scenario Outline: Guest books a room with various room id
+    Given rooms are available for booking
+    When a guest tries to book a room with "<dataset>"
+    Then the booking request should be "<bookingoutcome>"
+
+    Examples:
+      | dataset                 | bookingoutcome |
+      | ROOMID_VALID            | created        |
+      | ROOMID_OUT_OF_RANGE     | rejected       |
+      | ROOMID_ZERO             | rejected       |
+      | ROOMID_NEGATIVE         | rejected       |
+      | ROOMID_ALPHANUMERIC     | rejected       |
+      | ROOMID_DECIMAL          | rejected       |
+      | ROOMID_SPECIAL_CHARS    | rejected       |
+
   Scenario Outline: Validate booking with firstname rules
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"

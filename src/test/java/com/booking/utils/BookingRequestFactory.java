@@ -27,9 +27,8 @@ public class BookingRequestFactory {
 
                     BookingRequest request = new BookingRequest();
 
-                    request.setRoomid(
-                            Integer.parseInt(
-                                    ExcelUtility.getCellData(SHEET_NAME, i, 1)));
+                    String roomIdValue = ExcelUtility.getCellData(SHEET_NAME, i, 1);
+                    request.setRoomid(roomIdValue);
 
                     request.setFirstname(
                             ExcelUtility.getCellData(SHEET_NAME, i, 2));
