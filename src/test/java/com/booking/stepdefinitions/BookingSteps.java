@@ -25,7 +25,7 @@ public class BookingSteps {
             System.out.println("Assuming rooms are available for booking.");
         }
 
-    @When("a guest submits booking request using {string}")
+    @When("a guest tries to book a room with {string}")
     public void submit_booking_request(String dataset) {
 
         BookingRequest request =
@@ -34,7 +34,7 @@ public class BookingSteps {
         Response response = bookingService.createBooking(request);
         testContext.setResponse(response);
     }
-    @Then("booking should be {string}")
+    @Then("the booking request should be {string}")
     public void booking_should_be(String bookingoutcome) {
 
         Response response = testContext.getResponse();
