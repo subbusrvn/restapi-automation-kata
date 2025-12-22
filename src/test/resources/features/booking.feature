@@ -4,6 +4,7 @@ Feature: Hotel Room Booking Management
     Given rooms are available for booking
     When a guest submits booking request using "<dataset>"
     Then booking should be "<bookingoutcome>"
+
 # First name length should be 3 ~ 18 charecters
     Examples:
       | dataset               | bookingoutcome   |
@@ -43,3 +44,16 @@ Feature: Hotel Room Booking Management
       | LASTNAME_SPECIAL_CHARS  | created       |
       | LASTNAME_ALPHANUMERIC   | created       |
       | LASTNAME_LEADING_TRAILING_SPACES |created   |
+
+  Scenario Outline: Validate booking with email rules
+    Given rooms are available for booking
+    When a guest submits booking request using "<dataset>"
+    Then booking should be "<outcome>"
+
+    Examples:
+      | dataset                | outcome  |
+      | EMAIL_VALID            | created |
+      | EMAIL_EMPTY            | rejected |
+      | EMAIL_INVALID_FORMAT   | rejected |
+      | EMAIL_NO_DOMAIN        | rejected |
+      | EMAIL_NO_USERNAME      | rejected |
