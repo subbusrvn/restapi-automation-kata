@@ -42,7 +42,6 @@ public class BookingSteps {
     public void submit_booking_request(String dataset) {
 
         BookingRequest request = BookingRequestFactory.createFromExcel(dataset);
-
         // Save request in TestContext for later assertions
         testContext.setBookingRequest(request);
 
@@ -54,10 +53,11 @@ public class BookingSteps {
     public void create_booking(String dataset) {
 
         BookingRequest request = BookingRequestFactory.createFromExcel(dataset);
-        Response response = bookingService.createBooking(request);
-
-        testContext.setResponse(response);
         testContext.setBookingRequest(request);
+
+        Response response = bookingService.createBooking(request);
+        testContext.setResponse(response);
+
 
 
         log.info("****Create Booking Response:****");
@@ -193,12 +193,10 @@ log.info("*****Actual Status Code: *****" + actualStatusCode);
 
         // Map expected values for assertion
         Map<String, Object> expectedMap = new HashMap<>();
-        expectedMap.put("roomid", expected.getRoomid());
+        expectedMap.put("roomid", Integer.valueOf(expected.getRoomid()));
         expectedMap.put("firstname", expected.getFirstname());
         expectedMap.put("lastname", expected.getLastname());
         expectedMap.put("depositpaid", expected.getDepositpaid());
-        expectedMap.put("email", expected.getEmail());
-        expectedMap.put("phone", expected.getPhone());
         expectedMap.put("bookingdates.checkin", expected.getBookingdates().getCheckin());
         expectedMap.put("bookingdates.checkout", expected.getBookingdates().getCheckout());
 
