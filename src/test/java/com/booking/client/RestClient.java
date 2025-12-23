@@ -14,11 +14,13 @@ public class RestClient {
 
     public RequestSpecification loginPostRequest() {
         return RestAssured.given()
+                .log().all()
                 .contentType("application/json");
     }
 
     public Response post(String url, Object bdy) {
         return given()
+                .log().all()
                 .headers("Content-Type", "application/json")
                 .body(bdy)
                 .when()

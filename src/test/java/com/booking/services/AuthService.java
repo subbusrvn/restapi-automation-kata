@@ -27,6 +27,7 @@ public class AuthService {
 
         return restClient.loginPostRequest()
                 .header("Content-Type", "text/plain")
+                .log().all()
                 .body(authRequest)
                 .post(AuthEndpoints.LOGIN);
     }

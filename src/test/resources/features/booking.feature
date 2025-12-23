@@ -19,7 +19,7 @@ Feature: Hotel Room Booking Management
       | ROOMID_DECIMAL          | rejected       |
       | ROOMID_SPECIAL_CHARS    | rejected       |
 
- #----------------------------------------------------
+  #----------------------------------------------------
   #Guest book a room with various firstname rules
   # First name length should be 3 ~ 18 charecters
   #----------------------------------------------------

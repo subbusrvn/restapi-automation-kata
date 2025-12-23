@@ -115,17 +115,18 @@ public class BookingSteps {
         int expectedStatusCode;
 
         if ("created".equalsIgnoreCase(bookingoutcome)) {
-            expectedStatusCode = 201;
+            expectedStatusCode = 200;
             log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
+            log.info("****Booking Accepted****");
             Assert.assertEquals(expectedStatusCode, actualStatusCode);
             Integer bookingId = BookingIdExtractor.extract(response);
             testContext.setBookingId(bookingId);
 
-            //int bookingId = response.jsonPath().getInt("bookingid");
             Assert.assertTrue("Booking ID must be greater than 0", bookingId > 0);
         } else {
             expectedStatusCode = 400;
             log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
+            log.info("****Booking Operation failed****");
             Assert.assertEquals(expectedStatusCode, actualStatusCode);
             log.info("****Response Body:****\n" + response.getBody().prettyPrint());
         }
@@ -136,13 +137,12 @@ public class BookingSteps {
         Response response = testContext.getResponse();
         int actualStatusCode = response.getStatusCode();
         log.info("****Actual Status Code:**** " + actualStatusCode);
-        Assert.assertEquals("Booking should be created successfully", 201, actualStatusCode);
-        //Integer bookingId = response.jsonPath().getObject("bookingid", Integer.class);
+        Assert.assertEquals("Booking should be created successfully", 200, actualStatusCode);
+
         Integer bookingId = BookingIdExtractor.extract(response);
         testContext.setBookingId(bookingId);
-
         Assert.assertNotNull("Booking ID should be generated", bookingId);
-
+        log.info("****Booking ID Generated:**** ",bookingId);
     }
 
     @Then("a booking reference is generated")
@@ -151,7 +151,7 @@ public class BookingSteps {
         //Integer bookingId = response.jsonPath().getInt("bookingid");
         Integer bookingId = BookingIdExtractor.extract(response);
         testContext.setBookingId(bookingId);
-        log.info("*****Generated Booking ID:***** {}", bookingId);
+        log.info("*****Booking ID Generated ***** {}", bookingId);
 
         Assert.assertNotNull("Booking ID is null", bookingId);
         Assert.assertTrue("Booking ID is not greater than zero", bookingId > 0);
@@ -174,11 +174,22 @@ public class BookingSteps {
         JsonPath actual = response.jsonPath();
 
         Assert.assertEquals(Integer.parseInt(expected.getRoomid()), actual.getInt("roomid"));
+        log.info("*****Actual Booking ID***** {}", actual.getInt("roomid"));
+
         Assert.assertEquals(expected.getFirstname(), actual.getString("firstname"));
+        log.info("*****Actual Firstname***** {}", actual.getString("firstname"));
+
         Assert.assertEquals(expected.getLastname(), actual.getString("lastname"));
+        log.info("*****Actual Lastname***** {}", actual.getString("lastname"));
+
         Assert.assertEquals(expected.getDepositpaid(), actual.getBoolean("depositpaid"));
+        log.info("*****Actual Deposit Paid***** {}", actual.getBoolean("depositpaid"));
+
         Assert.assertEquals(expected.getBookingdates().getCheckin(), actual.getString("bookingdates.checkin"));
+        log.info("*****Actual CheckIn***** {}",  actual.getString("bookingdates.checkin"));
+
         Assert.assertEquals(expected.getBookingdates().getCheckout(), actual.getString("bookingdates.checkout"));
+        log.info("*****Actual Checkout***** {}",  actual.getString("bookingdates.checkout"));
         //int  bookingId = response.jsonPath().getInt("bookingid");
         //log.info("**** fetched booking id ****", bookingId );
     }
@@ -187,7 +198,7 @@ public class BookingSteps {
     public void the_booking_should_be_successfully_deleted() {
 
         Response response = testContext.getResponse();
-        Assert.assertTrue("Delete booking failed", response.getStatusCode() == 200 || response.getStatusCode() == 204);
+        Assert.assertTrue("Delete booking failed", response.getStatusCode() == 201);
 
     }
 
@@ -248,7 +259,7 @@ public class BookingSteps {
     public void validate_swagger_contract() {
 
         Response response = testContext.getResponse();
-        Assert.assertEquals(201, response.getStatusCode());
+        Assert.assertEquals(200, response.getStatusCode());
 
         JsonPath json = response.jsonPath();
 

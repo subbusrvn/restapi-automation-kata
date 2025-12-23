@@ -152,6 +152,117 @@ by non-technical stakeholders.
 ------------------------------------------------------------------------------------------------
 <span style="font-size:20px;">**12. Open Bugs**</span>
 ------------------------------------------------------------------------------------------------
+- #🐞 Known Issues / Bugs Identified
+- During API automation and exploratory testing, the following functional issues were identified in the Booking API.
+- ### BUG-01: System rejects to fail the improperly formatted login attempts
+- **Endpoint:** POST /auth/login
+- **Severity:** Critical
+- **Priority:** High
+- **Description:**  
+  System allows the login operation, when the Content-Type is passed as "plain/text". 
+- **Expected Result:**  
+  API should reject the request with 415 Error code.
+- **Actual Result:**  
+  Login Operation is sucessful with 200 Status code.
+- **Status:** Open
+
+---------------------------------------------------------------------------------------------------
+
+### BUG-02: Missing validation for past check-in dates
+- **Endpoint:** POST /booking
+- **Severity:** High
+- **Priority:** High
+- **Description:**  
+  API allows booking with check-in dates in the past dates.
+- **Expected Result:**  
+  API should reject bookings with past dates.
+- **Actual Result:**  
+  Booking is accepted.
+- **Status:** Open
+
+---------------------------------------------------------------------------------------------------
+### BUG-03: Response STATUS Code 201 is wrongly displayed for the booking success case, When compare the Swagger contract
+- **Endpoint:** POST /booking
+- **Severity:** Mediaum
+- **Priority:** Medium
+- **Description:**  
+  Response STATUS Code 201 is wrongly displayed for the booking success case
+- **Expected Result:**  
+  As per Swagger It should be 200. But as per standard, 201 is fine. But we need to update the swagger.
+- **Actual Result:**  
+  Booking operations succefully completed with201 status code.
+- **Status:** Open
+---------------------------------------------------------------------------------------------------
+### BUG-04: If the DEPOSIT_PAID field is empty or contains any value other than true or false, the booking operation is permitted.  
+- **Endpoint:** POST /booking
+- **Severity:** High
+- **Priority:** High
+- **Description:**  
+  If the DEPOSIT_PAID field is empty or contains any value other than true or false, the booking operation is permitted.
+- **Expected Result:**  
+  Booking operationshould be prohibited with 400 status code.
+- **Actual Result:**  
+  Booking operations succefully completed with201 status code.
+- **Status:** Open
+
+---------------------------------------------------------------------------------------------------
+
+### BUG-05: Schema Validation Failure
+- **Endpoint:** POST /booking
+- **Severity:** Critical
+- **Priority:** High
+- **Description:**  
+  The booking response schema validation fails because two request fields are not returned by the API, 
+- despite being accepted and persisted in the request. This is treated as a functional defect and 
+- documented accordingly.
+- **Expected Result:**  
+  The content to match the given JSON schema.
+- **Actual Result:**  
+  object has missing required properties (["email","phone"])
+- **Status:** Open
+
+---------------------------------------------------------------------------------------------------
+
+### BUG-06: Response data structure does not comply with the Swagger contract
+- **Endpoint:** POST /booking
+- **Severity:** Critical
+- **Priority:** High
+- **Description:**  
+  Response data structure does not comply with the Swagger contract
+- **Expected Result:**  
+  {
+  "bookingid": 10,
+  **"booking":** {
+  "roomid": 2,
+  "firstname": "John",
+  "lastname": "Doe",
+  "depositpaid": true,
+  "bookingdates": {
+  "checkin": "2025-10-13",
+  "checkout": "2025-10-15"
+  },
+  "email": "john.doe@example.com",
+  "phone": "1234567890"
+  }
+  }
+- 
+- **Actual Result:**  
+
+{
+"bookingid": 34,
+"roomid": 5687,
+"firstname": "Samyuktha",
+"lastname": "Saravanan",
+"depositpaid": true,
+"bookingdates": {
+"checkin": "2025-12-28",
+"checkout": "2025-12-31"
+}
+}  
+
+- **Status:** Open
+
+---------------------------------------------------------------------------------------------------
 <span style="font-size:20px;">**12. 👤 Author**</span>
 - Saravanan Subramaniyan
 - Senior QA | API Automation | Framework Design
