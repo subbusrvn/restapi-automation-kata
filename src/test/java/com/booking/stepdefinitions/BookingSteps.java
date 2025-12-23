@@ -2,6 +2,7 @@ package com.booking.stepdefinitions;
 
 import com.booking.context.TestContext;
 import com.booking.utils.BookingRequestFactory;
+import com.booking.utils.TokenManager;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -22,7 +23,7 @@ public class BookingSteps {
 
     private final TestContext testContext;
     private final BookingService bookingService;
-
+    private int bookingId;
     public BookingSteps(TestContext testContext) {
         this.testContext = testContext;
         this.bookingService = new BookingService();
@@ -44,6 +45,56 @@ public class BookingSteps {
         Response response = bookingService.createBooking(request);
         testContext.setResponse(response);
     }
+
+    @When("a guest creates a booking with {string}")
+    public void create_booking(String dataset) {
+
+        BookingRequest request = BookingRequestFactory.createFromExcel(dataset);
+        Response response = bookingService.createBooking(request);
+
+        testContext.setResponse(response);
+        testContext.setBookingRequest(request);
+
+        System.out.println("Create Booking Response:");
+        response.getBody().prettyPrint();
+        Assert.assertEquals(
+                "Booking creation failed",
+                201,
+                response.getStatusCode()
+        );
+
+        Integer bookingId = response.jsonPath().getInt("bookingid");
+
+        if (bookingId == null) {
+            throw new RuntimeException(
+                    "Booking ID is null. Response: " + response.getBody().asString()
+            );
+        }
+
+        testContext.setBookingId(bookingId);
+        System.out.println("Created Booking ID: " + bookingId);
+    }
+
+    @When("the guest retrieves the booking by ID")
+    public void the_guest_retrieves_the_booking_by_id() {
+        Response response = bookingService.getBookingById(testContext.getBookingId());
+        testContext.setResponse(response);
+    }
+
+    @When("the guest deletes the booking")
+    public void the_guest_deletes_the_booking() {
+
+        Response response = bookingService.deleteBooking(testContext.getBookingId(), TokenManager.getToken());
+        testContext.setResponse(response);
+    }
+
+
+    @Given("a booking exists")
+    public void booking_exists() {
+        Assert.assertNotNull("Booking ID must exist", testContext.getBookingId());
+    }
+
+
 
     @Then("the booking request should be {string}")
     public void booking_should_be(String bookingoutcome) {
@@ -78,6 +129,7 @@ public class BookingSteps {
         Integer bookingId = response.jsonPath().getInt("bookingid");
         Assert.assertNotNull("Booking ID should be generated", bookingId);
         Assert.assertTrue("Booking ID should be > 0", bookingId > 0);
+        testContext.setBookingId(bookingId);
     }
 
     @Then("a booking reference is generated")
@@ -92,6 +144,33 @@ public class BookingSteps {
     @Then("the booking details are returned correctly")
     public void the_booking_details_Schema_returned_correctly() {
         Response response = testContext.getResponse();
+    }
+
+    @Then("the booking details should match the created booking")
+    public void the_booking_details_should_match_the_created_booking() {
+
+        BookingRequest expected = testContext.getBookingRequest();
+        Response response = testContext.getResponse();
+
+        Assert.assertEquals(200, response.getStatusCode());
+
+        JsonPath actual = response.jsonPath();
+
+        Assert.assertEquals(Integer.parseInt(expected.getRoomid()), actual.getInt("roomid"));
+        Assert.assertEquals(expected.getFirstname(), actual.getString("firstname"));
+        Assert.assertEquals(expected.getLastname(), actual.getString("lastname"));
+        Assert.assertEquals(expected.getDepositpaid(), actual.getBoolean("depositpaid"));
+        Assert.assertEquals(expected.getBookingdates().getCheckin(), actual.getString("bookingdates.checkin"));
+        Assert.assertEquals(expected.getBookingdates().getCheckout(), actual.getString("bookingdates.checkout"));
+        bookingId = response.jsonPath().getInt("bookingid");
+    }
+
+    @Then("the booking should be successfully deleted")
+    public void the_booking_should_be_successfully_deleted() {
+
+        Response response = testContext.getResponse();
+        Assert.assertTrue("Delete booking failed", response.getStatusCode() == 200 || response.getStatusCode() == 204);
+
     }
 
     @Then("the booking details returned should be correct")
@@ -138,4 +217,16 @@ public class BookingSteps {
             Assert.assertEquals("Mismatch for field: " + path, expectedValue, actualValue);
         });
     }
+
+    @Then("retrieving the booking should return {string}")
+    public void retrieving_the_booking_should_return(String outcome) {
+        Response response = bookingService.getBookingById(testContext.getBookingId());
+        Assert.assertEquals("Booking should be not found", 404, response.getStatusCode());
+        System.out.println("Retrieve after delete outcome: " + outcome);
+
+        if ("not found".equalsIgnoreCase(outcome)) {
+            Assert.assertEquals(404, response.getStatusCode());
+        }
+    }
+
 }

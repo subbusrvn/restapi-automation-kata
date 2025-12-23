@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class TestContext {
     private Response response;
+    private int bookingId;
     private BookingRequest bookingRequest;
     public static final String baseUri = ConfigManager.getProperty("base_url");
 
@@ -25,6 +26,15 @@ public class TestContext {
         return response;
     }
 
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
+
+
     public void setResponse(Response response) {
         this.response = response;
     }
@@ -34,6 +44,7 @@ public class TestContext {
     public void set(String key, Object value) {
         scenarioData.put(key, value);
     }
+
     public <T> T get(String key) {
         return (T) scenarioData.get(key);
     }

@@ -144,3 +144,30 @@ Feature: Hotel Room Booking Management
     Examples:
       | dataset        |
       | BOOKING_VALID  |
+
+    # ------------------------------------------------------------------
+    # Booking API End-to-End Flow
+    # -------------------------------------------------------------------
+
+  Scenario Outline: Guest performs full booking lifecycle
+    Given login with valid credentials
+    Given rooms are available for booking
+    When a guest creates a booking with "<dataset>"
+    Then the room reservation is confirmed
+    And a booking reference is generated
+    And the booking details returned should be correct
+
+    And a booking exists
+    When the guest retrieves the booking by ID
+    Then the booking details should match the created booking
+
+    #When the guest updates the booking with "<updateDataset>"
+    #Then the booking details should reflect the updates
+
+    When the guest deletes the booking
+    Then the booking should be successfully deleted
+    And retrieving the booking should return "not found"
+
+    Examples:
+      | dataset       |
+      | BOOKING_E2E   |
