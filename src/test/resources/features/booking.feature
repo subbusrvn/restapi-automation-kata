@@ -1,6 +1,10 @@
 Feature: Hotel Room Booking Management
 
-  Scenario Outline: Guest books a room with various room id
+  #----------------------------------------------------
+  #Guest book a room with various room id
+  #----------------------------------------------------
+
+  Scenario Outline: Guest book a room with various room id
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -15,12 +19,16 @@ Feature: Hotel Room Booking Management
       | ROOMID_DECIMAL          | rejected       |
       | ROOMID_SPECIAL_CHARS    | rejected       |
 
-  Scenario Outline: Validate booking with firstname rules
+ #----------------------------------------------------
+  #Guest book a room with various firstname rules
+  # First name length should be 3 ~ 18 charecters
+  #----------------------------------------------------
+
+  Scenario Outline: Guest books a room with various firstname rules
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
 
-# First name length should be 3 ~ 18 charecters
     Examples:
       | dataset               | bookingoutcome   |
       | FIRSTNAME_VALID       | created          |
@@ -36,14 +44,15 @@ Feature: Hotel Room Booking Management
       | FIRSTNAME_ALPHANUMERIC | created         |
       | FIRSTNAME_LEADING_TRAILING_SPACES |created   |
 
+  #----------------------------------------------------
+  #Guest book a room with various lastname rules
 # Last name length should be 3 ~ 30 charecters
+  #----------------------------------------------------
 
-  Scenario Outline: Validate booking with lastname rules
+  Scenario Outline: Guest book a room with various lastname rules
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
-
-    # Last name length should be 3 ~ 30 charecters
 
     Examples:
       | dataset               | bookingoutcome   |
@@ -60,7 +69,11 @@ Feature: Hotel Room Booking Management
       | LASTNAME_ALPHANUMERIC   | created       |
       | LASTNAME_LEADING_TRAILING_SPACES |created   |
 
-  Scenario Outline: Validate booking with email rules
+ #----------------------------------------------------
+ # Guest book a room with various email rules
+ #----------------------------------------------------
+
+  Scenario Outline: Guest book a room with various email rules
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<outcome>"
@@ -73,7 +86,11 @@ Feature: Hotel Room Booking Management
       | EMAIL_NO_DOMAIN        | rejected |
       | EMAIL_NO_USERNAME      | rejected |
 
-  Scenario Outline: Guest books a room based on stay dates
+ #----------------------------------------------------
+ # Guest book a room based on stay dates
+ #----------------------------------------------------
+
+  Scenario Outline: Guest book a room based on stay dates
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -91,7 +108,11 @@ Feature: Hotel Room Booking Management
       | DATES_CHECKOUT_NULL                | rejected             |
       | DATES_TOO_LONG_STAY                | created              |
 
-  Scenario Outline: Guest books a room based on deposit paid flag
+ #----------------------------------------------------
+ # Guest book a room based on deposit paid
+ #----------------------------------------------------
+
+  Scenario Outline: Guest book a room based on deposit paid
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -105,7 +126,11 @@ Feature: Hotel Room Booking Management
       | DEPOSIT_NUMBER      | rejected       |
       | DEPOSIT_INVALID     | rejected       |
 
-  Scenario Outline: Guest books a room with various phone number
+ #----------------------------------------------------
+ # Guest book a room with various phone number
+ #----------------------------------------------------
+
+  Scenario Outline: Guest book a room with various phone number
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -120,11 +145,11 @@ Feature: Hotel Room Booking Management
       # | PHONE_ALPHANUMERIC       | rejected       | This case will be validated in the front end
       # | PHONE_SPECIAL_CHARS      | rejected       | This case will be validated in the front end
 
-   # ------------------------------------------------------------------
-  # Booking Creation – Success Flow - Response Data, Schema Validation
-  # -------------------------------------------------------------------
+ # ------------------------------------------------------------------
+ # Booking Creation – Success Flow - Response Data,Schema Validation
+ # -------------------------------------------------------------------
 
-  Scenario Outline: A guest books a room successfully and receives a valid booking schema details from system.
+  Scenario Outline: A guest book a room successfully and receives a valid booking schema details from system.
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the room reservation is confirmed
@@ -133,6 +158,10 @@ Feature: Hotel Room Booking Management
     Examples:
       | dataset                    |
       | SCHEMA_VALIDATION          |
+
+ # ------------------------------------------------------------------
+ # Booking Creation – Validate all the response data
+ # -------------------------------------------------------------------
 
   Scenario Outline: A guest books a room successfully and receives a valid booking  details from system.
     Given rooms are available for booking
@@ -145,36 +174,9 @@ Feature: Hotel Room Booking Management
       | dataset        |
       | BOOKING_VALID  |
 
-    # ------------------------------------------------------------------
-    # Booking API End-to-End Flow
-    # -------------------------------------------------------------------
-
-    Scenario Outline: Guest performs full booking lifecycle
-      Given login with valid credentials
-      Given rooms are available for booking
-      When a guest creates a booking with "<dataset>"
-      Then the room reservation is confirmed
-      And a booking reference is generated
-      And the booking details returned should be correct
-
-      And a booking exists
-      When the guest retrieves the booking by ID
-      Then the booking details should match the created booking
-
-      #When the guest updates the booking with "<updateDataset>"
-      #Then the booking details should reflect the updates
-
-      When the guest deletes the booking
-      Then the booking should be successfully deleted
-      And retrieving the booking should return "not found"
-
-      Examples:
-        | dataset       |
-        | BOOKING_E2E   |
-
-      #--------------------------------------------------------------------
-      # Booking API response contract validation
-      # --------------------------------------------------------------------
+  #--------------------------------------------------------------------
+  # Booking API - Response data structure validation with Swagger Response
+  # --------------------------------------------------------------------
 
   Scenario Outline: Validate booking creation response against Swagger contract
     Given login with valid credentials
@@ -184,3 +186,30 @@ Feature: Hotel Room Booking Management
     Examples:
       | dataset              |
       | SWAGGER_VALIDATION   |
+
+  # ------------------------------------------------------------------
+  # Booking API - End-to-End Flow --> Create - Read - Update - Delete
+  # -------------------------------------------------------------------
+
+  Scenario Outline: Guest performs full booking lifecycle
+    Given login with valid credentials
+    Given rooms are available for booking
+    When a guest creates a booking with "<dataset>"
+    Then the room reservation is confirmed
+    And a booking reference is generated
+    And the booking details returned should be correct
+
+    And a booking exists
+    When the guest retrieves the booking by ID
+    Then the booking details should match the created booking
+
+      #When the guest updates the booking with "<updateDataset>"
+      #Then the booking details should reflect the updates
+
+    When the guest deletes the booking
+    Then the booking should be successfully deleted
+    And retrieving the booking should return "not found"
+
+    Examples:
+      | dataset       |
+      | BOOKING_E2E   |
