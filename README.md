@@ -93,8 +93,12 @@ It demonstrates how API automation is implemented in professional QA teams, beyo
 
 ------------------------------------------------------------------------------------------------
 <span style="font-size:20px;">**4. Design Principles**</span>
-
-* BDD-first approach (business readable scenarios)
+This framework uses:
+- Rest Assured (API interaction)
+- Cucumber (BDD) -first approach (business readable scenarios)
+- JUnit (test execution)
+- JSON Schema validation
+- Test Context for data sharing
 * Service abstraction (no RestAssured in step definitions)
 * Single Responsibility for utilities
 * Low cyclomatic complexity (≤ 5 per method)
@@ -125,23 +129,47 @@ by non-technical stakeholders.
 - **Prerequisites**
 - Java 17+
 - Maven 3.8+
+- Git
+- Any IDE (IntelliJ IDEA / Eclipse – optional)
 
 ------------------------------------------------------------------------------------------------
-<span style="font-size:20px;">**8. Run all tests**</span>
+<span style="font-size:20px;">**8. SetUp**</span>
+- git clone https://github.com/subbusrvn/restapi-automation-kata
+- cd restapi-automation-kata
+
+**What This Command Does**
+
+- git clone → Downloads the project source code from GitHub
+- cd restapi-automation-kata → Navigates to the project root directory
+- mvn clean test →
+- Cleans previous build artifacts
+- Compiles the test code
+- Executes all Cucumber feature files
+- Runs API validations using Rest Assured
+
+**Execution Mode**
+
+- Tests run headlessly via command line
+- No UI or browser interaction is required
+- Suitable for local execution and CI/CD pipelines
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**9. Run all tests**</span>
 - mvn clean test
 
 ------------------------------------------------------------------------------------------------
-<span style="font-size:20px;">**9. Run a specific feature**</span>
-- mvn test -Dcucumber.filter.tags="@booking"
+<span style="font-size:20px;">**10. Reports**</span>
+
+- After execution, test reports will be available at:
+- Cucumber HTML Report: target/cucumber-report.html
 
 ------------------------------------------------------------------------------------------------
-<span style="font-size:20px;">**10. Logging**</span>
+<span style="font-size:20px;">**11. Logging**</span>
 - Centralized logging using Log4j2
 - Logs are written to console and rolling log files
 - Log files are excluded from version control (.gitignore)
 
 ------------------------------------------------------------------------------------------------
-<span style="font-size:20px;">**11. Why This Framework?**</span>
+<span style="font-size:20px;">**12. Why This Framework?**</span>
 
 - This project is built to reflect how API automation is done in real teams, not just demo scripts:
 - Clean separation of concerns
@@ -150,7 +178,7 @@ by non-technical stakeholders.
 - Easy to extend with new APIs or scenarios
 
 ------------------------------------------------------------------------------------------------
-<span style="font-size:20px;">**12. Open Bugs**</span>
+<span style="font-size:20px;">**13. Open Bugs**</span>
 ------------------------------------------------------------------------------------------------
 - #🐞 Known Issues / Bugs Identified
 - During API automation and exploratory testing, the following functional issues were identified in the Booking API.
@@ -263,6 +291,6 @@ by non-technical stakeholders.
 - **Status:** Open
 
 ---------------------------------------------------------------------------------------------------
-<span style="font-size:20px;">**12. 👤 Author**</span>
+<span style="font-size:20px;">**14. 👤 Author**</span>
 - Saravanan Subramaniyan
 - Senior QA | API Automation | Framework Design
