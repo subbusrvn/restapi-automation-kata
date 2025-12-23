@@ -1,9 +1,9 @@
 package com.booking.stepdefinitions;
 
 import com.booking.context.TestContext;
+import com.booking.utils.BookingIdExtractor;
 import com.booking.utils.BookingRequestFactory;
 import com.booking.utils.LoggerUtil;
-import com.booking.utils.TokenManager;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -11,11 +11,8 @@ import com.booking.models.booking.BookingRequest;
 import com.booking.services.BookingService;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,16 +25,30 @@ public class BookingSteps {
             LoggerUtil.getLogger(BookingSteps.class);
     private final TestContext testContext;
     private final BookingService bookingService;
-    private int bookingId;
     public BookingSteps(TestContext testContext) {
         this.testContext = testContext;
         this.bookingService = new BookingService();
     }
 
+    // -------------------------
+    // Given Steps
+    // -------------------------
     @Given("rooms are available for booking")
     public void rooms_are_available_for_booking() {
         log.info("****Assuming rooms are available for booking****");
     }
+
+    @Given("a booking exists")
+    public void booking_exists() {
+        Assert.assertTrue(
+                "Booking ID must exist and be > 0",
+                testContext.getBookingId() > 0
+        );
+    }
+
+    // -------------------------
+    // When Steps
+    // -------------------------
 
     @When("a guest tries to book a room with {string}")
     public void submit_booking_request(String dataset) {
@@ -57,8 +68,6 @@ public class BookingSteps {
         Response response = bookingService.createBooking(request);
         testContext.setResponse(response);
 
-
-
         log.info("****Create Booking Response:****");
         response.getBody().prettyPrint();
         Assert.assertEquals(
@@ -67,15 +76,17 @@ public class BookingSteps {
                 response.getStatusCode()
         );
 
-        Integer bookingId = response.jsonPath().getInt("bookingid");
-
-        if (bookingId == null) {
-            throw new RuntimeException(
-                    "Booking ID is null. Response: " + response.getBody().asString()
-            );
-        }
-
+        Integer bookingId = BookingIdExtractor.extract(response);
         testContext.setBookingId(bookingId);
+
+            if (bookingId <= 0) {
+                throw new RuntimeException(
+                        "Invalid booking ID: " + bookingId +
+                                ". Response: " + response.getBody().asString()
+                );
+            }
+
+
         log.info("****Created Booking ID: ****" + bookingId);
     }
 
@@ -88,17 +99,13 @@ public class BookingSteps {
     @When("the guest deletes the booking")
     public void the_guest_deletes_the_booking() {
 
-        Response response = bookingService.deleteBooking(testContext.getBookingId(), TokenManager.getToken());
+        Response response = bookingService.deleteBooking(testContext.getBookingId());
         testContext.setResponse(response);
     }
 
-
-    @Given("a booking exists")
-    public void booking_exists() {
-        Assert.assertNotNull("Booking ID must exist", testContext.getBookingId());
-    }
-
-
+    // -------------------------
+    // Then Steps
+    // -------------------------
 
     @Then("the booking request should be {string}")
     public void booking_should_be(String bookingoutcome) {
@@ -111,7 +118,11 @@ public class BookingSteps {
             expectedStatusCode = 201;
             log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
             Assert.assertEquals(expectedStatusCode, actualStatusCode);
-            Assert.assertNotNull(response.jsonPath().getInt("bookingid"));
+            Integer bookingId = BookingIdExtractor.extract(response);
+            testContext.setBookingId(bookingId);
+
+            //int bookingId = response.jsonPath().getInt("bookingid");
+            Assert.assertTrue("Booking ID must be greater than 0", bookingId > 0);
         } else {
             expectedStatusCode = 400;
             log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
@@ -126,16 +137,21 @@ public class BookingSteps {
         int actualStatusCode = response.getStatusCode();
         log.info("****Actual Status Code:**** " + actualStatusCode);
         Assert.assertEquals("Booking should be created successfully", 201, actualStatusCode);
-        Integer bookingId = response.jsonPath().getObject("bookingid", Integer.class);
-        Assert.assertNotNull("Booking ID should be generated", bookingId);
+        //Integer bookingId = response.jsonPath().getObject("bookingid", Integer.class);
+        Integer bookingId = BookingIdExtractor.extract(response);
         testContext.setBookingId(bookingId);
+
+        Assert.assertNotNull("Booking ID should be generated", bookingId);
+
     }
 
     @Then("a booking reference is generated")
     public void a_booking_reference_is_generated() {
         Response response = testContext.getResponse();
-        Integer bookingId = response.jsonPath().getInt("bookingid");
-        log.info("*****Generated Booking ID:*****" + bookingId);
+        //Integer bookingId = response.jsonPath().getInt("bookingid");
+        Integer bookingId = BookingIdExtractor.extract(response);
+        testContext.setBookingId(bookingId);
+        log.info("*****Generated Booking ID:***** {}", bookingId);
 
         Assert.assertNotNull("Booking ID is null", bookingId);
         Assert.assertTrue("Booking ID is not greater than zero", bookingId > 0);
@@ -163,7 +179,8 @@ public class BookingSteps {
         Assert.assertEquals(expected.getDepositpaid(), actual.getBoolean("depositpaid"));
         Assert.assertEquals(expected.getBookingdates().getCheckin(), actual.getString("bookingdates.checkin"));
         Assert.assertEquals(expected.getBookingdates().getCheckout(), actual.getString("bookingdates.checkout"));
-        bookingId = response.jsonPath().getInt("bookingid");
+        //int  bookingId = response.jsonPath().getInt("bookingid");
+        //log.info("**** fetched booking id ****", bookingId );
     }
 
     @Then("the booking should be successfully deleted")
@@ -184,10 +201,9 @@ public class BookingSteps {
         Assert.assertNotNull("Response is null", response);
 
         JsonPath actual = response.jsonPath();
-
-        Integer bookingId = actual.getInt("bookingid");
-        Assert.assertNotNull("Booking ID is null", bookingId);
-        Assert.assertTrue("Booking ID should be > 0", bookingId > 0);
+        Integer bookingId = BookingIdExtractor.extract(response);
+        testContext.setBookingId(bookingId);
+        Assert.assertTrue("bookingid must be > 0", bookingId > 0);
 
         // Map expected values for assertion
         Map<String, Object> expectedMap = new HashMap<>();
@@ -238,12 +254,12 @@ public class BookingSteps {
 
         // bookingid must exist
         Assert.assertNotNull("bookingid missing", json.get("bookingid"));
-        log.info("*****Booking ID must be there:***** "+json.get("bookingid"));
+        log.info("*****Booking ID must be there:***** " +json.get("bookingid"));
         // Swagger expects nested booking object
         Assert.assertNotNull(
                 "Swagger violation: 'booking' object missing",
                 json.get("booking"));
-        log.info("*****Swagger violation: 'booking' object missing***** "+json.get("booking"));
+        log.warn("***** Swagger violation: 'booking' object is missing in response *****");
 
         // Inside booking object
         Assert.assertNotNull(json.get("booking.roomid"));
@@ -255,6 +271,5 @@ public class BookingSteps {
         Assert.assertNotNull(json.get("booking.email"));
         Assert.assertNotNull(json.get("booking.phone"));
     }
-
 
 }

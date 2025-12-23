@@ -5,6 +5,7 @@ public class BookingDates {
     private String checkin;
     private String checkout;
 
+    @SuppressWarnings("unused")
     public BookingDates() {}
 
     public BookingDates(String checkin, String checkout) {
@@ -16,7 +17,7 @@ public class BookingDates {
 
         return checkin;
     }
-
+    @SuppressWarnings("unused")
     public void setCheckin(String checkin) {
 
         this.checkin = checkin;
@@ -26,7 +27,7 @@ public class BookingDates {
 
         return checkout;
     }
-
+    @SuppressWarnings("unused")
     public void setCheckout(String checkout) {
         this.checkout = checkout;
     }

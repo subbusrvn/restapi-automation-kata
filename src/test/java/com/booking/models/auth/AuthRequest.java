@@ -1,5 +1,6 @@
 package com.booking.models.auth;
 
+@SuppressWarnings("unused")
 public class AuthRequest {
 
     private String username;

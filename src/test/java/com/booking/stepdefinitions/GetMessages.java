@@ -3,7 +3,7 @@ package com.booking.stepdefinitions;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-
+import static org.hamcrest.Matchers.emptyOrNullString;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -23,8 +23,8 @@ public class GetMessages {
         response.then().statusCode(200)
                 .body("messages.size()", greaterThan(0))
                 .body("messages.id", everyItem(notNullValue()))
-                .body("messages.name", everyItem(not(isEmptyOrNullString())))
-                .body("messages.subject", everyItem(not(isEmptyOrNullString())))
+                .body("messages.name", everyItem(not(emptyOrNullString())))
+                .body("messages.subject", everyItem(not(emptyOrNullString())))
                 .body("messages.read", everyItem(notNullValue()))
                 .log().all();
     }

@@ -30,15 +30,16 @@ public class AuthSteps {
     // -------------------------
     // Given Steps
     // -------------------------
+
     @Given("a user wants to access the booking system")
     public void auth_endpoint_available() {
-        log.info("****\"Auth endpoint ready at \" + context.getBaseUri()****");
+        log.info("****\"Auth endpoint ready at {}" ,context.getBaseUri());
     }
 
     @Given("the system is available for user access")
     public void the_authentication_service_is_running() {
         RestAssured.baseURI = ConfigManager.getProperty("base_url");
-        log.info("Auth endpoint ready at " + RestAssured.baseURI);
+        log.info("*****Auth endpoint ready at{}*****", RestAssured.baseURI);
     }
 
     @Given("a user is logged into the booking system")
@@ -53,10 +54,9 @@ public class AuthSteps {
 
         String token = response.jsonPath().getString("token");
 
-        log.info("****Logged in user token:****" +token);
+        log.info("****Logged in user token{}:****", token);
         Assert.assertNotNull("Token should not be null", token);
         context.set(tokenKey, token);
-
         TokenManager.setToken(token);
     }
 
@@ -90,7 +90,6 @@ public class AuthSteps {
         // Store response in context
         context.setResponse(response);
     }
-
     // -------------------------
     // Then Steps
     // -------------------------
@@ -105,6 +104,7 @@ public class AuthSteps {
 
     @Then("the system should reject the request")
     public void verifyUnsupportedMediaType() {
+
         Assert.assertEquals(415, context.getResponse().getStatusCode());
     }
 
@@ -117,11 +117,13 @@ public class AuthSteps {
 
     @Then("the token format should be alphanumeric")
     public void verify_token_format() {
+
         Assert.assertTrue(token.matches("^[a-zA-Z0-9]+$"));
     }
 
     @Then("the token length should be greater than 10 characters")
     public void verify_token_length() {
+
         Assert.assertTrue(token.length() > 10);
     }
 

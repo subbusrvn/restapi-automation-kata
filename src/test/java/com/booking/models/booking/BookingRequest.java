@@ -51,6 +51,7 @@ public class BookingRequest {
         this.bookingdates = bookingdates;
     }
 
+    @SuppressWarnings("unused")
     public String getEmail() {
         return email;
     }
@@ -59,6 +60,7 @@ public class BookingRequest {
         this.email = email;
     }
 
+    @SuppressWarnings("unused")
     public String getPhone() {
         return phone;
     }

@@ -20,6 +20,7 @@ public class ConfigManager {
     }
 
     // Optional utility
+    @SuppressWarnings("unused")
     public static boolean containsKey(String key) {
         return properties.containsKey(key);
     }

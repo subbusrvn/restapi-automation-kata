@@ -1,98 +1,47 @@
 package com.booking.utils;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileInputStream;
+
+
 
 public class ExcelUtility {
 
-	// File --> Workbook --> Worksheet --> Row - Cell
-	// FileInputStream -- Read file
-	// FileOutputStream -- Write file
-	// XSSFWorkbook -- Workbook
-	// XSSFWorksheet -- Worksheet
-	// XSSFWorkRow -- WorkRow
-	// XSSFWorkCell -- WorkCell
-	public static FileInputStream fi;
-	public static FileOutputStream fo;
-	public static XSSFWorkbook wb;
-	public static XSSFSheet ws;
-	public static XSSFRow row;
-	public static XSSFCell cell;
-	public static XSSFCellStyle style;
-	public static String path;
+	private ExcelUtility() {}
 
-	public ExcelUtility(String path) {
-		this.path = path;
-	}
+	public static int getRowcount(String excelPath, String sheetName) {
+		try (FileInputStream fi = new FileInputStream(excelPath);
+			 XSSFWorkbook wb = new XSSFWorkbook(fi)) {
 
-	// Number of rows in the given file
-	// getRowcount
-
-	public static int getRowcount(String sheetName) throws IOException {
-
-		fi = new FileInputStream(path);
-		wb = new XSSFWorkbook(fi);
-		ws = wb.getSheet(sheetName);
-		int rowCount = ws.getLastRowNum();
-		return rowCount;
-	}
-
-	// Number of columns in the given file
-	// getCellCount
-
-	public static int getCellcount(String sheetName, int rownum) throws IOException {
-
-		fi = new FileInputStream(path);
-		wb = new XSSFWorkbook(fi);
-		ws = wb.getSheet(sheetName);
-		int cellCount = ws.getRow(rownum).getLastCellNum();
-		return cellCount;
-	}
-
-	// Get the Data of the given file
-	public static String getCellData(String sheetName, int rownum, int cellnum) throws IOException {
-
-		fi = new FileInputStream(path);
-		wb = new XSSFWorkbook(fi);
-		ws = wb.getSheet(sheetName);
-		row = ws.getRow(rownum);
-		cell = row.getCell(cellnum);
-
-		String data = "";
-		try {
-			DataFormatter dataformatter = new DataFormatter();
-			data = dataformatter.formatCellValue(cell);
+			return wb.getSheet(sheetName).getLastRowNum();
 
 		} catch (Exception e) {
-
+			return 0;
 		}
-		return data;
 	}
 
-	// Set the Data of the given file
+	public static String getCellData(
+			String excelPath,
+			String sheetName,
+			int rownum,
+			int cellnum) {
 
-	public static void setCellData(String sheetName, int rownum, int cellnum, String data) throws IOException {
+		try (FileInputStream fi = new FileInputStream(excelPath);
+			 XSSFWorkbook wb = new XSSFWorkbook(fi)) {
 
-		fi = new FileInputStream(path);
-		wb = new XSSFWorkbook(fi);
-		ws = wb.getSheet(sheetName);
-		row = ws.getRow(rownum);
-		cell = row.getCell(cellnum);
-		cell.setCellValue(data);
+			XSSFRow row = wb.getSheet(sheetName).getRow(rownum);
+			if (row == null) return "";
 
-		fo = new FileOutputStream(path);
-		wb.write(fo);
+			XSSFCell cell = row.getCell(cellnum);
+			if (cell == null) return "";
 
-		wb.close();
-		fi.close();
-		fo.close();
+			return new DataFormatter().formatCellValue(cell);
+
+		} catch (Exception e) {
+			return "";
+		}
 	}
 }

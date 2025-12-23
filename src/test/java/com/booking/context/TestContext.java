@@ -39,12 +39,14 @@ public class TestContext {
         this.response = response;
     }
 
-    private Map<String, Object> scenarioData = new HashMap<>();
+    private final  Map<String, Object> scenarioData = new HashMap<>();
+
 
     public void set(String key, Object value) {
         scenarioData.put(key, value);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T get(String key) {
         return (T) scenarioData.get(key);
     }

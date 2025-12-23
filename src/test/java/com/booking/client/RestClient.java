@@ -10,12 +10,14 @@ import static io.restassured.RestAssured.given;
 
 public class RestClient {
 
-    public static RequestSpecification loginPostRequest() {
-        return given()
-                .header("Content-Type", "application/json");
+
+
+    public RequestSpecification loginPostRequest() {
+        return RestAssured.given()
+                .contentType("application/json");
     }
 
-    public static Response post(String url, Object bdy) {
+    public Response post(String url, Object bdy) {
         return given()
                 .headers("Content-Type", "application/json")
                 .body(bdy)
@@ -24,7 +26,7 @@ public class RestClient {
                 .then()
                 .extract().response();
     }
-    public static Response get(String url) {
+    public Response get(String url) {
         String token = TokenManager.getToken();
 
         return given()
@@ -52,7 +54,7 @@ public class RestClient {
                 .response();
     }
 
-    public static Response delete(String endpoint) {
+    public Response delete(String endpoint) {
         String token = TokenManager.getToken();
         return given()
                 .contentType(ContentType.JSON)
