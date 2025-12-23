@@ -2,6 +2,7 @@ package com.booking.stepdefinitions;
 
 import com.booking.context.TestContext;
 import com.booking.utils.BookingRequestFactory;
+import com.booking.utils.LoggerUtil;
 import com.booking.utils.TokenManager;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
@@ -12,6 +13,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
 import java.util.HashMap;
@@ -21,6 +23,8 @@ import java.util.Map;
 
 public class BookingSteps {
 
+    private static final Logger log =
+            LoggerUtil.getLogger(BookingSteps.class);
     private final TestContext testContext;
     private final BookingService bookingService;
     private int bookingId;
@@ -31,7 +35,7 @@ public class BookingSteps {
 
     @Given("rooms are available for booking")
     public void rooms_are_available_for_booking() {
-        System.out.println("Assuming rooms are available for booking.");
+        log.info("****Assuming rooms are available for booking****");
     }
 
     @When("a guest tries to book a room with {string}")
@@ -55,7 +59,8 @@ public class BookingSteps {
         testContext.setResponse(response);
         testContext.setBookingRequest(request);
 
-        System.out.println("Create Booking Response:");
+
+        log.info("****Create Booking Response:****");
         response.getBody().prettyPrint();
         Assert.assertEquals(
                 "Booking creation failed",
@@ -72,7 +77,7 @@ public class BookingSteps {
         }
 
         testContext.setBookingId(bookingId);
-        System.out.println("Created Booking ID: " + bookingId);
+        log.info("****Created Booking ID: ****" + bookingId);
     }
 
     @When("the guest retrieves the booking by ID")
@@ -105,16 +110,14 @@ public class BookingSteps {
 
         if ("created".equalsIgnoreCase(bookingoutcome)) {
             expectedStatusCode = 201;
-            System.out.println("Expected Status Code: " + expectedStatusCode +
-                    ", Actual Status Code: " + actualStatusCode);
+            log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
             Assert.assertEquals(expectedStatusCode, actualStatusCode);
             Assert.assertNotNull(response.jsonPath().getInt("bookingid"));
         } else {
             expectedStatusCode = 400;
-            System.out.println("Expected Status Code: " + expectedStatusCode +
-                    ", Actual Status Code: " + actualStatusCode);
+            log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
             Assert.assertEquals(expectedStatusCode, actualStatusCode);
-            System.out.println("Response Body:\n" + response.getBody().prettyPrint());
+            log.info("****Response Body:****\n" + response.getBody().prettyPrint());
         }
     }
 
@@ -122,7 +125,7 @@ public class BookingSteps {
     public void the_room_reservation_is_confirmed() {
         Response response = testContext.getResponse();
         int actualStatusCode = response.getStatusCode();
-        System.out.println("Actual Status Code: " + actualStatusCode);
+log.info("*****Actual Status Code: *****" + actualStatusCode);
 
         Assert.assertEquals("Booking should be created successfully", 201, actualStatusCode);
 
@@ -136,7 +139,7 @@ public class BookingSteps {
     public void a_booking_reference_is_generated() {
         Response response = testContext.getResponse();
         Integer bookingId = response.jsonPath().getInt("bookingid");
-        System.out.println("Generated Booking ID: " + bookingId);
+        log.info("*****Generated Booking ID:*****" + bookingId);
 
         Assert.assertNotNull("Booking ID is null", bookingId);
         Assert.assertTrue("Booking ID is not greater than zero", bookingId > 0);
@@ -210,7 +213,7 @@ public class BookingSteps {
                 actualValue = actual.get(path);
             }
 
-            System.out.println("ASSERT FIELD: " + path +
+            log.info("ASSERT FIELD: " + path +
                     " | Expected: " + expectedValue +
                     " | Actual: " + actualValue);
 
@@ -222,7 +225,7 @@ public class BookingSteps {
     public void retrieving_the_booking_should_return(String outcome) {
         Response response = bookingService.getBookingById(testContext.getBookingId());
         Assert.assertEquals("Booking should be not found", 404, response.getStatusCode());
-        System.out.println("Retrieve after delete outcome: " + outcome);
+        log.info("Retrieve after delete outcome: " + outcome);
 
         if ("not found".equalsIgnoreCase(outcome)) {
             Assert.assertEquals(404, response.getStatusCode());

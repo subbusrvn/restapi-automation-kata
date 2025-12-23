@@ -6,13 +6,17 @@ import com.booking.models.auth.AuthRequest;
 
 import com.booking.services.AuthService;
 import com.booking.utils.AuthRequestFactory;
+import com.booking.utils.LoggerUtil;
 import com.booking.utils.TokenManager;
 import io.cucumber.java.en.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
 public class AuthSteps {
+    private static final Logger log =
+            LoggerUtil.getLogger(BookingSteps.class);
 
     private final TestContext context;
     private final AuthService authService;
@@ -28,13 +32,13 @@ public class AuthSteps {
     // -------------------------
     @Given("a user wants to access the booking system")
     public void auth_endpoint_available() {
-        System.out.println("Auth endpoint ready at " + context.getBaseUri());
+        log.info("****\"Auth endpoint ready at \" + context.getBaseUri()****");
     }
 
     @Given("the system is available for user access")
     public void the_authentication_service_is_running() {
         RestAssured.baseURI = ConfigManager.getProperty("base_url");
-        System.out.println("Auth endpoint ready at " + RestAssured.baseURI);
+        log.info("Auth endpoint ready at " + RestAssured.baseURI);
     }
 
     @Given("a user is logged into the booking system")
@@ -48,7 +52,8 @@ public class AuthSteps {
         context.setResponse(response);
 
         String token = response.jsonPath().getString("token");
-        System.out.println("Logged in user token: " + token);
+
+        log.info("****Logged in user token:****" +token);
         Assert.assertNotNull("Token should not be null", token);
         context.set(tokenKey, token);
 
