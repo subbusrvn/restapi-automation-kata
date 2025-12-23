@@ -1,4 +1,5 @@
 # Kata API Testing in Java
+## Original Specification
 
 API Testing and Java Exercise: Setting up a Basic API Test Automation Framework.
 
@@ -65,3 +66,92 @@ This kata has the purpose to evaluate both your technical skills as well as your
 * Quality of the codebase (design patterns, structure, code quality, …)
 * Use of Rest-Assured and Cucumber features
 * Commit history and progress demonstration
+------------------------------------------------------------------------------------------------
+<span style="font-size:25px;">**Automation Objectives**</span>
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**1. Overview**</span>
+
+This repository contains a scalable, maintainable API automation framework built to validate a RESTful Booking API.
+The framework is designed using real-world enterprise practices, focusing on readability, modularity, and extensibility.
+
+It demonstrates how API automation is implemented in professional QA teams, beyond simple RestAssured scripts.
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**2. Tech Stack**</span> 
+
+* Java 17
+* Rest Assured – API testing
+* Cucumber (BDD) – Business-readable scenarios
+* JUnit – Assertions
+* Log4j2 – Logging
+* Apache POI – Excel-based test data
+* Maven – Build & dependency management
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**3. Framework Architecture**</span>
+
+![Framework Architecture](docs/images/Framework-Architecture.png)
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**4. Design Principles**</span>
+
+* BDD-first approach (business readable scenarios)
+* Service abstraction (no RestAssured in step definitions)
+* Single Responsibility for utilities
+* Low cyclomatic complexity (≤ 5 per method)
+* Data-driven testing via Excel datasets
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**5. Test Coverage**</span>
+The framework currently validates:
+
+- ✅ LOGIN AUTH (POST)
+- ✅ Booking creation (POST)
+- ✅ Positive and negative scenarios
+- ✅ Schema validation
+- ✅ Field-level response validation
+- ✅ End-to-end booking lifecycle
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**6. Test Data Strategy**</span>
+- Test data is externalized using Excel, simulating legacy enterprise environments where data is often maintained 
+by non-technical stakeholders.
+
+- Each test scenario refers to a dataset key, keeping scenarios clean and reusable.
+
+- Example:
+- When a guest creates a booking with "ROOMID_VALID"
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**7. How to Run Tests**</span>
+- **Prerequisites**
+- Java 17+
+- Maven 3.8+
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**8. Run all tests**</span>
+- mvn clean test
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**9. Run a specific feature**</span>
+- mvn test -Dcucumber.filter.tags="@booking"
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**10. Logging**</span>
+- Centralized logging using Log4j2
+- Logs are written to console and rolling log files
+- Log files are excluded from version control (.gitignore)
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**11. Why This Framework?**</span>
+
+- This project is built to reflect how API automation is done in real teams, not just demo scripts:
+- Clean separation of concerns
+- Maintainable structure
+- Interview-ready design
+- Easy to extend with new APIs or scenarios
+
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**12. Open Bugs**</span>
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**12. 👤 Author**</span>
+- Saravanan Subramaniyan
+- Senior QA | API Automation | Framework Design
