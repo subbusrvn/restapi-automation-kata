@@ -171,3 +171,16 @@ Feature: Hotel Room Booking Management
       Examples:
         | dataset       |
         | BOOKING_E2E   |
+
+      #--------------------------------------------------------------------
+      # Booking API response contract validation
+      # --------------------------------------------------------------------
+
+  Scenario Outline: Validate booking creation response against Swagger contract
+    Given login with valid credentials
+    When a guest creates a booking with "<dataset>"
+    Then the response should follow the Swagger booking contract
+
+    Examples:
+      | dataset              |
+      | SWAGGER_VALIDATION   |

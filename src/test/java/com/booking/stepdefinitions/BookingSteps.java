@@ -19,6 +19,7 @@ import org.junit.Assert;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 
 public class BookingSteps {
@@ -42,8 +43,6 @@ public class BookingSteps {
     public void submit_booking_request(String dataset) {
 
         BookingRequest request = BookingRequestFactory.createFromExcel(dataset);
-        // Save request in TestContext for later assertions
-        testContext.setBookingRequest(request);
 
         Response response = bookingService.createBooking(request);
         testContext.setResponse(response);
@@ -125,13 +124,10 @@ public class BookingSteps {
     public void the_room_reservation_is_confirmed() {
         Response response = testContext.getResponse();
         int actualStatusCode = response.getStatusCode();
-log.info("*****Actual Status Code: *****" + actualStatusCode);
-
+        log.info("****Actual Status Code:**** " + actualStatusCode);
         Assert.assertEquals("Booking should be created successfully", 201, actualStatusCode);
-
-        Integer bookingId = response.jsonPath().getInt("bookingid");
+        Integer bookingId = response.jsonPath().getObject("bookingid", Integer.class);
         Assert.assertNotNull("Booking ID should be generated", bookingId);
-        Assert.assertTrue("Booking ID should be > 0", bookingId > 0);
         testContext.setBookingId(bookingId);
     }
 
@@ -147,6 +143,8 @@ log.info("*****Actual Status Code: *****" + actualStatusCode);
     @Then("the booking details are returned correctly")
     public void the_booking_details_Schema_returned_correctly() {
         Response response = testContext.getResponse();
+        response.then().assertThat()
+                .body(matchesJsonSchemaInClasspath("schemas/booking_post_schema.json"));
     }
 
     @Then("the booking details should match the created booking")
@@ -229,5 +227,34 @@ log.info("*****Actual Status Code: *****" + actualStatusCode);
             Assert.assertEquals(404, response.getStatusCode());
         }
     }
+
+    @Then("the response should follow the Swagger booking contract")
+    public void validate_swagger_contract() {
+
+        Response response = testContext.getResponse();
+        Assert.assertEquals(201, response.getStatusCode());
+
+        JsonPath json = response.jsonPath();
+
+        // bookingid must exist
+        Assert.assertNotNull("bookingid missing", json.get("bookingid"));
+        log.info("*****Booking ID must be there:***** "+json.get("bookingid"));
+        // Swagger expects nested booking object
+        Assert.assertNotNull(
+                "Swagger violation: 'booking' object missing",
+                json.get("booking"));
+        log.info("*****Swagger violation: 'booking' object missing***** "+json.get("booking"));
+
+        // Inside booking object
+        Assert.assertNotNull(json.get("booking.roomid"));
+        Assert.assertNotNull(json.get("booking.firstname"));
+        Assert.assertNotNull(json.get("booking.lastname"));
+        Assert.assertNotNull(json.get("booking.depositpaid"));
+        Assert.assertNotNull(json.get("booking.bookingdates.checkin"));
+        Assert.assertNotNull(json.get("booking.bookingdates.checkout"));
+        Assert.assertNotNull(json.get("booking.email"));
+        Assert.assertNotNull(json.get("booking.phone"));
+    }
+
 
 }
