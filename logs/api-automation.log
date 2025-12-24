@@ -4140,3 +4140,22 @@
 16:07:00 [main] INFO  BookingSteps - *****Actual Deposit Paid***** true
 16:07:00 [main] INFO  BookingSteps - *****Actual CheckIn***** 2025-12-28
 16:07:00 [main] INFO  BookingSteps - *****Actual Checkout***** 2025-12-31
+19:23:28 [main] INFO  BookingSteps - ****Logged in user tokendKyzT4VaUsu7KDQ9:****
+19:23:28 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+19:23:33 [main] INFO  BookingSteps - Create Booking Response:
+19:23:33 [main] INFO  BookingSteps - ****Created Booking ID: ****4
+19:23:33 [main] INFO  BookingSteps - ****Actual Status Code:**** 201
+19:23:33 [main] INFO  BookingSteps - ****Confirmed Booking ID:**** 4
+19:23:33 [main] INFO  BookingSteps - ****Generated Booking ID:**** 4
+19:23:33 [main] INFO  BookingSteps - ****ASSERT FIELD: firstname | Expected: Saravanan S | Actual: ****Saravanan S
+19:23:33 [main] INFO  BookingSteps - ****ASSERT FIELD: bookingdates.checkin | Expected: 2025-12-28 | Actual: ****2025-12-28
+19:23:33 [main] INFO  BookingSteps - ****ASSERT FIELD: bookingdates.checkout | Expected: 2025-12-31 | Actual: ****2025-12-31
+19:23:33 [main] INFO  BookingSteps - ****ASSERT FIELD: depositpaid | Expected: true | Actual: ****true
+19:23:33 [main] INFO  BookingSteps - ****ASSERT FIELD: roomid | Expected: 1067 | Actual: ****1067
+19:23:33 [main] INFO  BookingSteps - ****ASSERT FIELD: lastname | Expected: Subramaniyan | Actual: ****Subramaniyan
+19:23:33 [main] INFO  BookingSteps - *****Updated Booking Id is retrived*****4
+19:23:36 [main] INFO  BookingSteps - **** Update Booking Response ****
+19:23:37 [main] INFO  BookingSteps - **** Full Updated Booking Details ****
+19:23:37 [main] INFO  BookingSteps - ******status code for the Update*******200
+19:23:37 [main] INFO  BookingSteps - *****Updated Booking Id is retrived*****4
+19:23:37 [main] INFO  BookingSteps - Booking update shoudl be Successful200

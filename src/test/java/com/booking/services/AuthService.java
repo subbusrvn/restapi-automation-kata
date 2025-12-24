@@ -6,7 +6,6 @@ import com.booking.models.auth.AuthRequest;
 import io.restassured.response.Response;
 
 
-
 public class AuthService {
 
     private final RestClient restClient;
@@ -17,7 +16,7 @@ public class AuthService {
 
     public Response login(AuthRequest authRequest) {
 
-        return  restClient.post(AuthEndpoints.LOGIN, authRequest);
+        return restClient.post(AuthEndpoints.LOGIN, authRequest);
     }
 
     /**

@@ -11,7 +11,6 @@ import static io.restassured.RestAssured.given;
 public class RestClient {
 
 
-
     public RequestSpecification loginPostRequest() {
         return RestAssured.given()
                 .log().all()
@@ -28,6 +27,7 @@ public class RestClient {
                 .then()
                 .extract().response();
     }
+
     public Response get(String url) {
         String token = TokenManager.getToken();
 

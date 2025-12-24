@@ -1,4 +1,5 @@
 package com.booking.models.auth;
+
 @SuppressWarnings("unused")
 public class AuthResponse {
     private String token;

@@ -26,7 +26,8 @@ public class AuthRequestFactory {
             Map.entry("splcharPassword", new String[]{"valid.username", "splcharUsername"})
     );
 
-    private AuthRequestFactory() {}
+    private AuthRequestFactory() {
+    }
 
     /**
      * Pure mapping: assumes caller has valid userType and handles empty keys

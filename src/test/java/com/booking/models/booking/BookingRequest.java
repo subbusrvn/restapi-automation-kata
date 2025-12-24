@@ -11,11 +11,17 @@ public class BookingRequest {
     private String email;
     private String phone;
 
-    public BookingRequest() {}
+    public BookingRequest() {
+    }
 
     // getters & setters
-    public String getRoomid() { return roomid; }
-    public void setRoomid(String roomid) { this.roomid = roomid; }
+    public String getRoomid() {
+        return roomid;
+    }
+
+    public void setRoomid(String roomid) {
+        this.roomid = roomid;
+    }
 
     public String getFirstname() {
         return firstname;

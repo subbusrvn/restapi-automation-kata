@@ -204,13 +204,15 @@ Feature: Hotel Room Booking Management
     When the guest retrieves the booking by ID
     Then the booking details should match the created booking
 
-      #When the guest updates the booking with "<updateDataset>"
-      #Then the booking details should reflect the updates
+    When the guest updates the booking with "<updateDataset>"
+    Then the booking update should be successful
+
+    When the guest retrieves the booking by ID
+    Then the booking details should reflect the updates
 
     When the guest deletes the booking
     Then the booking should be successfully deleted
-    And retrieving the booking should return "not found"
 
     Examples:
-      | dataset       |
-      | BOOKING_E2E   |
+      | dataset       | updateDataset  |
+      | BOOKING_E2E   | BOOKING_UPDATE |

@@ -3,6 +3,7 @@ package com.booking.stepdefinitions;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+
 import static org.hamcrest.Matchers.emptyOrNullString;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -14,8 +15,8 @@ public class GetMessages {
     public void iWantToReadTheMessages() {
 
         response = given().log().all()
-                        .when()
-                        .get("https://automationintesting.online/api/message");
+                .when()
+                .get("https://automationintesting.online/api/message");
     }
 
     @Then("I should receive all existing messages")

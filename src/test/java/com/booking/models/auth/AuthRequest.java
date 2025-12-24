@@ -7,7 +7,8 @@ public class AuthRequest {
     private String password;
 
     // Constructors
-    public AuthRequest() {}
+    public AuthRequest() {
+    }
 
     public AuthRequest(String username, String password) {
         this.username = username;

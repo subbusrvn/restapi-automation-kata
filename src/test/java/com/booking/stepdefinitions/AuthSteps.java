@@ -33,7 +33,7 @@ public class AuthSteps {
 
     @Given("a user wants to access the booking system")
     public void auth_endpoint_available() {
-        log.info("****\"Auth endpoint ready at {}" ,context.getBaseUri());
+        log.info("****\"Auth endpoint ready at {}", context.getBaseUri());
     }
 
     @Given("the system is available for user access")
@@ -90,6 +90,7 @@ public class AuthSteps {
         // Store response in context
         context.setResponse(response);
     }
+
     // -------------------------
     // Then Steps
     // -------------------------

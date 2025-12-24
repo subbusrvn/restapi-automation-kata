@@ -1,4 +1,5 @@
 package com.booking.services;
+
 import com.booking.client.RestClient;
 import com.booking.models.booking.BookingRequest;
 
@@ -8,9 +9,11 @@ import static com.booking.endpoints.BookingEndpoints.*;
 
 public class BookingService {
     private final RestClient restClient;
+
     public BookingService() {
         this.restClient = new RestClient();
     }
+
     public Response createBooking(BookingRequest bookingRequest) {
 
         return restClient.post(BOOKING_ENDPOINT, bookingRequest);

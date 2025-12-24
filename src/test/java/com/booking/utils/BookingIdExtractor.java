@@ -4,7 +4,8 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 
 public class BookingIdExtractor {
-    private BookingIdExtractor() {}
+    private BookingIdExtractor() {
+    }
 
     public static Integer extract(Response response) {
         Integer bookingId = response.jsonPath().get("bookingid");
