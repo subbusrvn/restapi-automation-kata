@@ -33,3 +33,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Logs ###
+logs/
+
+#### IntelliJ project files
+.idea/
+
+### Maven/Gradle build output
+target/test-classes
