@@ -148,7 +148,7 @@ Feature: Hotel Room Booking Management
  # ------------------------------------------------------------------
  # Booking Creation – Success Flow - Response Data,Schema Validation
  # -------------------------------------------------------------------
-@positive
+@positive @sanity
   Scenario Outline: A guest book a room successfully and receives a valid booking schema details from system.
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
@@ -163,7 +163,7 @@ Feature: Hotel Room Booking Management
  # Booking Creation – Validate all the response data
  # -------------------------------------------------------------------
 
-  @positive
+  @positive @sanity
   Scenario Outline: A guest books a room successfully and receives a valid booking  details from system.
     Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
@@ -178,7 +178,7 @@ Feature: Hotel Room Booking Management
   #--------------------------------------------------------------------
   # Booking API - Response data structure validation with Swagger Response
   # --------------------------------------------------------------------
-@positive
+@positive @sanity
   Scenario Outline: Validate booking creation response against Swagger contract
     Given login with valid credentials
     When a guest creates a booking with "<dataset>"
@@ -191,7 +191,7 @@ Feature: Hotel Room Booking Management
   # ------------------------------------------------------------------
   # Booking API - End-to-End Flow --> Create - Read - Update - Delete
   # -------------------------------------------------------------------
-  @E2E
+  @E2E @sanity
   Scenario Outline: Guest performs full booking lifecycle
     Given login with valid credentials
     Given rooms are available for booking

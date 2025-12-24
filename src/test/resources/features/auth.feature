@@ -4,7 +4,7 @@ Feature: User Login Scenarios
 #----------------------------------------------------
   Valid Login Operation
 # ----------------------------------------------------
-  @positive
+  @positive @sanity
   Scenario Outline: User login access for valid Cre
     Given a user wants to access the booking system
     When the user logs in with "<userType>" credentials

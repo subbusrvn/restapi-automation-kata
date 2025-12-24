@@ -137,24 +137,85 @@ by non-technical stakeholders.
 - git clone https://github.com/subbusrvn/restapi-automation-kata
 - cd restapi-automation-kata
 
-**What This Command Does**
-
+What This Command Does:
 - git clone → Downloads the project source code from GitHub
 - cd restapi-automation-kata → Navigates to the project root directory
-- mvn clean test →
+------------------------------------------------------------------------------------------------
+<span style="font-size:20px;">**9. Execution Mode**</span>
+
+<span style="font-size:16px;">**9.1 All Test Execution**</span><br>
+
+Run the below comment in the command prompt<br>
+<span style="font-size:12px; color: red;"><b>mvn clean test</b></span><br>
+
 - Cleans previous build artifacts
 - Compiles the test code
 - Executes all Cucumber feature files
 - Runs API validations using Rest Assured
 
-**Execution Mode**
+<span style="font-size:16px;">**9.2 Tag-Based Test Execution**</span>
 
-- Tests run headlessly via command line
-- No UI or browser interaction is required
-- Suitable for local execution and CI/CD pipelines
-------------------------------------------------------------------------------------------------
-<span style="font-size:20px;">**9. Run all tests**</span>
-- mvn clean test
+This framework uses Cucumber tags to control test execution efficiently.
+Tags help in grouping scenarios based on test intent, validation type, and execution purpose, 
+enabling flexible local and CI/CD runs without code changes.
+
+<span style="font-size:16px;">**Supported Tags: POSITIVE**</span></br>
+<span style="font-size:14px;">**Purpose:**</span><br>
+
+Covers happy-path scenarios where valid inputs are provided and the expected outcome is successful.
+
+<span style="font-size:14px;">**Typical usage:**</span>
+
+ - Valid booking creation
+ - Successful authentication 
+ - Accepted boundary values (e.g., min/max allowed length)
+
+<span style="font-size:14px;">**Command:**</span>  
+<span style="font-size:12px; color: red;"><b>mvn clean test "-Dcucumber.filter.tags=@positive"</b></span><br>
+
+<span style="font-size:16px;">**Supported Tags: NEGATIVE**</span></br>
+<span style="font-size:14px;">**Purpose:**</span><br>
+
+Covers scenarios where invalid inputs are provided and the system is expected to reject the request gracefully.
+
+<span style="font-size:14px;">**Typical usage:**</span>
+
+ - Missing mandatory fields
+ - Invalid credentials
+ - Invalid date ranges
+ - Empty or malformed input values
+
+<span style="font-size:14px;">**Command:**</span>  
+<span style="font-size:12px; color: red;"><b>mvn clean test "-Dcucumber.filter.tags=@negative"</b></span><br>
+
+<span style="font-size:16px;">**Supported Tags: VALIDATION**</span></br>
+<span style="font-size:14px;">**Purpose:**</span><br>
+
+Groups all field-level and business-rule validations, including both positive and negative cases.
+
+<span style="font-size:14px;">**Typical usage:**</span>
+
+ - Boundary value analysis
+ - Mandatory field validation
+ - Input format and normalization checks
+
+<span style="font-size:14px;">**Command:**</span>  
+<span style="font-size:12px; color: red;"><b>mvn clean test "-Dcucumber.filter.tags=@validation"</b></span><br>
+
+<span style="font-size:16px;">**Supported Tags: SANITY**</span></br>
+<span style="font-size:14px;">**Purpose:**</span><br>
+
+Represents a small, fast, and critical subset of tests used to quickly verify system stability after a deployment or configuration change.
+
+<span style="font-size:14px;">**Typical usage:**</span>
+
+ - Happy-path only
+ - Minimal data setup
+ - Fast execution
+ - High business confidence
+
+<span style="font-size:14px;">**Command:**</span>  
+<span style="font-size:12px; color: red;"><b>mvn clean test "-Dcucumber.filter.tags=@sanity"</b></span><br>
 
 ------------------------------------------------------------------------------------------------
 <span style="font-size:20px;">**10. Reports**</span>
