@@ -2,6 +2,10 @@ package com.booking.utils;
 
 import com.booking.models.booking.BookingDates;
 import com.booking.models.booking.BookingRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BookingRequestFactory {
 
@@ -21,7 +25,31 @@ public class BookingRequestFactory {
 
                 BookingRequest request = new BookingRequest();
 
-                request.setRoomid(ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 1));
+                //request.setRoomid(ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 1));
+
+                String roomIdValue =
+                        ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 1);
+
+                if (roomIdValue == null || roomIdValue.trim().isEmpty()) {
+
+                    long roomIdLong =
+                            ((System.currentTimeMillis() % 900_000_000L) + 100_000_000L)
+                                    + ThreadLocalRandom.current().nextInt(0, 100);
+
+                    roomIdValue = String.valueOf(roomIdLong);
+
+                    // Optional write-back (for visibility)
+                    ExcelUtility.setCellData(
+                            EXCEL_PATH,
+                            SHEET_NAME,
+                            i,
+                            1,
+                            roomIdValue
+                    );
+                }
+
+                request.setRoomid(roomIdValue);
+
 
                 request.setFirstname(ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 2));
 

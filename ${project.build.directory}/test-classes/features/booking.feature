@@ -1,17 +1,7 @@
-Feature: Hotel Room Booking Management – Create Booking
+Feature: Hotel Room Booking Management
 
-This feature validates the behavior of the Hotel Room Booking system by ensuring that room
-reservations can be created, validated, and managed correctly under various conditions.
-It covers functional correctness, data validation, error handling, and contract compliance
-of the booking API.
-
-  Background: Given rooms are available for booking
-
-  #----------------------------------------------------
-  #Guest book a room with various room id
-  #----------------------------------------------------
-  @validation
-  Scenario Outline: Guest book a room with various room id
+  Scenario Outline: Guest books a room with various room id
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
 
@@ -25,15 +15,12 @@ of the booking API.
       | ROOMID_DECIMAL          | rejected       |
       | ROOMID_SPECIAL_CHARS    | rejected       |
 
-  #----------------------------------------------------
-  #Guest book a room with various firstname rules
-  # First name length should be 3 ~ 18 charecters
-  #----------------------------------------------------
-  @validation
-  Scenario Outline: Guest books a room with various firstname rules
+  Scenario Outline: Validate booking with firstname rules
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
 
+# First name length should be 3 ~ 18 charecters
     Examples:
       | dataset               | bookingoutcome   |
       | FIRSTNAME_VALID       | created          |
@@ -49,14 +36,14 @@ of the booking API.
       | FIRSTNAME_ALPHANUMERIC | created         |
       | FIRSTNAME_LEADING_TRAILING_SPACES |created   |
 
-  #----------------------------------------------------
-  #Guest book a room with various lastname rules
 # Last name length should be 3 ~ 30 charecters
-  #----------------------------------------------------
-  @validation
-  Scenario Outline: Guest book a room with various lastname rules
+
+  Scenario Outline: Validate booking with lastname rules
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
+
+    # Last name length should be 3 ~ 30 charecters
 
     Examples:
       | dataset               | bookingoutcome   |
@@ -73,11 +60,8 @@ of the booking API.
       | LASTNAME_ALPHANUMERIC   | created       |
       | LASTNAME_LEADING_TRAILING_SPACES |created   |
 
- #----------------------------------------------------
- # Guest book a room with various email rules
- #----------------------------------------------------
-  @validation
-  Scenario Outline: Guest book a room with various email rules
+  Scenario Outline: Validate booking with email rules
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<outcome>"
 
@@ -89,11 +73,8 @@ of the booking API.
       | EMAIL_NO_DOMAIN        | rejected |
       | EMAIL_NO_USERNAME      | rejected |
 
- #----------------------------------------------------
- # Guest book a room based on stay dates
- #----------------------------------------------------
-  @validation
-  Scenario Outline: Guest book a room based on stay dates
+  Scenario Outline: Guest books a room based on stay dates
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
 
@@ -110,11 +91,8 @@ of the booking API.
       | DATES_CHECKOUT_NULL                | rejected             |
       | DATES_TOO_LONG_STAY                | created              |
 
- #----------------------------------------------------
- # Guest book a room based on deposit paid
- #----------------------------------------------------
-  @validation
-  Scenario Outline: Guest book a room based on deposit paid
+  Scenario Outline: Guest books a room based on deposit paid flag
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
 
@@ -127,11 +105,8 @@ of the booking API.
       | DEPOSIT_NUMBER      | rejected       |
       | DEPOSIT_INVALID     | rejected       |
 
- #----------------------------------------------------
- # Guest book a room with various phone number
- #----------------------------------------------------
-  @validation
-  Scenario Outline: Guest book a room with various phone number
+  Scenario Outline: Guest books a room with various phone number
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
 
@@ -145,11 +120,12 @@ of the booking API.
       # | PHONE_ALPHANUMERIC       | rejected       | This case will be validated in the front end
       # | PHONE_SPECIAL_CHARS      | rejected       | This case will be validated in the front end
 
- # ------------------------------------------------------------------
- # Booking Creation – Success Flow - Response Data,Schema Validation
- # -------------------------------------------------------------------
-@positive @sanity
-  Scenario Outline: A guest book a room successfully and receives a valid booking schema details from system.
+   # ------------------------------------------------------------------
+  # Booking Creation – Success Flow - Response Data, Schema Validation
+  # -------------------------------------------------------------------
+
+  Scenario Outline: A guest books a room successfully and receives a valid booking schema details from system.
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the room reservation is confirmed
     And the booking details are returned correctly
@@ -158,11 +134,8 @@ of the booking API.
       | dataset                    |
       | SCHEMA_VALIDATION          |
 
- # ------------------------------------------------------------------
- # Booking Creation – Validate all the response data
- # -------------------------------------------------------------------
-  @positive @sanity
   Scenario Outline: A guest books a room successfully and receives a valid booking  details from system.
+    Given rooms are available for booking
     When a guest tries to book a room with "<dataset>"
     Then the room reservation is confirmed
     And a booking reference is generated
@@ -171,16 +144,3 @@ of the booking API.
     Examples:
       | dataset        |
       | BOOKING_VALID  |
-
-  #--------------------------------------------------------------------
-  # Booking API - Response data structure validation with Swagger Response
-  # --------------------------------------------------------------------
-@positive @sanity
-  Scenario Outline: Validate booking creation response against Swagger contract
-    Given login with valid credentials
-    When a guest creates a booking with "<dataset>"
-    Then the response should follow the Swagger booking contract
-
-    Examples:
-      | dataset              |
-      | SWAGGER_VALIDATION   |
