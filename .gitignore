@@ -41,4 +41,6 @@ logs/
 .idea/
 
 ### Maven/Gradle build output
+target/
+target/classes
 target/test-classes
