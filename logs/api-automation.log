@@ -3312,3 +3312,411 @@
 23:59:25 [main] INFO  BookingSteps - ****Create Booking Response:****
 23:59:25 [main] INFO  BookingSteps - ****Created Booking ID: ****35
 23:59:25 [main] INFO  BookingSteps - ****Actual Status Code:**** 201
+10:04:57 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:10:05 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:46 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:49 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:50 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:50 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:51 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:51 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:52 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:53 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:53 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:54 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:23:54 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:34:56 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:17 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:18 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:19 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:20 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:21 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:21 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:22 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:23 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:24 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:24 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:25 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:35:25 [main] INFO  BookingSteps - *****Auth endpoint ready athttps://automationintesting.online/api*****
+10:35:26 [main] INFO  BookingSteps - *****Auth endpoint ready athttps://automationintesting.online/api*****
+10:35:27 [main] INFO  BookingSteps - ****Logged in user token24pDQx6JNcRaJWcF:****
+10:35:28 [main] INFO  BookingSteps - ****Logged in user tokenKMKF8qbNdHz0V5Ev:****
+10:35:28 [main] INFO  BookingSteps - ****Logged in user token0xzdENoFFWUc3twI:****
+10:35:28 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:05 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 409
+10:36:05 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:05 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:06 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:06 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:06 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Failed to create booking"
+    ]
+}
+10:36:06 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:07 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:07 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:07 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "must be greater than or equal to 1"
+    ]
+}
+10:36:07 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:08 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:08 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:08 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "must be greater than or equal to 1"
+    ]
+}
+10:36:08 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:09 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:09 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:09 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Failed to create booking"
+    ]
+}
+10:36:09 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:10 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:10 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:10 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Failed to create booking"
+    ]
+}
+10:36:10 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:11 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:11 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:11 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Failed to create booking"
+    ]
+}
+10:36:11 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:12 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:12 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:12 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:13 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:13 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:13 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 3 and 18"
+    ]
+}
+10:36:13 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:14 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:14 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:14 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:15 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:15 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:15 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 3 and 18"
+    ]
+}
+10:36:15 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:15 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:15 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:16 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:16 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:16 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:16 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 3 and 18",
+        "Firstname should not be blank"
+    ]
+}
+10:36:16 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:17 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:17 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:17 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 3 and 18",
+        "Firstname should not be blank"
+    ]
+}
+10:36:17 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:18 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:18 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:18 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Firstname should not be blank"
+    ]
+}
+10:36:18 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:19 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:19 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:19 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:19 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:19 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:19 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:20 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:20 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:20 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:21 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:21 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:21 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:22 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:22 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:22 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:23 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:23 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:23 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 3 and 30"
+    ]
+}
+10:36:23 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:24 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:24 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:24 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:25 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:25 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:25 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 3 and 30"
+    ]
+}
+10:36:25 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:26 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:26 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:26 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:26 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:26 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:26 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 3 and 30",
+        "Lastname should not be blank"
+    ]
+}
+10:36:26 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:28 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:28 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:28 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Lastname should not be blank",
+        "size must be between 3 and 30"
+    ]
+}
+10:36:28 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:29 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:29 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:29 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Lastname should not be blank"
+    ]
+}
+10:36:29 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:30 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:30 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:30 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:31 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:31 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:31 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:32 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:32 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:32 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:32 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:32 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:32 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:33 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:33 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:33 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:34 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:34 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:34 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "must not be empty"
+    ]
+}
+10:36:34 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:36 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:36 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:36 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "must be a well-formed email address"
+    ]
+}
+10:36:36 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:36 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:36 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:36 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "must be a well-formed email address"
+    ]
+}
+10:36:36 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:38 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:38 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:38 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "must be a well-formed email address"
+    ]
+}
+10:36:38 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:39 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:39 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:39 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:39 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 409
+10:36:39 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:39 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:40 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 409
+10:36:40 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:40 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:42 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 201
+10:36:42 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:42 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:42 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:42 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:42 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "must not be null"
+    ]
+}
+10:36:43 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:44 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:44 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:44 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "must not be null"
+    ]
+}
+10:36:44 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:45 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:45 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:45 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:46 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:46 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:46 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Failed to create booking"
+    ]
+}
+10:36:46 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:47 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:47 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:47 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "Failed to create booking"
+    ]
+}
+10:36:47 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:48 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:48 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:48 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:49 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:49 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:49 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:50 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:50 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:50 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:51 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 201
+10:36:51 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:51 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:52 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 201
+10:36:52 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:52 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:53 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 201
+10:36:53 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:53 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:54 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 201
+10:36:54 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:54 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:55 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:55 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:55 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:56 [main] INFO  BookingSteps - ****Expected Status Code:**** 200, ****Actual Status Code:**** 201
+10:36:56 [main] INFO  BookingSteps - ****Booking Accepted****
+10:36:56 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:57 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:57 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:57 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 11 and 21"
+    ]
+}
+10:36:57 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:58 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:58 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:58 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 11 and 21"
+    ]
+}
+10:36:58 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:36:59 [main] INFO  BookingSteps - ****Expected Status Code:**** 400, ****Actual Status Code:**** 400
+10:36:59 [main] INFO  BookingSteps - ****Booking Operation failed****
+10:36:59 [main] INFO  BookingSteps - ****Response Body:****
+{
+    "errors": [
+        "size must be between 11 and 21",
+        "must not be empty"
+    ]
+}
+10:36:59 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:37:00 [main] INFO  BookingSteps - ****Actual Status Code:**** 201
+10:37:00 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:37:01 [main] INFO  BookingSteps - ****Actual Status Code:**** 201
+10:37:02 [main] INFO  BookingSteps - ****Logged in user tokenS0dyrPp4moQfTM4Y:****
+10:37:03 [main] INFO  BookingSteps - ****Create Booking Response:****
+10:37:03 [main] INFO  BookingSteps - ****Created Booking ID: ****34
+10:37:04 [main] INFO  BookingSteps - ****Logged in user tokenOwYK7AWkTlF43Pel:****
+10:37:04 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:37:05 [main] INFO  BookingSteps - ****Create Booking Response:****
+10:37:05 [main] INFO  BookingSteps - ****Created Booking ID: ****35
+10:37:05 [main] INFO  BookingSteps - ****Actual Status Code:**** 201
+10:42:57 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:14 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:17 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:17 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:18 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:19 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:19 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:20 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:20 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:21 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:22 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:23 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+10:43:23 [main] INFO  BookingSteps - *****Auth endpoint ready athttps://automationintesting.online/api*****
+10:43:24 [main] INFO  BookingSteps - *****Auth endpoint ready athttps://automationintesting.online/api*****
+10:43:24 [main] INFO  BookingSteps - ****Logged in user tokenJA8rYFwjwTh10OkF:****
+10:43:25 [main] INFO  BookingSteps - ****Logged in user tokenjm9e046hFCu3PmPR:****
+10:43:26 [main] INFO  BookingSteps - ****Logged in user tokend0raRT5OnGHyXP1d:****
+10:57:28 [main] INFO  BookingSteps - ****Logged in user tokenzVeLxXpbAYJvXwhk:****
+10:57:28 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+10:58:07 [main] INFO  BookingSteps - ****Create Booking Response:****
+11:00:12 [main] INFO  BookingSteps - ****"Auth endpoint ready at https://automationintesting.online/api
+11:00:15 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+11:00:18 [main] INFO  BookingSteps - ****Actual Status Code:**** 201
+11:00:18 [main] INFO  BookingSteps - ****Assuming rooms are available for booking****
+11:00:20 [main] INFO  BookingSteps - ****Actual Status Code:**** 201
+11:00:20 [main] INFO  BookingSteps - ****Logged in user tokenaofJ1ivDekWFmSLZ:****
+11:00:22 [main] INFO  BookingSteps - ****Create Booking Response:****
+11:00:22 [main] INFO  BookingSteps - ****Created Booking ID: ****7

@@ -1,9 +1,11 @@
 Feature: User Login Scenarios
+  The below cases are used to ensure the login end point with various inputs
 
-  #----------------------------------------------------
-  Login operation check with various login credentials
-  # ----------------------------------------------------
-  Scenario Outline: User login access based on credentials
+#----------------------------------------------------
+  Valid Login Operation
+# ----------------------------------------------------
+  @positive
+  Scenario Outline: User login access for valid Cre
     Given a user wants to access the booking system
     When the user logs in with "<userType>" credentials
     Then access should be <loginResult>
@@ -11,6 +13,19 @@ Feature: User Login Scenarios
     Examples:
       | userType        | loginResult |
       | valid           | granted     |
+
+
+  #----------------------------------------------------
+  #Login operation check with various login credentials
+  # ----------------------------------------------------
+  @authVerification @negative
+  Scenario Outline: User login access based on credentials
+    Given a user wants to access the booking system
+    When the user logs in with "<userType>" credentials
+    Then access should be <loginResult>
+
+    Examples:
+      | userType        | loginResult |
       | invalidUser     | denied      |
       | invalidPassword | denied      |
       | emptyUsername   | denied      |
@@ -22,9 +37,11 @@ Feature: User Login Scenarios
       | caseSenPassword | denied      |
       | splcharUsername | denied      |
       | splcharPassword | denied      |
+
   #----------------------------------------------------
   #Login operation with invalid Content-Type
   #----------------------------------------------------
+  @negative
   Scenario: System rejects improperly formatted login attempts
     Given the system is available for user access
     When a client submits a login request in an unsupported format
@@ -32,6 +49,7 @@ Feature: User Login Scenarios
   #----------------------------------------------------
   #Access Token length, type verification
   #----------------------------------------------------
+  @negative
   Scenario: Login operation with token validation
     Given the system is available for user access
     When login with valid credentials
@@ -39,9 +57,11 @@ Feature: User Login Scenarios
     And the token format should be alphanumeric
     And the token length should be greater than 10 characters
     And Content-Type is genearted in the header
+
  #----------------------------------------------------
  #Unique token for every Login access
  #----------------------------------------------------
+  @negative
   Scenario: Each login creates a unique user session
     When a user is logged into the booking system
     And the user logs in again with the same credentials
