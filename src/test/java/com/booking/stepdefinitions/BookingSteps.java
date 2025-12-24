@@ -137,7 +137,7 @@ public class BookingSteps {
         Response response = testContext.getResponse();
         int actualStatusCode = response.getStatusCode();
         log.info("****Actual Status Code:**** " + actualStatusCode);
-        Assert.assertEquals("Booking should be created successfully", 200, actualStatusCode);
+        Assert.assertEquals("Booking should be created successfully", 201, actualStatusCode);
 
         Integer bookingId = BookingIdExtractor.extract(response);
         testContext.setBookingId(bookingId);
