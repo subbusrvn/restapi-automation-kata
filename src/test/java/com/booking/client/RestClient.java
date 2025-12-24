@@ -18,8 +18,10 @@ public class RestClient {
     }
 
     public Response post(String url, Object bdy) {
+        String token = TokenManager.getToken();
         return given()
                 .log().all()
+                .cookie("token", token)
                 .headers("Content-Type", "application/json")
                 .body(bdy)
                 .when()

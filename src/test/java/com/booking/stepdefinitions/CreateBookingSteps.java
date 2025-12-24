@@ -20,13 +20,13 @@ import java.util.Map;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 
-public class BookingSteps {
+public class CreateBookingSteps {
 
-    private static final Logger log = LoggerUtil.getLogger(BookingSteps.class);
+    private static final Logger log = LoggerUtil.getLogger(CreateBookingSteps.class);
     private final TestContext testContext;
     private final BookingService bookingService;
 
-    public BookingSteps(TestContext testContext) {
+    public CreateBookingSteps(TestContext testContext) {
         this.testContext = testContext;
         this.bookingService = new BookingService();
     }
