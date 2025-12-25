@@ -6,7 +6,7 @@ Feature: Delete Hotel Room Booking
 #----------------------------------------------------------------------------------------------------
 # Booking Created and Deleted
 #----------------------------------------------------------------------------------------------------
-  @delete
+  @positive
   Scenario Outline: Create and then delete a booking
     Given the booking system is available for user access
     When the user logs in with "<userType>" credentials
@@ -24,7 +24,7 @@ Feature: Delete Hotel Room Booking
 #----------------------------------------------------------------------------------------------------
 # Booking Delete Scenario for invalid booking Id
 #----------------------------------------------------------------------------------------------------
-  @delete
+  @negative
   Scenarios: Delete booking with an invalid booking ID
 
     Given the user logs in with "<userType>" credentials
@@ -40,7 +40,7 @@ Feature: Delete Hotel Room Booking
 #----------------------------------------------------------------------------------------------------
 # Booking Delete Scenario without token
 #----------------------------------------------------------------------------------------------------
-  @delete
+  @negative
   Scenario: Delete booking without auth token
     Given the booking system is available for user access
     And a valid booking ID exists
@@ -51,7 +51,7 @@ Feature: Delete Hotel Room Booking
 #----------------------------------------------------------------------------------------------------
 # Delete booking with expired / invalid token
 #----------------------------------------------------------------------------------------------------
-  @delete @security
+  @negative
     Scenario: Attempt to delete booking with an invalid or expired token
     Given the booking system is available for user access
     And the user logs in with "valid" credentials
