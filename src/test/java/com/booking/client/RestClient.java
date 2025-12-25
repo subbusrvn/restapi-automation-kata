@@ -50,12 +50,26 @@ public class RestClient {
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .body(body)
-                .log().body()
+                .log().all()
+                .when()
+                .patch(endpoint)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
+    public static Response put(String endpoint, Object body) {
+        String token = TokenManager.getToken();
+        return given()
+                .contentType(ContentType.JSON)
+                .cookie("token", token)
+                .body(body)
+                .log().all()
                 .when()
                 .put(endpoint)
                 .then()
-                .extract()
-                .response();
+                .log().all()
+                .extract().response();
     }
 
     public Response delete(String endpoint) {
@@ -63,12 +77,12 @@ public class RestClient {
         return given()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
-                .log().body()
+                .log().all()
                 .when()
                 .delete(endpoint)
                 .then()
-                .extract()
-                .response();
+                .log().all()
+                .extract().response();
     }
 
 }

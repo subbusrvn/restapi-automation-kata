@@ -6,7 +6,7 @@ Feature: Delete Hotel Room Booking
 #----------------------------------------------------------------------------------------------------
 # Booking Created and Deleted
 #----------------------------------------------------------------------------------------------------
-  @positive
+  @positive @delete
   Scenario Outline: Create and then delete a booking
     Given the booking system is available for user access
     When the user logs in with "<userType>" credentials
@@ -14,8 +14,8 @@ Feature: Delete Hotel Room Booking
     And the user creates a booking with "<dataset>"
     Then the booking is successfully created
     When the user deletes the booking using the stored booking ID
-    Then the deletion should be successful with status code 200
-    And retrieving the same booking ID should return 404 not found
+    Then the deletion should be successful
+    And retrieving the same booking ID should display not found
 
     Examples:
       | userType | loginResult | dataset       |
@@ -24,14 +24,14 @@ Feature: Delete Hotel Room Booking
 #----------------------------------------------------------------------------------------------------
 # Booking Delete Scenario for invalid booking Id
 #----------------------------------------------------------------------------------------------------
-  @negative
+  @negative @delete
   Scenarios: Delete booking with an invalid booking ID
 
     Given the user logs in with "<userType>" credentials
     And an invalid booking ID is set
     When the user deletes the booking using the stored booking ID
-    Then the response status code should be 404
-    And the response body should indicate booking not found
+    Then attempt to update a booking that does not exist
+    And the response should state that the requested booking does not exist
 
     Examples:
       | userType | loginResult | dataset       |
@@ -40,18 +40,18 @@ Feature: Delete Hotel Room Booking
 #----------------------------------------------------------------------------------------------------
 # Booking Delete Scenario without token
 #----------------------------------------------------------------------------------------------------
-  @negative
+  @negative @delete
   Scenario: Delete booking without auth token
     Given the booking system is available for user access
     And a valid booking ID exists
     When the user sends a DELETE request without the auth token
-    Then the response status code should be 401
-    And the response body should indicate authorization error
+    Then the API should return an unauthorized status
+    And the response should clearly communicate that the request is not authorized
 
 #----------------------------------------------------------------------------------------------------
 # Delete booking with expired / invalid token
 #----------------------------------------------------------------------------------------------------
-  @negative
+  @negative @delete
     Scenario: Attempt to delete booking with an invalid or expired token
     Given the booking system is available for user access
     And the user logs in with "valid" credentials
@@ -60,5 +60,5 @@ Feature: Delete Hotel Room Booking
     Then the booking is successfully created
     Given the user has an invalid or expired token
     When the user deletes the booking using the stored booking ID
-    Then the deletion should fail with status code 401
+    Then the API should return an unauthorized status
     And the error message should indicate unauthorized access

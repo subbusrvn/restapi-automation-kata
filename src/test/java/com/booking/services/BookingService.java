@@ -25,9 +25,15 @@ public class BookingService {
 
     }
 
-    @SuppressWarnings("unused")
-    public Response updateBooking(int bookingId, BookingRequest request) {
+    public Response updateBookingPatch(int bookingId, BookingRequest request) {
         return RestClient.patch(
+                BOOKING_PATCH.replace("{id}", String.valueOf(bookingId)),
+                request
+        );
+    }
+
+    public Response updateBookingPut(int bookingId, BookingRequest request) {
+        return RestClient.put(
                 BOOKING_PATCH.replace("{id}", String.valueOf(bookingId)),
                 request
         );

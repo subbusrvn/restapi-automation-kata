@@ -109,7 +109,7 @@ public class CreateBookingSteps {
         BookingRequest updateRequest = BookingRequestFactory.createFromExcel(updateDataset);
 
         // Perform the update via bookingService
-        Response updateresponse = bookingService.updateBooking(testContext.getBookingId(), updateRequest);
+        Response updateresponse = bookingService.updateBookingPatch(testContext.getBookingId(), updateRequest);
 
         log.info("**** Update Booking Response ****");
         updateresponse.getBody().prettyPrint();
@@ -138,7 +138,7 @@ public class CreateBookingSteps {
         int expectedStatusCode;
 
         if ("created".equalsIgnoreCase(bookingoutcome)) {
-            expectedStatusCode = 200;
+            expectedStatusCode = 201;
             log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
             log.info("****Booking Accepted****");
             Assert.assertEquals(expectedStatusCode, actualStatusCode);

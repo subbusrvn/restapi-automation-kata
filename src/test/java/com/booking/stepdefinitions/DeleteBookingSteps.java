@@ -117,47 +117,39 @@ public class DeleteBookingSteps {
     }
 
 
-    @Then("the deletion should be successful with status code {int}")
-    public void validate_delete_status(int expectedStatus) {
+    @Then("the deletion should be successful")
+    public void validate_delete_status() {
         Response deleteResponse = testContext.getDeleteResponse();
-        assertEquals(expectedStatus, deleteResponse.getStatusCode());
+        assertEquals(200, deleteResponse.getStatusCode());
     }
 
-    @Then("retrieving the same booking ID should return {int} not found")
-    public void validate_deleted_booking(int expectedStatus) {
+    @Then("retrieving the same booking ID should display not found")
+    public void validate_deleted_booking() {
         int bookingId = testContext.getBookingId();
         Response getResponse = bookingService.getBookingById(bookingId);
-        assertEquals(expectedStatus, getResponse.getStatusCode());
-    }
-/*
-    @Then("the system should return {int} forbidden")
-    public void validate_forbidden_status(int expectedStatus) {
-        Response deleteResponse = testContext.getDeleteResponse();
-        assertEquals(expectedStatus, deleteResponse.getStatusCode());
-    }
-*/
-    @Then("the response status code should be {int}")
-    public void the_response_status_code_should_be(Integer expectedStatusCode) {
-        assertEquals(expectedStatusCode.intValue(), testContext.getResponse().getStatusCode());
+        assertEquals(404, getResponse.getStatusCode());
     }
 
-    @Then("the response body should indicate booking not found")
+@Then("the API should return an unauthorized status")
+public void the_response_status_unauthorized() {
+    assertEquals(401, testContext.getResponse().getStatusCode());
+}
+
+    @Then("attempt to update a booking that does not exist")
+    public void the_response_status_code_should_be() {
+        assertEquals(404, testContext.getResponse().getStatusCode());
+    }
+
+    @Then("the response should state that the requested booking does not exist")
     public void the_response_body_should_indicate_booking_not_found() {
         testContext.getResponse().then().body(containsString("Not Found"));
     }
 
-    @Then("the response body should indicate authorization error")
+    @Then("the response should clearly communicate that the request is not authorized")
     public void validate_response_body() {
         String errorMessage = testContext.getResponse().jsonPath().getString("error");
         assertTrue(errorMessage.toLowerCase().contains("unauthorized") ||
                 errorMessage.toLowerCase().contains("forbidden"));
-    }
-
-    @Then("the deletion should fail with status code {int}")
-    public void validate_delete_failure(int expectedStatus) {
-        Response deleteResponse = testContext.getDeleteResponse();
-        assertNotNull("Delete response is null!", deleteResponse);
-        assertEquals(expectedStatus, deleteResponse.getStatusCode());
     }
 
     @Then("the error message should indicate unauthorized access")
