@@ -9,7 +9,7 @@ Feature: Delete Hotel Room Booking
   @positive @delete
   Scenario Outline: Create and then delete a booking
     Given the booking system is available for user access
-    When the user logs in with "<userType>" credentials
+    When the user login with "<userType>" credentials
     Then access should be <loginResult>
     And the user creates a booking with "<dataset>"
     Then the booking is successfully created
@@ -18,8 +18,8 @@ Feature: Delete Hotel Room Booking
     And retrieving the same booking ID should display not found
 
     Examples:
-      | userType | loginResult | dataset       |
-      | valid    | granted     | BOOKING_VALID |
+      | userType | loginResult | dataset              |
+      | valid    | granted     | BOOKING_VALID_DELETE1 |
 
 #----------------------------------------------------------------------------------------------------
 # Booking Delete Scenario for invalid booking Id
@@ -27,15 +27,15 @@ Feature: Delete Hotel Room Booking
   @negative @delete
   Scenarios: Delete booking with an invalid booking ID
 
-    Given the user logs in with "<userType>" credentials
+    Given the user login with "<userType>" credentials
     And an invalid booking ID is set
     When the user deletes the booking using the stored booking ID
     Then attempt to update a booking that does not exist
     And the response should state that the requested booking does not exist
 
     Examples:
-      | userType | loginResult | dataset       |
-      | valid    | granted     | BOOKING_VALID |
+      | userType | loginResult | dataset               |
+      | valid    | granted     | BOOKING_VALID_DELETE2 |
 
 #----------------------------------------------------------------------------------------------------
 # Booking Delete Scenario without token
@@ -54,9 +54,9 @@ Feature: Delete Hotel Room Booking
   @negative @delete
     Scenario: Attempt to delete booking with an invalid or expired token
     Given the booking system is available for user access
-    And the user logs in with "valid" credentials
+    And the user login with "valid" credentials
     Then access should be granted
-    And the user creates a booking with "BOOKING_VALID"
+    And the user creates a booking with "BOOKING_VALID_DELETE3"
     Then the booking is successfully created
     Given the user has an invalid or expired token
     When the user deletes the booking using the stored booking ID

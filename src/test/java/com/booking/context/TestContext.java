@@ -20,6 +20,7 @@ public class TestContext {
 
     private int bookingId;
     private String token;
+    private Boolean useInvalidToken = false;
     public static final String baseUri = ConfigManager.getProperty("base_url");
 
     //----------------------------------------------------------------------------------
@@ -99,11 +100,18 @@ public class TestContext {
 //Token getter and setter
 //----------------------------------------------------------------------------------
     public String getToken() {
+        if (useInvalidToken) {
+            return "invalid_token_123";
+        }
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public void setUseInvalidToken(boolean useInvalidToken) {
+        this.useInvalidToken = useInvalidToken;
     }
 
 //----------------------------------------------------------------------------------

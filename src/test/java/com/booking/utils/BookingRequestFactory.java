@@ -27,30 +27,23 @@ public class BookingRequestFactory {
 
                 //request.setRoomid(ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 1));
 
-                String roomIdValue =
-                        ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 1);
+                String roomIdStr = ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 1);
 
-                if (roomIdValue == null || roomIdValue.trim().isEmpty()) {
+                if (roomIdStr == null || roomIdStr.trim().isEmpty()) {
 
-                    long roomIdLong =
-                            ((System.currentTimeMillis() % 900_000_000L) + 100_000_000L)
-                                    + ThreadLocalRandom.current().nextInt(0, 100);
+                    // Valid random room id for positive flow
+                    int generatedRoomId = (int) ((System.currentTimeMillis() % 900_000_000L) + 100_000_000L);
 
-                    roomIdValue = String.valueOf(roomIdLong);
+                    request.setRoomid(generatedRoomId);
 
-                    // Optional write-back (for visibility)
-                    ExcelUtility.setCellData(
-                            EXCEL_PATH,
-                            SHEET_NAME,
-                            i,
-                            1,
-                            roomIdValue
-                    );
+                    // write back for traceability
+                    ExcelUtility.setCellData(EXCEL_PATH, SHEET_NAME, i, 1, String.valueOf(generatedRoomId));
+
+                } else {
+
+                    // Send raw input to API (NO parsing!)
+                    request.setRoomid(roomIdStr.trim());
                 }
-
-                request.setRoomid(roomIdValue);
-
-
                 request.setFirstname(ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 2));
 
                 request.setLastname(ExcelUtility.getCellData(EXCEL_PATH, SHEET_NAME, i, 3));

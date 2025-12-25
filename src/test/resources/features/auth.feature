@@ -5,9 +5,9 @@ Feature: User Login Scenarios
   Valid Login Operation
 # ----------------------------------------------------
   @positive @sanity
-  Scenario Outline: User login access for valid Cre
+  Scenario Outline: User login access for valid Credentials
     Given a user wants to access the booking system
-    When the user logs in with "<userType>" credentials
+    When the user login with "<userType>" credentials
     Then access should be <loginResult>
 
     Examples:
@@ -21,7 +21,7 @@ Feature: User Login Scenarios
   @authVerification @negative
   Scenario Outline: User login access based on credentials
     Given a user wants to access the booking system
-    When the user logs in with "<userType>" credentials
+    When the user login with "<userType>" credentials
     Then access should be <loginResult>
 
     Examples:

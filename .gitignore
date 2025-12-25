@@ -42,6 +42,7 @@ logs/
 
 ### Maven/Gradle build output
 target/
+${project.build.directory}/
 target/classes
 target/test-classes
 *.class

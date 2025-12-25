@@ -5,6 +5,7 @@ import com.booking.models.booking.BookingRequest;
 import com.booking.services.BookingService;
 import com.booking.utils.BookingRequestFactory;
 import com.booking.utils.LoggerUtil;
+import com.booking.utils.TokenManager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -32,20 +33,6 @@ public class DeleteBookingSteps {
     @Given("the booking system is available for user access")
     public void booking_system_is_available() {
     }
-/*
-    // Optional: negative scenario for unauthorized deletion
-    @Given("the user is not logged in")
-    public void user_not_logged_in() {
-        testContext.setToken(null); // Clear token
-    }
-*/
-    /*
-    @Given("the user is authenticated with a valid token")
-    public void the_user_is_authenticated_with_a_valid_token() {
-        log.info(" Before deleting the Data, Token value", testContext.getToken());
-    }
-
-     */
 
     @Given("an invalid booking ID is set")
     public void an_invalid_booking_id_is_set() {
@@ -56,21 +43,20 @@ public class DeleteBookingSteps {
     public void a_valid_booking_id_exists() {
         // You can either create a booking dynamically or use a known booking ID
         int bookingId = 5; // example booking ID
-        log.info("Booking Id set to delete{}",bookingId);
+        log.info("Booking Id set to delete{}", bookingId);
     }
 
     @Given("the user has an invalid or expired token")
     public void set_invalid_token() {
-        testContext.setToken("invalidToken123"); // or expired token if you have one
+        String invalidToken = "invalidToken123";
+
+        testContext.setToken(invalidToken);
+        testContext.setUseInvalidToken(true);
+        TokenManager.setToken(invalidToken);
+        log.info("Using expired/invalid authentication token for delete booking request");
+
     }
 
-/*
-    @When("the user deletes the booking with ID {int}")
-    public void delete_booking_unauthorized(int bookingId) {
-        Response deleteResponse = bookingService.deleteBooking(bookingId);
-        testContext.setDeleteResponse(deleteResponse);
-    }
-*/
     @When("the user creates a booking with {string}")
     public void submit_booking_request(String dataset) {
         BookingRequest request = BookingRequestFactory.createFromExcel(dataset);
@@ -130,10 +116,10 @@ public class DeleteBookingSteps {
         assertEquals(404, getResponse.getStatusCode());
     }
 
-@Then("the API should return an unauthorized status")
-public void the_response_status_unauthorized() {
-    assertEquals(401, testContext.getResponse().getStatusCode());
-}
+    @Then("the API should return an unauthorized status")
+    public void the_response_status_unauthorized() {
+        assertEquals(401, testContext.getResponse().getStatusCode());
+    }
 
     @Then("attempt to update a booking that does not exist")
     public void the_response_status_code_should_be() {

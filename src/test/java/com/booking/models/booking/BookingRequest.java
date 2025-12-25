@@ -1,9 +1,11 @@
 package com.booking.models.booking;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookingRequest {
 
-    private String roomid;
+    private Object roomid;
     private String firstname;
     private String lastname;
     private Boolean depositpaid;
@@ -15,11 +17,11 @@ public class BookingRequest {
     }
 
     // getters & setters
-    public String getRoomid() {
+    public Object getRoomid() {
         return roomid;
     }
 
-    public void setRoomid(String roomid) {
+    public void setRoomid(Object roomid) {
         this.roomid = roomid;
     }
 

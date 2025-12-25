@@ -63,7 +63,7 @@ public class AuthSteps {
     // -------------------------
     // When Steps
     // -------------------------
-    @When("the user logs in with {string} credentials")
+    @When("the user login with {string} credentials")
     public void send_auth_request_by_user_type(String userType) {
         AuthRequest request = AuthRequestFactory.build(userType); // Delegated!
         Response response = authService.login(request);
@@ -71,7 +71,7 @@ public class AuthSteps {
 
         context.setResponse(response);
         TokenManager.setToken(token);
-        log.info("Login Generated Token",TokenManager.getToken());
+        log.info("Login Generated Token{}", TokenManager.getToken());
     }
 
     @When("login with valid credentials")
