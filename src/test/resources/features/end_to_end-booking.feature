@@ -1,4 +1,4 @@
-Feature: Hotel Room Booking Management – End to End Booking
+Feature: Hotel Room Booking Management System – End to End Booking
 
   As a user
   I want to manage hotel bookings

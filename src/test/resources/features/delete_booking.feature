@@ -1,4 +1,4 @@
-Feature: Delete Hotel Room Booking
+Feature: Hotel Room Booking Management System - Delete Endpoint
   This feature validates the behavior of the Hotel Room Booking system when deleting bookings.
   It ensures that bookings can be deleted successfully, unauthorized deletions are blocked, and error handling works correctly.
   It covers functional correctness, negative validation, and response verification of the DELETE /booking/{id} endpoint.

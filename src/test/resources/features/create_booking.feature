@@ -1,4 +1,4 @@
-Feature: Hotel Room Booking Management – Create Booking
+Feature: Hotel Room Booking Management System – Create Booking
 
 This feature validates the behavior of the Hotel Room Booking system by ensuring that room
 reservations can be created, validated, and managed correctly under various conditions.

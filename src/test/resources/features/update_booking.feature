@@ -1,4 +1,4 @@
-Feature: Update Existing Booking Details
+Feature: Hotel Room Booking Management System - Update Existing Booking Details
 
   As an authenticated hotel staff user
   Wanted to update existing booking details

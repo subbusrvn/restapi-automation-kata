@@ -1,4 +1,4 @@
-Feature: User Login Scenarios
+Feature: Hotel Room Booking Management System - User Login Scenarios
   The below cases are used to ensure the login end point with various inputs
 
 #----------------------------------------------------

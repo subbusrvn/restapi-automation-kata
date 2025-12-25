@@ -9,7 +9,7 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"com.booking.stepdefinitions", "com.booking.hooks", "com.booking.context",},
-        //tags = "@update",
+        //tags = "@get",
         plugin = {
                 "pretty",
                 "html:target/cucumber-report.html"

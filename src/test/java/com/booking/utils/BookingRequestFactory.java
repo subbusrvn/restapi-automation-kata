@@ -37,7 +37,7 @@ public class BookingRequestFactory {
                     request.setRoomid(generatedRoomId);
 
                     // write back for traceability
-                    ExcelUtility.setCellData(EXCEL_PATH, SHEET_NAME, i, 1, String.valueOf(generatedRoomId));
+                    ExcelUtility.setCellData(EXCEL_PATH, SHEET_NAME, i, 11, String.valueOf(generatedRoomId));
 
                 } else {
 

@@ -1,0 +1,62 @@
+Feature: Hotel Room Booking Management System – GET Endpoints
+  As a hotel booking system user
+  Want to retrieve booking details using GET APIs
+  So that can view booking information accurately
+#-----------------------------------------------------------------------------------------------------
+#Happy Path scenario : Create room booking and get the booked id with user access
+#-----------------------------------------------------------------------------------------------------
+  Background:
+    Given login with valid credentials
+
+  @get @positive
+  Scenario Outline: Get the booked id with user access
+    When a guest creates a booking with "<dataset>"
+    Then the room reservation is confirmed
+    And a booking reference is generated
+    And the booking details returned should be correct
+    And a booking exists
+
+    When Update the invalid authentication token to the created bookingid
+    When the guest retrieves the booking by ID
+    Then the booking details should match the created booking
+
+    Examples:
+      | dataset               |
+      | BOOKING_VALID_GET1    |
+
+#-----------------------------------------------------------------------------------------------------
+#Negative cases : Create room booking and get the booked id without user access(No token access)
+#-----------------------------------------------------------------------------------------------------
+  @get @negative
+  Scenario Outline: Get the booked id with user access
+    When a guest creates a booking with "<dataset>"
+    Then the room reservation is confirmed
+    And a booking reference is generated
+    And the booking details returned should be correct
+
+    And a booking exists
+    When use an invalid authentication token
+    When the guest retrieves the booking by ID
+    Then the booking details should match the created booking
+
+    Examples:
+      | dataset               |
+      | BOOKING_VALID_GET2    |
+#-----------------------------------------------------------------------------------------------------
+#Negative cases : Get the non existing booking id
+#-----------------------------------------------------------------------------------------------------
+  @get @negative
+  Scenario Outline: Get the non existing booked id
+    When a guest creates a booking with "<dataset>"
+    Then the room reservation is confirmed
+    And a booking reference is generated
+    And the booking details returned should be correct
+
+    And a booking exists
+    When Set the non-existing booking id to current booking
+    When the guest retrieves the booking by ID
+    Then the booking details should match the created booking
+
+    Examples:
+      | dataset               |
+      | BOOKING_VALID_GET3    |

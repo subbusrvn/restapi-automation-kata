@@ -87,9 +87,75 @@ It demonstrates how API automation is implemented in professional QA teams, beyo
 * Apache POI – Excel-based test data
 * Maven – Build & dependency management
 ------------------------------------------------------------------------------------------------
-<span style="font-size:20px;">**3. Framework Architecture**</span>
+<span style="font-size:20px;">**3. Framework Architecture**</span><br>
 
-![Framework Architecture](docs/images/Framework-Architecture.png)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>REST API Automation Framework</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    pre {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      font-size: 14px;
+      overflow-x: auto;
+    }
+    .caption {
+      text-align: center;
+      font-style: italic;
+      color: #555;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>REST API Automation Kata</h1>
+
+<h2>📁 Project Structure</h2>
+  <pre>
+restapi-automation-kata
+│
+├── src
+│   └── test
+│       ├── java
+│       │   └── com.booking
+│       │       ├── client
+│       │       ├── config
+│       │       ├── context
+│       │       ├── endpoints
+│       │       ├── hooks
+│       │       ├── models
+│       │       ├── runners
+│       │       ├── services
+│       │       ├── stepdefinitions
+│       │       └── utils
+│       └── resources
+│           ├── features
+│           ├── schemas
+│           ├── spec
+│           ├── testData
+│           ├── config.properties
+│           └── log4j2.xml
+│
+├── .assets
+│   ├── architecture.png
+│   └── api-flow.png
+│
+├── pom.xml
+├── README.md
+└── .gitignore
+  </pre>
 
 ------------------------------------------------------------------------------------------------
 <span style="font-size:20px;">**4. Design Principles**</span>
