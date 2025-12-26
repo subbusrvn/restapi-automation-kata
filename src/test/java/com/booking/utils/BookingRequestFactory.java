@@ -9,6 +9,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BookingRequestFactory {
 
+    private BookingRequestFactory() {
+        // utility class
+    }
     private static final String EXCEL_PATH = "src/test/resources/testData/Booking_Creation_DataSet.xlsx";
 
     private static final String SHEET_NAME = "Booking";
