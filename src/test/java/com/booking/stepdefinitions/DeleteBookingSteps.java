@@ -3,7 +3,6 @@ package com.booking.stepdefinitions;
 import com.booking.context.TestContext;
 import com.booking.models.booking.BookingRequest;
 import com.booking.services.BookingService;
-import com.booking.utils.BookingRequestFactory;
 import com.booking.utils.LoggerUtil;
 import com.booking.utils.TokenManager;
 import io.cucumber.java.en.Given;

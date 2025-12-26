@@ -53,7 +53,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
     Then the booking request should be "<bookingoutcome>"
     And an existing booking is created
 
-    When Update the booking with the following fields
+    When Update the below booking with PATCH method
       | firstname   | lastname   | depositpaid |
       | <firstname> | <lastname> | <depositpaid> |
     Then the API should return a successful update response

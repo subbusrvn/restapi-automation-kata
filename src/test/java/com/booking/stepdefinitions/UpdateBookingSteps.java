@@ -1,6 +1,6 @@
 package com.booking.stepdefinitions;
 
-import com.booking.enums.UpdateType;
+import com.booking.models.booking.BookingDates;
 import com.booking.models.booking.BookingRequest;
 import com.booking.context.TestContext;
 import com.booking.services.BookingService;
@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 
 import static org.junit.Assert.*;
-//import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -34,7 +33,15 @@ public class UpdateBookingSteps {
     // ---------------------------------
     // Scenario Steps
     // ---------------------------------
+    @Given("use an invalid authentication token")
+    public void i_use_an_invalid_authentication_token() {
+        String invalidToken = "INVALID_TOKEN_12345";
 
+        testContext.setToken(invalidToken);
+        testContext.setUseInvalidToken(true);
+        TokenManager.setToken(invalidToken);
+        log.info("************After set the token to Null******{}", invalidToken);
+    }
     @Given("an existing booking is created")
     public void an_existing_booking_is_created() {
 
@@ -72,15 +79,23 @@ public class UpdateBookingSteps {
         log.info("*****Non existing book id has been set*****");
     }
 
-    @When("Update the booking with the following fields")
-    public void i_update_the_booking_with_the_following_fields(DataTable dataTable) {
+    @When("Update the below booking with PATCH method")
+    public void Update_the_below_booking_with_following_fields(DataTable dataTable) {
 
         Map<String, String> data = dataTable.asMaps().get(0);
 
         BookingRequest updateRequest =
-                PatchBookingRequestBuilder.build(data, UpdateType.PUT);
+                PatchBookingRequestBuilder.build(
+                        data.get("firstname"),
+                        data.get("lastname"),
+                        Boolean.parseBoolean(data.get("depositpaid")),
+                        null,
+                        null,
+                        null,
+                        null
+                );
 
-        Response response = bookingService.updateBookingPut(
+        Response response = bookingService.updateBookingPatch(
                 testContext.getBookingId(),
                 updateRequest
         );
@@ -89,24 +104,26 @@ public class UpdateBookingSteps {
         testContext.setUpdateResponse(response);
     }
 
-    @Given("use an invalid authentication token")
-    public void i_use_an_invalid_authentication_token() {
-        String invalidToken = "INVALID_TOKEN_12345";
+    @When("Update the booking with the following fields")
+    public void update_booking_with_following_fields(DataTable dataTable) {
 
-        testContext.setToken(invalidToken);
-        testContext.setUseInvalidToken(true);
-        TokenManager.setToken(invalidToken);
-        log.info("************After set the token to Null******{}", invalidToken);
-    }
+        Map<String, String> data = dataTable.asMaps(String.class, String.class).get(0);
 
-    //PUT Method
-    @When("Update below booking details without providing a token")
-    public void i_Update_below_booking_details_without_providing_token(DataTable dataTable) {
+        // Pre-parse using external parser (all logic outside this method)
+        Integer roomid = SafeParser.toInteger(data.get("roomid"));
+        Boolean depositpaid = SafeParser.toBoolean(data.get("depositpaid"));
+        String firstname = SafeParser.toNullIfEmpty(data.get("firstname"));
+        String lastname = SafeParser.toNullIfEmpty(data.get("lastname"));
+        String email = SafeParser.toNullIfEmpty(data.get("email"));
+        String phone = SafeParser.toNullIfEmpty(data.get("phone"));
+        BookingDates bookingDates = new BookingDates(
+                SafeParser.toNullIfEmpty(data.get("bookingdates.checkin")),
+                SafeParser.toNullIfEmpty(data.get("bookingdates.checkout"))
+        );
 
-        Map<String, String> data = dataTable.asMaps().get(0);
-
-        BookingRequest updateRequest =
-                PatchBookingRequestBuilder.build(data, UpdateType.PUT);
+        BookingRequest updateRequest = PutBookingRequestBuilder.build(
+                roomid, firstname, lastname, depositpaid, bookingDates, email, phone
+        );
 
         Response response = bookingService.updateBookingPut(
                 testContext.getBookingId(),
