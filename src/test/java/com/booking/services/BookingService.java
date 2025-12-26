@@ -34,7 +34,7 @@ public class BookingService {
 
     public Response updateBookingPut(int bookingId, BookingRequest request) {
         return RestClient.put(
-                BOOKING_PATCH.replace("{id}", String.valueOf(bookingId)),
+                BOOKING_PUT.replace("{id}", String.valueOf(bookingId)),
                 request
         );
     }

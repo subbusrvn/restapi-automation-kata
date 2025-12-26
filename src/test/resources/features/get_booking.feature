@@ -6,7 +6,7 @@ Feature: Hotel Room Booking Management System – GET Endpoints
 #Happy Path scenario : Create room booking and get the booked id with user access
 #-----------------------------------------------------------------------------------------------------
   Background:
-    Given login with valid credentials
+    Given rooms are available for booking
 
   @get @positive
   Scenario Outline: Get the booked id with user access
