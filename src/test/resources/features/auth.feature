@@ -4,7 +4,7 @@ Feature: Hotel Room Booking Management System - User Login Scenarios
 #----------------------------------------------------
   Valid Login Operation
 # ----------------------------------------------------
-  @positive @sanity
+  @authVerification @positive @sanity @smoke @regression
   Scenario Outline: User login access for valid Credentials
     Given a user wants to access the booking system
     When the user login with "<userType>" credentials
@@ -18,7 +18,7 @@ Feature: Hotel Room Booking Management System - User Login Scenarios
   #----------------------------------------------------
   #Login operation check with various login credentials
   # ----------------------------------------------------
-  @authVerification @negative
+  @authVerification @negative @regression
   Scenario Outline: User login access based on credentials
     Given a user wants to access the booking system
     When the user login with "<userType>" credentials
@@ -41,7 +41,7 @@ Feature: Hotel Room Booking Management System - User Login Scenarios
   #----------------------------------------------------
   #Login operation with invalid Content-Type
   #----------------------------------------------------
-  @negative
+  @authVerification @negative @regression
   Scenario: System rejects improperly formatted login attempts
     Given the system is available for user access
     When a client submits a login request in an unsupported format
@@ -49,7 +49,7 @@ Feature: Hotel Room Booking Management System - User Login Scenarios
   #----------------------------------------------------
   #Access Token length, type verification
   #----------------------------------------------------
-  @negative
+  @authVerification @negative @regression
   Scenario: Login operation with token validation
     Given the system is available for user access
     When login with valid credentials
@@ -61,7 +61,7 @@ Feature: Hotel Room Booking Management System - User Login Scenarios
  #----------------------------------------------------
  #Unique token for every Login access
  #----------------------------------------------------
-  @negative
+  @authVerification @positive @regression
   Scenario: Each login creates a unique user session
     When a user is logged into the booking system
     And the user logs in again with the same credentials

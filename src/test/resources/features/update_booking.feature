@@ -10,7 +10,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
   Background:
     Given login with valid credentials
 
-  @update @positive
+  @update @positive @sanity @smoke @regression
   Scenario Outline: Successfully update all booking fields
     Given a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -29,7 +29,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
 #-----------------------------------------------------------------------------------------------------
 #Update With Partial Valid Data with PUT Update method
 #-----------------------------------------------------------------------------------------------------
-  @update @negative
+  @update @negative @sanity @smoke @regression
   Scenario Outline: Update with partial mandatory data with PUT Update method
     Given a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -47,7 +47,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
 #-----------------------------------------------------------------------------------------------------
 #Update only allowed columns data with PATCH Update method
 #-----------------------------------------------------------------------------------------------------
-  @update @negative
+  @update @negative @regression
   Scenario Outline: Update only allowed columns data with PATCH Update method
     Given a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -64,7 +64,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
 #-----------------------------------------------------------------------------------------------------
 #Update With Invalid Field Values : Booking Created, Get the Created booking details and Updated the booking details
 #-----------------------------------------------------------------------------------------------------
-  @update @negative
+  @update @negative @regression
   Scenario Outline: Update With Invalid Field Values
     Given a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -87,7 +87,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
 #-----------------------------------------------------------------------------------------------------
 #Update Invalid  authorization
 #-----------------------------------------------------------------------------------------------------
-  @update @negative
+  @update @negative @regression
   Scenario Outline: Update Invalid  authorization
     Given a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -108,7 +108,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
 #-----------------------------------------------------------------------------------------------------
 #Update operation with expired token
 #-----------------------------------------------------------------------------------------------------
-  @update @negative
+  @update @negative @regression
   Scenario Outline: Update operation with exired authorization
     Given a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -129,7 +129,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
 #-----------------------------------------------------------------------------------------------------
 #Update operation with no token
 #-----------------------------------------------------------------------------------------------------
-  @update @negative
+  @update @negative @regression
   Scenario Outline: Update operation with no token
     Given a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -150,7 +150,7 @@ Feature: Hotel Room Booking Management System - Update Existing Booking Details
 #-----------------------------------------------------------------------------------------------------
 #Update operation for non-existing booking
 #-----------------------------------------------------------------------------------------------------
-  @update @negative
+  @update @negative @regression
   Scenario Outline: Ensure update fails gracefully when booking ID does not exist
     Given a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"

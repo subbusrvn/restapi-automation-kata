@@ -10,7 +10,7 @@ of the booking API.
   #----------------------------------------------------
   #Guest book a room with various room id
   #----------------------------------------------------
-  @validation @create
+  @validation @create @regression
   Scenario Outline: Guest book a room with various room id
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -29,7 +29,7 @@ of the booking API.
   #Guest book a room with various firstname rules
   # First name length should be 3 ~ 18 charecters
   #----------------------------------------------------
-  @validation @create
+  @validation @create @regression
   Scenario Outline: Guest books a room with various firstname rules
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -53,7 +53,7 @@ of the booking API.
   #Guest book a room with various lastname rules
 # Last name length should be 3 ~ 30 charecters
   #----------------------------------------------------
-  @validation @create
+  @validation @create @regression
   Scenario Outline: Guest book a room with various lastname rules
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -76,7 +76,7 @@ of the booking API.
  #----------------------------------------------------
  # Guest book a room with various email rules
  #----------------------------------------------------
-  @validation @create
+  @validation @create @regression
   Scenario Outline: Guest book a room with various email rules
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<outcome>"
@@ -92,7 +92,7 @@ of the booking API.
  #----------------------------------------------------
  # Guest book a room based on stay dates
  #----------------------------------------------------
-  @validation @create
+  @validation @create @regression
   Scenario Outline: Guest book a room based on stay dates
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -113,7 +113,7 @@ of the booking API.
  #----------------------------------------------------
  # Guest book a room based on deposit paid
  #----------------------------------------------------
-  @validation @create
+  @validation @create @regression
   Scenario Outline: Guest book a room based on deposit paid
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -130,7 +130,7 @@ of the booking API.
  #----------------------------------------------------
  # Guest book a room with various phone number
  #----------------------------------------------------
-  @validation @create
+  @create @validation @regression
   Scenario Outline: Guest book a room with various phone number
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"
@@ -148,7 +148,7 @@ of the booking API.
  # ------------------------------------------------------------------
  # Booking Creation – Success Flow - Response Data,Schema Validation
  # -------------------------------------------------------------------
-@positive @sanity @create
+  @create @positive @sanity @regression
   Scenario Outline: A guest book a room successfully and receives a valid booking schema details from system.
     When a guest tries to book a room with "<dataset>"
     Then the room reservation is confirmed
@@ -161,7 +161,7 @@ of the booking API.
  # ------------------------------------------------------------------
  # Booking Creation – Validate all the response data
  # -------------------------------------------------------------------
-  @positive @sanity @create
+  @create @positive @sanity @regression
   Scenario Outline: A guest books a room successfully and receives a valid booking  details from system.
     When a guest tries to book a room with "<dataset>"
     Then the room reservation is confirmed
@@ -175,7 +175,7 @@ of the booking API.
   #--------------------------------------------------------------------
   # Booking API - Response data structure validation with Swagger Response
   # --------------------------------------------------------------------
-@positive @sanity @create
+  @create @positive @sanity @regression
   Scenario Outline: Validate booking creation response against Swagger contract
     Given login with valid credentials
     When a guest creates a booking with "<dataset>"

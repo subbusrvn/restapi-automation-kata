@@ -7,7 +7,7 @@ Feature: Hotel Room Booking Management System – End to End Booking
   # ------------------------------------------------------------------
   # Booking API - End-to-End Flow --> Create - Read - Update - Delete
   # -------------------------------------------------------------------
-  @E2E @sanity
+  @E2E @sanity @smoke @regression
   Scenario Outline: Guest performs full booking lifecycle
   Given login with valid credentials
   When a guest creates a booking with "<dataset>"

@@ -6,7 +6,7 @@ Feature: Hotel Room Booking Management System - Delete Endpoint
 #----------------------------------------------------------------------------------------------------
 # Booking Created and Deleted
 #----------------------------------------------------------------------------------------------------
-  @positive @delete
+  @positive @delete @sanity @regression
   Scenario Outline: Create and then delete a booking
     Given the booking system is available for user access
     When the user login with "<userType>" credentials
@@ -24,7 +24,7 @@ Feature: Hotel Room Booking Management System - Delete Endpoint
 #----------------------------------------------------------------------------------------------------
 # Booking Delete Scenario for invalid booking Id
 #----------------------------------------------------------------------------------------------------
-  @negative @delete
+  @negative @delete @sanity @regression
   Scenarios: Delete booking with an invalid booking ID
 
     Given the user login with "<userType>" credentials
@@ -40,7 +40,7 @@ Feature: Hotel Room Booking Management System - Delete Endpoint
 #----------------------------------------------------------------------------------------------------
 # Booking Delete Scenario without token
 #----------------------------------------------------------------------------------------------------
-  @negative @delete
+  @negative @delete @sanity @regression
   Scenario: Delete booking without auth token
     Given the booking system is available for user access
     And a valid booking ID exists
@@ -51,7 +51,7 @@ Feature: Hotel Room Booking Management System - Delete Endpoint
 #----------------------------------------------------------------------------------------------------
 # Delete booking with expired / invalid token
 #----------------------------------------------------------------------------------------------------
-  @negative @delete
+  @negative @delete @sanity @regression
     Scenario: Attempt to delete booking with an invalid or expired token
     Given the booking system is available for user access
     And the user login with "valid" credentials
