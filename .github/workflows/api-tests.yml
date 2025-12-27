@@ -1,56 +1,38 @@
 name: API Automation
 
-
 on:
   schedule:
-    - cron: '0 * * * *'   # every hour at minute 0 (UTC)
+    - cron: '0 * * * *'
   push:
     branches: [ main ]
-  workflow_dispatch:       # allows manual trigger
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
       - name: Checkout code
-        uses: actions/checkout@latest
+        uses: actions/checkout@v4
 
-      # Set up JDK 17
       - name: Set up JDK 17
-        uses: actions/setup-java@latest
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      # Run Maven tests
       - name: Run Maven tests
-        id: run_tests
         run: mvn clean test
 
-      # Upload Cucumber HTML report as artifact
       - name: Upload Cucumber HTML report
-        uses: actions/upload-artifact@latest
+        uses: actions/upload-artifact@v4
         with:
           name: cucumber-report
           path: target/cucumber-reports/html
 
-      # Upload JUnit test results as artifact
-      - name: Upload JUnit Test Results
-        uses: actions/upload-artifact@latest
-        with:
-          name: junit-report
-          path: target/surefire-reports/TEST-*.xml
-
-      # Publish JUnit test results to GitHub Actions
-      - name: Publish Test Results
-        uses: dorny/test-reporter@latest
+      - name: Publish JUnit Test Results
+        uses: dorny/test-reporter@v1
         with:
           name: API Tests
-          path: target/surefire-reports/TEST-*.xml
-          reporter: junit
-
-      #  Optional: Print UTC time for logs
-      - name: Print UTC time
-        run: date -u
+          path: target/surefire-reports
+          reporter: java-junit
