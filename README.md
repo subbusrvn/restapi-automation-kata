@@ -6,27 +6,6 @@
 
 <hr/>
 
-<style>
-  .overview-text {
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  .section-text {
-    font-size: 14px;
-    line-height: 1.7;
-    color: #333;
-  }
-  h2, h3, h4 {
-    color: #2c3e50;
-  }
-  pre {
-    background-color: #f5f5f5;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-  }
-</style>
-
 <h2>1. Overview</h2>
 <p class="overview-text">
   This project is a <strong>scalable and modular API automation framework</strong> built using
@@ -165,12 +144,12 @@
 <h3>4.5 Resources Layer</h3>
 <p class="section-text">External resources and configuration files for test execution.</p>
 <ul>
-  <li><strong>features</strong> – Cucumber <code>.feature</code> files</li>
-  <li><strong>schemas</strong> – JSON schema files</li>
-  <li><strong>spec</strong> – OpenAPI / Swagger specs</li>
-  <li><strong>testData</strong> – Excel and input files</li>
-  <li><strong>config.properties</strong> – Environment-specific values</li>
-  <li><strong>log4j2.xml</strong> – Logging configuration</li>
+  <li><strong>features</strong> – Cucumber <code>.feature</code> files written in Gherkin syntax</li>
+  <li><strong>schemas</strong> – JSON schema files used for response validation</li>
+  <li><strong>spec</strong> – OpenAPI / Swagger specifications for contract validation</li>
+  <li><strong>testData</strong> – EExcel and other input files for data-driven testing</li>
+  <li><strong>config.properties</strong> – Environment-specific configuration values</li>
+  <li><strong>log4j2.xml</strong> – Centralized logging configuration</li>
 </ul>
 
 <h4>High-Level Directory Overview</h4>
@@ -213,7 +192,9 @@ restapi-automation-kata/
 
 <h2>5. Test Coverage</h2>
 <p class="section-text">
-  Comprehensive <strong>functional</strong>, <strong>negative</strong>, and <strong>contract-level</strong> coverage.
+  The framework provides comprehensive <strong>functional</strong>, 
+  <strong>negative</strong>, and <strong>contract-level</strong> coverage for the 
+  Booking API, ensuring high confidence in API reliability and behavior.
 </p>
 
 <h3>5.1 Authentication Coverage</h3>
@@ -227,8 +208,11 @@ restapi-automation-kata/
 <p><strong>✔ Ensures secure access control</strong></p>
 
 <h3>5.2 Booking API – Full Lifecycle Coverage</h3>
-<p>CRUD workflow:</p>
+<p>
+  Covers the entire <strong>CRUD lifecycle</strong> of a booking:
+</p>
 
+<p>CRUD workflow:</p>
 <h4>5.2.1 Create Booking</h4>
 <ul>
   <li>Valid booking creation with full payload</li>
@@ -240,14 +224,14 @@ restapi-automation-kata/
 <ul>
   <li>Fetch booking by valid ID</li>
   <li>Fetch with invalid/non-existent ID</li>
-  <li>Response consistency verification</li>
+  <li>Verify response consistency after create or update</li>
 </ul>
 
 <h4>5.2.3 Update Booking</h4>
 <ul>
-  <li>Full update (PUT)</li>
-  <li>Partial update (PATCH)</li>
-  <li>Data integrity verification</li>
+  <li>Full update (PUT) with all fields</li>
+  <li>Partial update (PATCH) with selective fields</li>
+  <li>Data integrity verification after update</li>
 </ul>
 
 <h4>5.2.4 Delete Booking</h4>
@@ -256,7 +240,9 @@ restapi-automation-kata/
   <li>Verify booking inaccessible after deletion</li>
   <li>Negative scenarios for invalid/missing authorization</li>
 </ul>
-
+<p>
+  <strong>✔ Validates real-world booking workflows end-to-end.</strong>
+</p>
 <h3>5.3 Negative & Edge Case Scenarios</h3>
 <ul>
   <li>Invalid request payloads</li>
@@ -264,15 +250,17 @@ restapi-automation-kata/
   <li>Incorrect data types</li>
   <li>Invalid path parameters</li>
   <li>Unauthorized/forbidden access</li>
-  <li>Handling non-existent resources</li>
+  <li>Handling of non-existent resources</li>
 </ul>
-
+<p>
+  <strong>✔ Ensures API fails gracefully with correct status codes and error messages.</strong>
+</p>
 <h3>5.4 Schema & Field-Level Validation</h3>
 <ul>
   <li>JSON schema validation</li>
-  <li>Mandatory vs optional fields</li>
-  <li>Data type/format checks</li>
-  <li>Contract validation against Swagger/OpenAPI</li>
+  <li>Mandatory vs optional field verification</li>
+  <li>Data type and format checks (dates, numbers, booleans)</li>
+  <li>Contract validation aligned with Swagger / OpenAPI specifications</li>
 </ul>
 
 <h3>5.5 Data & State Validation</h3>
@@ -293,32 +281,42 @@ restapi-automation-kata/
 </ul>
 
 <h3>5.7 Coverage Summary</h3>
+<p>
+  This test suite ensures:
+</p>
 <ul>
   <li>Functional correctness</li>
-  <li>Error handling</li>
+  <li>RobustError handling</li>
   <li>Contract compliance</li>
-  <li>Regression safety</li>
+  <li>High confidence regression safety</li>
 </ul>
 
 <h2>6. Test Data Strategy</h2>
 <p class="section-text">
-  Excel files simulate enterprise test data, scenarios refer to dataset keys to keep feature files clean.
+  Describes how <strong>Excel files</strong> simulate 
+  <strong>enterprise-level test data</strong>, with scenarios referring to 
+  <strong>dataset keys</strong> to keep Gherkin feature files clean and readable.
 </p>
-
 <h2>7. How to Run Tests</h2>
 <h3>7.1 Prerequisites</h3>
 <ul>
   <li>Java 17+</li>
-  <li>Maven 3.8+</li>
+  <li>Maven 3.8+ or higher</li>
   <li>Git</li>
-  <li>Optional IDE</li>
+  <li>Any IDE (IntelliJ IDEA, Eclipse) Optional</li>
 </ul>
 
 <h2>8. Setup</h2>
+<p>
+  Follow these simple steps to set up the project on your local machine:
+</p>
 <pre>
 git clone https://github.com/subbusrvn/restapi-automation-kata
 cd restapi-automation-kata
 </pre>
+<p>
+  Once cloned, the project is ready to run without any additional configuration.
+</p>
 
 <h2>9. Execution Modes</h2>
 <p>
@@ -348,6 +346,9 @@ cd restapi-automation-kata
 </p>
 
 <h2>11. Logging</h2>
+<p>
+  Logging is handled using <strong>Log4j2</strong>.
+</p>
 <ul>
   <li>Logs are printed to the console during execution</li>
   <li>Rolling log files are generated for deeper analysis</li>
@@ -355,6 +356,10 @@ cd restapi-automation-kata
 </ul>
 
 <h2>12. Why This Framework?</h2>
+<p>
+  This framework is designed to reflect real-world API automation practices, not demo or toy scripts.
+</p>
+
 <ul>
   <li>Professional-grade API automation architecture</li>
   <li>Clean separation of concerns across layers</li>
@@ -362,13 +367,19 @@ cd restapi-automation-kata
   <li>Easy to extend for additional APIs and services</li>
 </ul>
 
+
 <h2>13. Open Bugs</h2>
+<p>
+  The following known issues were identified during testing and are currently open:
+</p>
 <ul>
   <li>Missing validations</li>
   <li>Schema mismatches</li>
   <li>Inconsistent error messages</li>
 </ul>
-
+<p>
+  These issues highlight gaps in the API and demonstrate the effectiveness of the test coverage.
+</p>
 <h2>14. Author</h2>
 <p><strong>Saravanan Subramaniyan</strong><br/>
 Senior QA | API Automation | Framework Design
