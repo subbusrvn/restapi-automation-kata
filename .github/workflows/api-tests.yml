@@ -100,7 +100,7 @@ jobs:
         with:
           server_address: smtp.sendgrid.net
           server_port: 587
-          secure: true
+          secure: false
           username: apikey
           password: ${{ secrets.SENDGRID_API_KEY }}
           from: ${{ secrets.SENDGRID_FROM }}
@@ -109,4 +109,5 @@ jobs:
           html_body: file://email.html
           attachments: |
             target/cucumber-report.html
-            target/chaintest/resources/Email.html
+            target/chaintest/Email.html
+  
