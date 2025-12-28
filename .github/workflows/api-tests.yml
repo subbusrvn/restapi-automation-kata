@@ -51,7 +51,7 @@ jobs:
           password: ${{ secrets.SENDGRID_API_KEY }}
           subject: "API Automation Test Report – Build #${{ github.run_number }}"
           to: ${{ secrets.EMAIL_TO }}
-          from: subbusrvn@gmail.com
+          from: ${{ secrets.SENDGRID_FROM }}
 
           html_body: |
             <h3>API Automation Execution Summary</h3>
