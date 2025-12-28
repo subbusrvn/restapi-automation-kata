@@ -33,9 +33,13 @@
 <p class="overview-text">
   Modern tools chosen to make API automation <strong>reliable, maintainable, and scalable</strong>:
 </p>
+- Java 17 – 
+- Rest Assured – 
+- Cucumber – BDD test scenarios
+- Maven – Dependency and build management
 <ul class="section-text">
   <li><strong>Java 17:</strong> Modern features, strong typing, long-term support.</li>
-  <li><strong>Rest Assured:</strong> Java library for API testing.</li>
+  <li><strong>Rest Assured:</strong> Simplified API testing Java.</li>
   <li><strong>Cucumber (BDD):</strong> Gherkin syntax for business-readable test scenarios.</li>
   <li><strong>Maven:</strong> Build and dependency management.</li>
   <li><strong>GitHub Actions:</strong> CI/CD automation.</li>
@@ -51,7 +55,7 @@
 
 <h4>client / config / endpoints</h4>
 <ul>
-  <li>Initializes <strong>Rest Assured client</strong></li>
+  <li>Initializes the <strong>Rest Assured client</strong></li>
   <li>Manages environment-specific configurations</li>
   <li>Defines base URLs and API endpoint constants</li>
 </ul>
@@ -60,94 +64,103 @@
 <ul>
   <li>Stores <strong>scenario-level shared data</strong></li>
   <li>Manages authentication tokens securely</li>
-  <li>Holds dynamic values like booking IDs</li>
+  <li>Holds dynamic values such as booking IDs for reuse across steps</li>
 </ul>
 
 <h4>hooks</h4>
 <ul>
-  <li>Cucumber lifecycle hooks (<code>@Before</code>, <code>@After</code>)</li>
-  <li>Handles test setup and teardown</li>
+  <li>Implements Cucumber lifecycle hooks (<code>@Before</code>, <code>@After</code>)</li>
+  <li>Handles test setup and teardown activities</li>
   <li>Initializes and cleans up scenario context</li>
   <li>Supports logging and failure handling</li>
 </ul>
 
 <h4>models</h4>
 <ul>
-  <li>POJOs for request/response payloads</li>
-  <li>Ensures <strong>type safety</strong></li>
-  <li>Supports JSON serialization/deserialization</li>
+  <li>Defines POJOs for request and response payloads</li>
+  <li>Ensures <strong>type safety</strong> in API communication</li>
+  <li>Supports clean JSON serialization and deserialization</li>
 </ul>
 
 <h4>runners</h4>
 <ul>
   <li>Configures Cucumber test runners</li>
-  <li>Tag-based execution</li>
+  <li>Supports <strong>tag-based execution</strong></li>
   <li>Manages reporting and execution settings</li>
 </ul>
 
 <h3>4.2 Business / Service Layer</h3>
-<p class="section-text">Encapsulates API execution logic and keeps step definitions clean.</p>
+<p>
+This layer encapsulates API execution logic and keeps step definitions clean and readable.
+</p>
 
 <h4>services</h4>
 <ul>
-  <li>Executes API calls: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code></li>
-  <li>Accepts request objects and headers</li>
-  <li>Returns only <strong>Response</strong> objects</li>
-  <li>No test assertions inside</li>
+  <li>Executes API calls using HTTP methods (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>)</li>
+  <li>Accepts request objects and headers as input</li>
+  <li>Returns only <strong>Response</strong> objects to callers</li>
+  <li>Contains no test assertions or step-level logic</li>
 </ul>
 
 <h4>stepdefinitions</h4>
 <ul>
   <li>Maps Gherkin steps to executable actions</li>
-  <li>Orchestration layer between requests, services, validators</li>
-  <li>Coordinates request creation, API execution, response handling</li>
-  <li>No business/API logic inside</li>
+  <li>Acts as an <strong>orchestration layer</strong> between requests, services, and validators</li>
+  <li>Coordinates request creation, API execution, and response handling</li>
+  <li>Avoids embedding business or API execution logic</li>
 </ul>
 
 <h3>4.3 Utility & Factory Layer</h3>
-<p class="section-text">Reusable helpers and factories for data handling and request construction.</p>
+<p>
+This layer contains reusable helpers and factories that support data handling and request construction.
+</p>
 
 <h4>utils</h4>
 <ul>
-  <li>Common utilities: logging, parsing, token handling, helper functions</li>
+  <li>Provides common reusable utilities used across the framework</li>
+  <li>Supports logging, parsing, token handling, and helper functions</li>
 </ul>
 
 <h4>excel / factory / utility</h4>
 <ul>
-  <li>Excel-based test data reading/writing</li>
-  <li>Dynamic request construction using factory/builder patterns</li>
-  <li>Safe parsing of optional and nullable fields</li>
+  <li>Manages <strong>Excel-based test data</strong> reading and writing</li>
+  <li>Supports <strong>dynamic request construction</strong> using factory and builder patterns</li>
+  <li>Handles safe parsing of optional and nullable fields</li>
 </ul>
 
 <h4>Key Classes</h4>
 <ul>
-  <li><strong>TokenManager</strong> – Centralized token management</li>
-  <li><strong>AuthRequestFactory</strong> – Builds auth payloads</li>
-  <li><strong>PutBookingRequestBuilder</strong> – PUT request payload builder</li>
-  <li><strong>PatchBookingRequestBuilder</strong> – PATCH request payload builder</li>
-  <li><strong>SafeParser</strong> – Handles null/empty values</li>
-  <li><strong>BookingIdExtractor</strong> – Extracts and stores booking IDs</li>
-  <li><strong>LoggerUtil</strong> – Centralized logging</li>
+  <li><strong>TokenManager</strong> – Centralized authentication token generation and reuse</li>
+  <li><strong>AuthRequestFactory</strong> – Builds authentication request payloads</li>
+  <li><strong>PutBookingRequestBuilder</strong> – Constructs PUT request payloads with conditional field inclusion</li>
+  <li><strong>PatchBookingRequestBuilder</strong> – Constructs PATCH request payloads with conditional field inclusion</li>
+  <li><strong>SafeParser</strong> – Safely handles null and empty values</li>
+  <li><strong>BookingIdExtractor</strong> – Extracts and stores booking IDs for reuse</li>
+  <li><strong>LoggerUtil</strong> – Provides centralized and consistent logging support</li>
 </ul>
 
 <h3>4.4 Validation Layer</h3>
-<p class="section-text">Centralizes all response validations.</p>
+<p>
+This layer centralizes all response validations to keep step definitions clean and avoid assertion duplication.
+</p>
 <h4>validator</h4>
 <ul>
-  <li>API response validations</li>
-  <li>HTTP status code checks</li>
-  <li>Response body field validations</li>
-  <li>JSON schema validation</li>
-  <li>Prevents duplication in step definitions</li>
+  <li>Centralizes all <strong>API response validations</strong></li>
+  <li>Performs <strong>HTTP status code</strong> checks</li>
+  <li>Validates <strong>response body fields</strong> and values</li>
+  <li>Supports <strong>JSON schema validation</strong></li>
+  <li>Prevents assertion logic from being duplicated inside step definitions</li>
 </ul>
 
 <h3>4.5 Resources Layer</h3>
-<p class="section-text">External resources and configuration files for test execution.</p>
+<p>
+Contains all external resources and configuration files required for test execution.
+</p>
 <ul>
   <li><strong>features</strong> – Cucumber <code>.feature</code> files written in Gherkin syntax</li>
   <li><strong>schemas</strong> – JSON schema files used for response validation</li>
   <li><strong>spec</strong> – OpenAPI / Swagger specifications for contract validation</li>
-  <li><strong>testData</strong> – EExcel and other input files for data-driven testing</li>
+  <li><strong>testData</strong> – Excel and other input files for data-driven testing</li>
   <li><strong>config.properties</strong> – Environment-specific configuration values</li>
   <li><strong>log4j2.xml</strong> – Centralized logging configuration</li>
 </ul>
@@ -191,7 +204,7 @@ restapi-automation-kata/
 </pre>
 
 <h2>5. Test Coverage</h2>
-<p class="section-text">
+<p>
   The framework provides comprehensive <strong>functional</strong>, 
   <strong>negative</strong>, and <strong>contract-level</strong> coverage for the 
   Booking API, ensuring high confidence in API reliability and behavior.
@@ -201,11 +214,13 @@ restapi-automation-kata/
 <ul>
   <li>Valid authentication token generation</li>
   <li>Invalid credentials handling</li>
-  <li>Malformed/missing authentication payloads</li>
-  <li>Token reuse via centralized token management</li>
-  <li>Authorization failure scenarios</li>
+  <li>Missing or malformed authentication payload validation</li>
+  <li>Token reuse across scenarios via centralized token management</li>
+  <li>Authorization failure scenarios (expired or missing token cases)</li>
 </ul>
-<p><strong>✔ Ensures secure access control</strong></p>
+<p>
+  <strong>✔ Ensures secure access control and prevents unauthorized API usage.</strong>
+</p>
 
 <h3>5.2 Booking API – Full Lifecycle Coverage</h3>
 <p>
@@ -215,15 +230,15 @@ restapi-automation-kata/
 <p>CRUD workflow:</p>
 <h4>5.2.1 Create Booking</h4>
 <ul>
-  <li>Valid booking creation with full payload</li>
-  <li>Mandatory field validation</li>
-  <li>Boundary checks (dates, price, names)</li>
+  <li>Valid booking creation with complete payload</li>
+  <li>Mandatory field validations</li>
+  <li>Boundary value checks (dates, price, names)</li>
 </ul>
 
 <h4>5.2.2 Read Booking</h4>
 <ul>
   <li>Fetch booking by valid ID</li>
-  <li>Fetch with invalid/non-existent ID</li>
+  <li>Fetch booking with invalid or non-existent ID</li>
   <li>Verify response consistency after create or update</li>
 </ul>
 
@@ -237,8 +252,8 @@ restapi-automation-kata/
 <h4>5.2.4 Delete Booking</h4>
 <ul>
   <li>Successful deletion with valid authorization</li>
-  <li>Verify booking inaccessible after deletion</li>
-  <li>Negative scenarios for invalid/missing authorization</li>
+  <li>Verify booking is no longer accessible after deletion</li>
+  <li>Negative scenarios for invalid or missing authorization</li>
 </ul>
 <p>
   <strong>✔ Validates real-world booking workflows end-to-end.</strong>
@@ -291,7 +306,34 @@ restapi-automation-kata/
   <li>High confidence regression safety</li>
 </ul>
 
+
 <h2>6. Test Data Strategy</h2>
+
+<p>
+Test data is managed efficiently to support <strong>scalable, maintainable, and flexible testing</strong>.
+</p>
+
+<h3>Test Data Location</h3>
+<ul>
+  <li>Stored in Excel files under <code>src/test/resources/testData/</code></li>
+  <li>Each row represents an independent test scenario</li>
+  <li>Columns correspond to request fields and optional parameters</li>
+</ul>
+
+<h3>Data-Driven Execution</h3>
+<ul>
+  <li>The <strong>Factory layer</strong> reads Excel rows to dynamically build API request payloads</li>
+  <li>For PATCH requests, only non-empty fields from Excel are included in the request</li>
+  <li>Allows multiple scenarios to be tested without hardcoding payloads</li>
+</ul>
+
+<h3>Benefits</h3>
+<ul>
+  <li>Improves test coverage with minimal code changes</li>
+  <li>Simplifies adding new test scenarios</li>
+  <li>Maintains readability and low cyclomatic complexity</li>
+  <li>Supports clean separation of data and logic</li>
+</ul>
 <p class="section-text">
   Describes how <strong>Excel files</strong> simulate 
   <strong>enterprise-level test data</strong>, with scenarios referring to 
@@ -310,8 +352,10 @@ restapi-automation-kata/
 <p>
   Follow these simple steps to set up the project on your local machine:
 </p>
+## How to Run
+
 <pre>
-git clone https://github.com/subbusrvn/restapi-automation-kata
+1. Clone repo: git clone https://github.com/subbusrvn/restapi-automation-kata
 cd restapi-automation-kata
 </pre>
 <p>
