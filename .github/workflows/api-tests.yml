@@ -10,48 +10,55 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Java 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # 3️⃣ Run tests
       - name: Run tests
         run: mvn clean test
 
+      # 4️⃣ Generate Execution Summary
       - name: Generate Execution Summary
         run: |
           echo "TOTAL=$(grep -o 'Tests run: [0-9]*' target/surefire-reports/*.txt | awk '{sum+=$3} END {print sum}')" >> $GITHUB_ENV
           echo "FAILURES=$(grep -o 'Failures: [0-9]*' target/surefire-reports/*.txt | awk '{sum+=$2} END {print sum}')" >> $GITHUB_ENV
           echo "SKIPPED=$(grep -o 'Skipped: [0-9]*' target/surefire-reports/*.txt | awk '{sum+=$2} END {print sum}')" >> $GITHUB_ENV
 
+      # 5️⃣ Upload Cucumber Report
       - name: Upload Cucumber Report
         uses: actions/upload-artifact@v4
         with:
           name: Cucumber-Report
-          path: target/cucumber-html-reports
+          path: target/cucumber-report.html
 
+      # 6️⃣ Upload ChainTest Report
       - name: Upload ChainTest Report
         uses: actions/upload-artifact@v4
         with:
           name: ChainTest-Report
-          path: target/chaintest
+          path: target/chaintest/resources/Email.html
 
-      - name: Send Test Execution Email via SendGrid
-        if: always()
+      # 7️⃣ Send Test Execution Email via SendGrid
+      - name: Send Test Execution Email
+        if: always() && secrets.SENDGRID_API_KEY != ''
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.sendgrid.net
           server_port: 587
           secure: false
-          username: apikey
+          username: apikey                     # literal, correct for SendGrid
           password: ${{ secrets.SENDGRID_API_KEY }}
-          subject: "API Automation Test Report – Build #${{ github.run_number }}"
+          from: ${{ secrets.SENDGRID_FROM }}  # Verified sender
           to: ${{ secrets.EMAIL_TO }}
-          from: ${{ secrets.SENDGRID_FROM }}
+          subject: "API Automation Test Report – Build #${{ github.run_number }} on ${{ github.ref_name }}"
 
           html_body: |
             <h3>API Automation Execution Summary</h3>
@@ -72,10 +79,11 @@ jobs:
             <b>Reports:</b>
             <ul>
               <li>Cucumber HTML – Attached</li>
+              <li>ChainTest Email HTML – Attached</li>
               <li>
-                ChainTest –
+                Artifacts Download – 
                 <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">
-                  Download from Artifacts
+                  Click here
                 </a>
               </li>
             </ul>
@@ -84,4 +92,6 @@ jobs:
             Regards,<br/>
             CI Automation Pipeline
 
-          attachments: target/cucumber-html-reports/index.html
+          attachments: |
+            target/cucumber-report.html
+            target/chaintest/resources/Email.html

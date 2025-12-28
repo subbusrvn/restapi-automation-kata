@@ -10,7 +10,8 @@ import io.cucumber.junit.CucumberOptions;
         glue = {"com.booking.stepdefinitions", "com.booking.hooks", "com.booking.context",},
         plugin = {
                 "pretty",
-                "html:target/cucumber-report.html"
+                //"html:target/cucumber-report.html",
+                "com.aventstack.chaintest.plugins.ChainTestCucumberListener:"
         },
         monochrome = true
 )
