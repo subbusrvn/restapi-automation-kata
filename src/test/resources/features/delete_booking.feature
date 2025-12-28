@@ -7,7 +7,7 @@ Feature: Hotel Room Booking Management System - Delete Endpoint
 # Booking Created and Deleted
 #----------------------------------------------------------------------------------------------------
   @positive @delete @sanity @regression
-  Scenario Outline: Create and then delete a booking
+  Scenario Outline: Create and then delete a booking id
     Given the booking system is available for user access
     When the user login with "<userType>" credentials
     Then access should be <loginResult>
@@ -25,8 +25,7 @@ Feature: Hotel Room Booking Management System - Delete Endpoint
 # Booking Delete Scenario for invalid booking Id
 #----------------------------------------------------------------------------------------------------
   @negative @delete @sanity @regression
-  Scenarios: Delete booking with an invalid booking ID
-
+  Scenario Outline: Delete booking with an invalid booking ID
     Given the user login with "<userType>" credentials
     And an invalid booking ID is set
     When the user deletes the booking using the stored booking ID

@@ -24,7 +24,7 @@ public final class BookingSwaggerValidator {
         }
     }
 
-    private static void validateNestedBooking(JsonPath json) {
+    public static void validateNestedBooking(JsonPath json) {
         Assert.assertNotNull("Swagger violation: 'roomid' missing",json.get("booking.roomid"));
         Assert.assertNotNull("Swagger violation: 'firstname' missing",json.get("booking.firstname"));
         Assert.assertNotNull("Swagger violation: 'lastname' missing",json.get("booking.lastname"));
@@ -35,7 +35,7 @@ public final class BookingSwaggerValidator {
         Assert.assertNotNull("Swagger violation: 'phone' missing",json.get("booking.phone"));
     }
 
-    private static void validateFlatBooking(JsonPath json) {
+    public static void validateFlatBooking(JsonPath json) {
         Assert.assertNotNull("Swagger violation: 'roomid' missing",json.get("roomid"));
         Assert.assertNotNull("Swagger violation: 'firstname' missing",json.get("firstname"));
         Assert.assertNotNull("Swagger violation: 'lastname' missing",json.get("lastname"));

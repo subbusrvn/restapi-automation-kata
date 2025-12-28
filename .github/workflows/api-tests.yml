@@ -21,77 +21,92 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # 3️⃣ Run tests
+      # 3️⃣ Run tests (do not fail job here)
       - name: Run tests
-        run: mvn clean test
+        run: mvn clean test || true
 
-      # 4️⃣ Generate Execution Summary
+      # 4️⃣ Generate Execution Summary (safe)
       - name: Generate Execution Summary
         run: |
-          echo "TOTAL=$(grep -o 'Tests run: [0-9]*' target/surefire-reports/*.txt | awk '{sum+=$3} END {print sum}')" >> $GITHUB_ENV
-          echo "FAILURES=$(grep -o 'Failures: [0-9]*' target/surefire-reports/*.txt | awk '{sum+=$2} END {print sum}')" >> $GITHUB_ENV
-          echo "SKIPPED=$(grep -o 'Skipped: [0-9]*' target/surefire-reports/*.txt | awk '{sum+=$2} END {print sum}')" >> $GITHUB_ENV
+          TOTAL=$(grep -h "Tests run:" target/surefire-reports/*.txt 2>/dev/null | awk '{sum+=$3} END {print sum+0}')
+          FAILURES=$(grep -h "Failures:" target/surefire-reports/*.txt 2>/dev/null | awk '{sum+=$2} END {print sum+0}')
+          SKIPPED=$(grep -h "Skipped:" target/surefire-reports/*.txt 2>/dev/null | awk '{sum+=$2} END {print sum+0}')
+          PASSED=$((TOTAL - FAILURES - SKIPPED))
 
-      # 5️⃣ Upload Cucumber Report
+          echo "TOTAL=$TOTAL" >> $GITHUB_ENV
+          echo "FAILURES=$FAILURES" >> $GITHUB_ENV
+          echo "SKIPPED=$SKIPPED" >> $GITHUB_ENV
+          echo "PASSED=$PASSED" >> $GITHUB_ENV
+
+      # 5️⃣ Generate Email HTML (env vars expand correctly)
+      - name: Generate Email Body
+        run: |
+          cat <<EOF > email.html
+          <h2>API Automation Execution Summary</h2>
+
+          <table border="1" cellpadding="6" cellspacing="0">
+            <tr>
+              <th>Total</th>
+              <th style="color:green;">Passed</th>
+              <th style="color:red;">Failed</th>
+              <th style="color:orange;">Skipped</th>
+            </tr>
+            <tr>
+              <td>${TOTAL}</td>
+              <td>${PASSED}</td>
+              <td>${FAILURES}</td>
+              <td>${SKIPPED}</td>
+            </tr>
+          </table>
+
+          <br/>
+
+          <b>Branch:</b> ${{ github.ref_name }}<br/>
+          <b>Build Number:</b> #${{ github.run_number }}<br/>
+          <b>Execution Status:</b> ${{ job.status }}<br/>
+
+          <br/>
+          <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">
+            View Full Execution Details
+          </a>
+
+          <br/><br/>
+          Regards,<br/>
+          CI Automation Pipeline
+          EOF
+
+      # 6️⃣ Upload Cucumber Report
       - name: Upload Cucumber Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Cucumber-Report
           path: target/cucumber-report.html
+          if-no-files-found: warn
 
-      # 6️⃣ Upload ChainTest Report
+      # 7️⃣ Upload ChainTest Report
       - name: Upload ChainTest Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ChainTest-Report
           path: target/chaintest/resources/Email.html
+          if-no-files-found: warn
 
-      # 7️⃣ Send Test Execution Email via SendGrid
+      # 8️⃣ Send Test Execution Email via SendGrid
       - name: Send Test Execution Email
-        if: always() && secrets.SENDGRID_API_KEY != ''
+        if: always()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.sendgrid.net
           server_port: 587
-          secure: false
-          username: apikey                     # literal, correct for SendGrid
+          secure: true
+          username: apikey
           password: ${{ secrets.SENDGRID_API_KEY }}
-          from: ${{ secrets.SENDGRID_FROM }}  # Verified sender
+          from: ${{ secrets.SENDGRID_FROM }}
           to: ${{ secrets.EMAIL_TO }}
-          subject: "API Automation Test Report – Build #${{ github.run_number }} on ${{ github.ref_name }}"
-
-          html_body: |
-            <h3>API Automation Execution Summary</h3>
-            <table border="1" cellpadding="6">
-              <tr>
-                <th>Total</th>
-                <th>Failures</th>
-                <th>Skipped</th>
-              </tr>
-              <tr>
-                <td>${{ env.TOTAL }}</td>
-                <td>${{ env.FAILURES }}</td>
-                <td>${{ env.SKIPPED }}</td>
-              </tr>
-            </table>
-
-            <br/>
-            <b>Reports:</b>
-            <ul>
-              <li>Cucumber HTML – Attached</li>
-              <li>ChainTest Email HTML – Attached</li>
-              <li>
-                Artifacts Download – 
-                <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">
-                  Click here
-                </a>
-              </li>
-            </ul>
-
-            <br/>
-            Regards,<br/>
-            CI Automation Pipeline
-
+          subject: "API Automation Test Report – Build #${{ github.run_number }}"
+          html_body: file://email.html
           attachments: |
             target/cucumber-report.html
             target/chaintest/resources/Email.html

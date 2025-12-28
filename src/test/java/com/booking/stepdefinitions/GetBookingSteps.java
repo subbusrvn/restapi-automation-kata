@@ -22,7 +22,7 @@ public class GetBookingSteps {
 
     @Given("Set the invalid authentication token to the created bookingid")
     public void i_use_an_invalid_authentication_token() {
-        String invalidToken = "INVALID_TOKEN_12345";
+        String invalidToken = "INVALID_TOKEN_12222345";
 
         testContext.setToken(invalidToken);
         testContext.setUseInvalidToken(true);

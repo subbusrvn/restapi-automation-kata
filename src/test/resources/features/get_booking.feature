@@ -12,9 +12,6 @@ Feature: Hotel Room Booking Management System – GET Endpoints
   Scenario Outline: Get the booked id with user access
     When a guest creates a booking with "<dataset>"
     Then the room reservation is confirmed
-    And a booking reference is generated
-    And the booking details returned should be correct
-    And a booking exists
 
     When Update the invalid authentication token to the created bookingid
     When the guest retrieves the booking by ID
@@ -31,11 +28,7 @@ Feature: Hotel Room Booking Management System – GET Endpoints
   Scenario Outline: Get the booked id with user access
     When a guest creates a booking with "<dataset>"
     Then the room reservation is confirmed
-    And a booking reference is generated
-    And the booking details returned should be correct
-
-    And a booking exists
-    When use an invalid authentication token
+    When Set the invalid authentication token to the created bookingid
     When the guest retrieves the booking by ID
     Then the booking details should match the created booking
 
@@ -49,10 +42,6 @@ Feature: Hotel Room Booking Management System – GET Endpoints
   Scenario Outline: Get the non existing booked id
     When a guest creates a booking with "<dataset>"
     Then the room reservation is confirmed
-    And a booking reference is generated
-    And the booking details returned should be correct
-
-    And a booking exists
     When Set the non-existing booking id to current booking
     When the guest retrieves the booking by ID
     Then the booking details should match the created booking

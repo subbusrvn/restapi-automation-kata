@@ -6,12 +6,16 @@ import com.booking.context.TestContext;
 import com.booking.services.BookingService;
 import com.booking.utils.LoggerUtil;
 import com.booking.utils.*;
+import com.booking.utils.excel.factory.BookingRequestFactory;
+import com.booking.validators.CreateBookingResponseValidator;
+import com.booking.validators.UpdateBookingResponseValidator;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 
 import java.util.Map;
 
@@ -29,10 +33,11 @@ public class UpdateBookingSteps {
         this.testContext = testContext;
         this.bookingService = new BookingService();
     }
-
-    // ---------------------------------
-    // Scenario Steps
-    // ---------------------------------
+    /*
+    *---------------------------------
+    * Scenario Steps
+    * ---------------------------------
+    */
     @Given("use an invalid authentication token")
     public void i_use_an_invalid_authentication_token() {
         String invalidToken = "INVALID_TOKEN_12345";
@@ -42,16 +47,26 @@ public class UpdateBookingSteps {
         TokenManager.setToken(invalidToken);
         log.info("************After set the token to Null******{}", invalidToken);
     }
-    @Given("an existing booking is created")
+    @Given("the guest now has an existing booking")
     public void an_existing_booking_is_created() {
-
         Response response = testContext.getResponse();// or make a POST call
         Integer bookingId = response.jsonPath().getInt("bookingid");
-
         assertTrue("Booking must have a valid positive ID", bookingId > 0);
         log.info("Already Created Booking ID: {}", bookingId);
     }
 
+    @When("a guest creates a new booking with initial details {string}")
+    public void submit_booking_request(String dataset) {
+        BookingRequest request = BookingRequestFactory.createFromExcel(dataset);
+        Response response = bookingService.createBooking(request);
+        testContext.setResponse(response);
+    }
+
+    @Then("the booking should be {string} successfully")
+    public void booking_should_be(String bookingoutcome) {
+        Response response = testContext.getResponse();
+        UpdateBookingResponseValidator.validateCreateMsg(response, bookingoutcome,testContext);
+    }
 
     @When("use an expired authentication token")
     public void use_an_expired_authentication_token() {
@@ -104,11 +119,10 @@ public class UpdateBookingSteps {
         testContext.setUpdateResponse(response);
     }
 
-    @When("Update the booking with the following fields")
+    @When("the guest updates the booking with the following details")
     public void update_booking_with_following_fields(DataTable dataTable) {
 
         Map<String, String> data = dataTable.asMaps(String.class, String.class).get(0);
-
         // Pre-parse using external parser (all logic outside this method)
         Integer roomid = SafeParser.toInteger(data.get("roomid"));
         Boolean depositpaid = SafeParser.toBoolean(data.get("depositpaid"));
@@ -120,27 +134,24 @@ public class UpdateBookingSteps {
                 SafeParser.toNullIfEmpty(data.get("bookingdates.checkin")),
                 SafeParser.toNullIfEmpty(data.get("bookingdates.checkout"))
         );
-
         BookingRequest updateRequest = PutBookingRequestBuilder.build(
                 roomid, firstname, lastname, depositpaid, bookingDates, email, phone
         );
 
         Response response = bookingService.updateBookingPut(
-                testContext.getBookingId(),
-                updateRequest
+                testContext.getBookingId(), updateRequest
         );
-
         testContext.setUpdateRequest(updateRequest);
         testContext.setUpdateResponse(response);
     }
 
-    @Then("the API should return a successful update response")
-    public void the_api_should_return_a_successful_update_response() {
+    @Then("the booking patch update should be successful")
+    public void the_booking_patch_update_should_be_successful() {
         Response response = testContext.getUpdateResponse();
-        assertEquals(200, response.statusCode());
-    }
+        UpdateBookingResponseValidator.validateUpdateResponse(response,testContext);
 
-    @Then("the updated booking should reflect all the new values")
+    }
+    @Then("the guest should see all the updated details reflected in the booking")
     public void the_updated_booking_should_reflect_all_the_new_values() {
 
         Response updateResponse = testContext.getUpdateResponse();

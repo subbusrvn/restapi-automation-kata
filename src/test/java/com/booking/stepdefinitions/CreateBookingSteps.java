@@ -4,6 +4,7 @@ import com.booking.context.TestContext;
 import com.booking.utils.BookingIdExtractor;
 import com.booking.utils.LoggerUtil;
 import com.booking.utils.excel.factory.BookingRequestFactory;
+import com.booking.validators.CreateBookingResponseValidator;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -34,9 +35,11 @@ public class CreateBookingSteps {
         log.info("****Assuming rooms are available for booking****");
     }
 
-    // -------------------------
-    // When Steps
-    // -------------------------
+    /*-------------------------
+     * When Steps
+     *-------------------------
+     */
+
     @When("a guest tries to book a room with {string}")
     public void submit_booking_request(String dataset) {
 
@@ -46,33 +49,15 @@ public class CreateBookingSteps {
         testContext.setResponse(response);
     }
 
-    // -------------------------
-    // Then Steps
-    // -------------------------
+    /*-------------------------
+     * Then Steps
+     *-------------------------
+     */
 
     @Then("the booking request should be {string}")
     public void booking_should_be(String bookingoutcome) {
-
         Response response = testContext.getResponse();
-        int actualStatusCode = response.getStatusCode();
-        int expectedStatusCode;
-
-        if ("created".equalsIgnoreCase(bookingoutcome)) {
-            expectedStatusCode = 201;
-            log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
-            log.info("****Booking Accepted****");
-            Assert.assertEquals(expectedStatusCode, actualStatusCode);
-            Integer bookingId = BookingIdExtractor.extract(response);
-            testContext.setBookingId(bookingId);
-
-            Assert.assertTrue("Booking ID must be greater than 0", bookingId > 0);
-        } else {
-            expectedStatusCode = 400;
-            log.info("****Expected Status Code:**** " + expectedStatusCode + ", ****Actual Status Code:**** " + actualStatusCode);
-            log.info("****Booking Operation failed****");
-            Assert.assertEquals(expectedStatusCode, actualStatusCode);
-            log.info("****Response Body:****\n" + response.getBody().prettyPrint());
-        }
+        CreateBookingResponseValidator.validateCreateMsg(response, bookingoutcome,testContext);
     }
 
     @Then("the booking details are returned correctly")

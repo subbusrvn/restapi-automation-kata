@@ -13,4 +13,14 @@ public class BookingIdExtractor {
         Assert.assertTrue("bookingid must be > 0", bookingId > 0);
         return bookingId;
     }
-}
+
+    public static Integer extractFromLocationHeader(Response response) {
+        Integer bookingId = response.jsonPath().getInt("bookingid");
+
+        Assert.assertNotNull("bookingid missing in response body", bookingId);
+        Assert.assertTrue("Invalid bookingid", bookingId > 0);
+
+        return bookingId;
+    }
+    }
+

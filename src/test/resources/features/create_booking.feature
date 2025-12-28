@@ -79,10 +79,10 @@ of the booking API.
   @validation @create @regression
   Scenario Outline: Guest book a room with various email rules
     When a guest tries to book a room with "<dataset>"
-    Then the booking request should be "<outcome>"
+    Then the booking request should be "<bookingoutcome>"
 
     Examples:
-      | dataset                | outcome  |
+      | dataset                | bookingoutcome  |
       | EMAIL_VALID            | created |
       | EMAIL_EMPTY            | rejected |
       | EMAIL_INVALID_FORMAT   | rejected |
@@ -92,7 +92,7 @@ of the booking API.
  #----------------------------------------------------
  # Guest book a room based on stay dates
  #----------------------------------------------------
-  @validation @create @regression
+  @validation @create @regression @dateValidRange
   Scenario Outline: Guest book a room based on stay dates
     When a guest tries to book a room with "<dataset>"
     Then the booking request should be "<bookingoutcome>"

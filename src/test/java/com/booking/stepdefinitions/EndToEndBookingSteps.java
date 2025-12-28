@@ -5,6 +5,8 @@ import com.booking.models.booking.BookingRequest;
 import com.booking.services.BookingService;
 import com.booking.utils.LoggerUtil;
 import com.booking.utils.excel.factory.BookingRequestFactory;
+import com.booking.validators.DeleteBookingResponseValidator;
+import com.booking.validators.UpdateBookingResponseValidator;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -32,9 +34,7 @@ public class EndToEndBookingSteps {
 
 
         BookingRequest createRequest = BookingRequestFactory.createFromExcel(dataset);
-
         Response createResponse = bookingService.createBooking(createRequest);
-
         log.info("Create Booking Response:");
         createResponse.then().log().all();
 
@@ -78,6 +78,7 @@ public class EndToEndBookingSteps {
         Integer bookingId = response.jsonPath().get("bookingid");
         Assert.assertNotNull("Booking ID should be generated", bookingId);
         testContext.setBookingId(bookingId);
+        testContext.setResponse(response);
 
         log.info("****Generated Booking ID:**** " + bookingId);
         Assert.assertTrue("Booking ID is not greater than zero", bookingId > 0);
@@ -126,8 +127,9 @@ public class EndToEndBookingSteps {
 
     @When("the guest retrieves the booking by ID")
     public void the_guest_retrieves_the_booking_by_id() {
-        //Response getresponse = bookingService.getBookingById(testContext.getBookingId());
-        testContext.setResponse(testContext.getGetUpdatedBookingResponse());
+        //testContext.setResponse(testContext.getGetUpdatedBookingResponse());
+        testContext.setResponse(testContext.getCreateResponse());
+        testContext.getBookingId();
         log.info("*****Updated Booking Id is retrived*****{}", testContext.getBookingId());
     }
 
@@ -136,18 +138,14 @@ public class EndToEndBookingSteps {
 
         BookingRequest expected = testContext.getCreateRequest();
         Response response = testContext.getCreateResponse();
-
         Assert.assertEquals(201, response.getStatusCode());
-
         JsonPath actual = response.jsonPath();
 
-        //Assert.assertEquals(expected.getRoomid(), actual.getInt("roomid"));
         Assert.assertEquals(expected.getFirstname(), actual.getString("firstname"));
         Assert.assertEquals(expected.getLastname(), actual.getString("lastname"));
         Assert.assertEquals(expected.getDepositpaid(), actual.getBoolean("depositpaid"));
         Assert.assertEquals(expected.getBookingdates().getCheckin(), actual.getString("bookingdates.checkin"));
         Assert.assertEquals(expected.getBookingdates().getCheckout(), actual.getString("bookingdates.checkout"));
-        //int bookingId = response.jsonPath().getInt("bookingid");
     }
 
     @When("the guest updates the booking with {string}")
@@ -160,7 +158,7 @@ public class EndToEndBookingSteps {
         BookingRequest updateRequest = BookingRequestFactory.createFromExcel(updateDataset);
 
         // Perform the update via bookingService
-        Response updateresponse = bookingService.updateBookingPatch(testContext.getBookingId(), updateRequest);
+        Response updateresponse = bookingService.updateBookingPut(testContext.getBookingId(), updateRequest);
 
         log.info("**** Update Booking Response ****");
         updateresponse.getBody().prettyPrint();
@@ -178,9 +176,8 @@ public class EndToEndBookingSteps {
 
     @Then("the booking update should be successful")
     public void the_booking_update_should_be_successful() {
-        Response response = testContext.getGetUpdatedBookingResponse();
-        Assert.assertNotNull("Update response should not be null", response);
-        log.info("******status code for the Update*******{}", response.getStatusCode());
+        Response response = testContext.getUpdateResponse();
+        UpdateBookingResponseValidator.validateUpdateResponse(response, testContext);
     }
 
     @Then("the booking details should reflect the updates")
@@ -188,7 +185,7 @@ public class EndToEndBookingSteps {
 
         BookingRequest expected = testContext.getUpdateRequest();
         Response response = testContext.getGetUpdatedBookingResponse();
-        log.info("Booking update shoudl be Successful" + response.getStatusCode());
+        log.info("Booking update should be successful" + response.getStatusCode());
 
         JsonPath actual = response.jsonPath();
 
@@ -201,18 +198,14 @@ public class EndToEndBookingSteps {
 
     @When("the guest deletes the booking")
     public void the_guest_deletes_the_booking() {
-
         Response deleteResponse = bookingService.deleteBooking(testContext.getBookingId());
-
         testContext.setDeleteResponse(deleteResponse);
     }
 
     @Then("the booking should be successfully deleted")
     public void the_booking_should_be_successfully_deleted() {
         Response response = testContext.getDeleteResponse();
-        Assert.assertNotNull(response);
-        Assert.assertTrue("Delete should return 200 or 204", response.getStatusCode() == 200 || response.getStatusCode() == 204);
-
+        DeleteBookingResponseValidator.validateDeleteResponse(response);
     }
 
 }

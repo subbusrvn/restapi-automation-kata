@@ -426,5 +426,5 @@ cd restapi-automation-kata
 </p>
 <h2>14. Author</h2>
 <p><strong>Saravanan Subramaniyan</strong><br/>
-Senior QA | API Automation | Framework Design
+Senior QA | API Automation | Framework Designing
 </p>

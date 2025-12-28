@@ -18,12 +18,12 @@ public class AuthSteps {
     private static final Logger log =
             LoggerUtil.getLogger(CreateBookingSteps.class);
 
-    private final TestContext context;
+    private final TestContext testContext;
     private final AuthService authService;
     private String token;
 
-    public AuthSteps(TestContext context) {
-        this.context = context;
+    public AuthSteps(TestContext testContext) {
+        this.testContext = testContext;
         this.authService = new AuthService();
     }
 
@@ -33,7 +33,7 @@ public class AuthSteps {
 
     @Given("a user wants to access the booking system")
     public void auth_endpoint_available() {
-        log.info("****\"Auth endpoint ready at {}", context.getBaseUri());
+        log.info("****\"Auth endpoint ready at {}", testContext.getBaseUri());
     }
 
     @Given("the system is available for user access")
@@ -49,14 +49,14 @@ public class AuthSteps {
     }
 
     private void login(AuthRequest request, String tokenKey) {
-        Response response = authService.login(request);
-        context.setResponse(response);
+        Response response = authService.login(request, testContext);
+        testContext.setResponse(response);
 
         String token = response.jsonPath().getString("token");
 
         log.info("****Logged in user token{}:****", token);
         Assert.assertNotNull("Token should not be null", token);
-        context.set(tokenKey, token);
+        testContext.set(tokenKey, token);
         TokenManager.setToken(token);
     }
 
@@ -65,11 +65,11 @@ public class AuthSteps {
     // -------------------------
     @When("the user login with {string} credentials")
     public void send_auth_request_by_user_type(String userType) {
-        AuthRequest request = AuthRequestFactory.build(userType); // Delegated!
-        Response response = authService.login(request);
-        String token = response.path("token");
+        AuthRequest request = AuthRequestFactory.build(userType);
+        Response loginresponse = authService.login(request,testContext);
+        String token = loginresponse.path("token");
 
-        context.setResponse(response);
+        testContext.setResponse(loginresponse);
         TokenManager.setToken(token);
         log.info("Login Generated Token{}", TokenManager.getToken());
     }
@@ -90,7 +90,7 @@ public class AuthSteps {
         // Call the service with invalid content type
         Response response = authService.loginWithInvalidContentType(request);
         // Store response in context
-        context.setResponse(response);
+        testContext.setResponse(response);
     }
 
     // -------------------------
@@ -108,12 +108,12 @@ public class AuthSteps {
     @Then("the system should reject the request")
     public void verifyUnsupportedMediaType() {
 
-        Assert.assertEquals(415, context.getResponse().getStatusCode());
+        Assert.assertEquals(415, testContext.getResponse().getStatusCode());
     }
 
     @Then("the system should return a token")
     public void verify_token_exists() {
-        token = context.getResponse().jsonPath().getString("token");
+        token = testContext.getResponse().jsonPath().getString("token");
         Assert.assertNotNull(token);
         Assert.assertFalse(token.isEmpty());
     }
@@ -132,20 +132,20 @@ public class AuthSteps {
 
     @Then("Content-Type is genearted in the header")
     public void is_cookie_Genearted_InHeader() {
-        String contentType = context.getResponse().getHeader("Content-Type");
+        String contentType = testContext.getResponse().getHeader("Content-Type");
         if (contentType != null) Assert.assertTrue(contentType.contains("application/json"));
     }
 
     @Then("each login should create a unique session")
     public void each_login_should_create_unique_session() {
-        Assert.assertNotEquals(context.get("token"), context.get("token2"));
+        Assert.assertNotEquals(testContext.get("token"), testContext.get("token2"));
     }
 
     // -------------------------
     // Private helpers
     // -------------------------
     private void assertAccessGranted() {
-        Response response = context.getResponse();
+        Response response = testContext.getResponse();
         //Assert.assertEquals(201, response.getStatusCode());
         String token = response.jsonPath().getString("token");
         Assert.assertNotNull(token);
@@ -153,7 +153,7 @@ public class AuthSteps {
     }
 
     private void assertAccessDenied() {
-        Response response = context.getResponse();
+        Response response = testContext.getResponse();
         Assert.assertEquals(401, response.getStatusCode());
         String actual = response.jsonPath().getString("error");
         String expected = ConfigManager.getProperty("login.error.message");
