@@ -25,7 +25,7 @@ jobs:
       - name: Run tests
         run: mvn clean test || true
 
-      # 4️⃣ Generate Execution Summary (safe)
+      # 4️⃣ Generate Execution Summary
       - name: Generate Execution Summary
         run: |
           TOTAL=$(grep -h "Tests run:" target/surefire-reports/*.txt 2>/dev/null | awk '{sum+=$3} END {print sum+0}')
@@ -38,7 +38,7 @@ jobs:
           echo "SKIPPED=$SKIPPED" >> $GITHUB_ENV
           echo "PASSED=$PASSED" >> $GITHUB_ENV
 
-      # 5️⃣ Generate Email HTML (env vars expand correctly)
+      # 5️⃣ Generate Email HTML
       - name: Generate Email Body
         run: |
           cat <<EOF > email.html
@@ -93,21 +93,20 @@ jobs:
           path: target/chaintest/resources/Email.html
           if-no-files-found: warn
 
-      # 8️⃣ Send Test Execution Email via SendGrid
+      # 8️⃣ Send Test Execution Email (Outlook SMTP)
       - name: Send Test Execution Email
         if: always()
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.sendgrid.net
+          server_address: smtp.office365.com
           server_port: 587
           secure: false
-          username: apikey
-          password: ${{ secrets.SENDGRID_API_KEY }}
-          from: ${{ secrets.SENDGRID_FROM }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
           to: ${{ secrets.EMAIL_TO }}
           subject: "API Automation Test Report – Build #${{ github.run_number }}"
           html_body: file://email.html
           attachments: |
             target/cucumber-report.html
             target/chaintest/Email.html
-  
