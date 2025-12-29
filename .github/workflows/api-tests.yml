@@ -93,17 +93,17 @@ jobs:
           path: target/chaintest/resources/Email.html
           if-no-files-found: warn
 
-      # 8️⃣ Send Test Execution Email (Outlook SMTP)
+          # 8️⃣ Send Test Execution Email (Zoho SMTP)
       - name: Send Test Execution Email
         if: always()
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.office365.com
-          server_port: 587
-          secure: false
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
+          server_address: smtp.zoho.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.ZOHO_EMAIL }}
+          password: ${{ secrets.ZOHO_APP_PASSWORD }}
+          from: GitHub Actions <${{ secrets.ZOHO_EMAIL }}>
           to: ${{ secrets.EMAIL_TO }}
           subject: "API Automation Test Report – Build #${{ github.run_number }}"
           html_body: file://email.html
