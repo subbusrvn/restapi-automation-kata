@@ -22,10 +22,11 @@ public class TestContext {
     private String token;
     private Boolean useInvalidToken = false;
     public static final String baseUri = ConfigManager.getProperty("base_url");
-
-    //----------------------------------------------------------------------------------
-    // Create, update, get Booking response getter and setter
-    //----------------------------------------------------------------------------------
+    /*
+     * ----------------------------------------------------------------------------------
+     * Create, update, get Booking response getter and setter
+     * ----------------------------------------------------------------------------------
+    */
     public Response getCreateResponse() {
         return createResponse;
     }
@@ -66,9 +67,10 @@ public class TestContext {
         this.deleteResponse = deleteResponse;
     }
 
-    //----------------------------------------------------------------------------------
-// Create, update, get Booking Request getter and setter
-//----------------------------------------------------------------------------------
+    /*----------------------------------------------------------------------------------
+    * Create, update, get Booking Request getter and setter
+    *----------------------------------------------------------------------------------
+    */
     public BookingRequest getCreateRequest() {
         return createRequest;
     }
@@ -85,9 +87,10 @@ public class TestContext {
         this.updateRequest = bookingRequest;
     }
 
-    //----------------------------------------------------------------------------------
-//BOOKING ID getter and setter
-//----------------------------------------------------------------------------------
+    /*----------------------------------------------------------------------------------
+    * BOOKING ID getter and setter
+    * ----------------------------------------------------------------------------------
+    */
     public int getBookingId() {
         return bookingId;
     }
@@ -96,9 +99,10 @@ public class TestContext {
         this.bookingId = bookingId;
     }
 
-    //----------------------------------------------------------------------------------
-//Token getter and setter
-//----------------------------------------------------------------------------------
+    /* ----------------------------------------------------------------------------------
+    * Token getter and setter
+    * ----------------------------------------------------------------------------------
+    */
     public String getToken() {
         if (useInvalidToken) {
             return "invalid_token_123";
@@ -114,20 +118,16 @@ public class TestContext {
         this.useInvalidToken = useInvalidToken;
     }
 
-//----------------------------------------------------------------------------------
-//Base URI
-//----------------------------------------------------------------------------------
-
+  /* ----------------------------------------------------------------------------------
+  *  Base URI
+  *  ----------------------------------------------------------------------------------
+  */
     public String getBaseUri() {
 
         return baseUri;
     }
 
-    //----------------------------------------------------------------------------------
-
-
     private final Map<String, Object> scenarioData = new HashMap<>();
-
 
     public void set(String key, Object value) {
         scenarioData.put(key, value);
@@ -137,8 +137,6 @@ public class TestContext {
     public <T> T get(String key) {
         return (T) scenarioData.get(key);
     }
-
-
 }
 
 

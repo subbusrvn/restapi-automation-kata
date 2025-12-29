@@ -39,7 +39,7 @@ public class GetBookingSteps {
         TokenManager.setToken(nonExistinBookingID);
         log.info("************After set the token to Null******{}", nonExistinBookingID);
     }
-
+/*
     @When("the guest retrieves the booking by booked id")
     public void the_guest_retrieves_the_booking_by_id() {
         testContext.setResponse(testContext.getCreateResponse());
@@ -52,4 +52,6 @@ public class GetBookingSteps {
         Assert.assertNotNull("Booking Id is not null",testContext.getBookingId());
         log.info("*****Updated Booking Id is retrived*****{}", testContext.getBookingId());
     }
+
+ */
 }

@@ -3,8 +3,6 @@ package com.booking.utils;
 import com.booking.models.booking.BookingDates;
 import com.booking.models.booking.BookingRequest;
 
-import java.util.Map;
-
 public class PatchBookingRequestBuilder {
 
     private PatchBookingRequestBuilder() {

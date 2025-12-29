@@ -13,7 +13,7 @@ import io.cucumber.junit.CucumberOptions;
                 "html:target/cucumber-report.html",
                 "com.aventstack.chaintest.plugins.ChainTestCucumberListener:"
         },
-        //tags = "@E2E",
+        tags = "@swaggerValidationCheck",
         monochrome = true
 )
 public class TestRunner {

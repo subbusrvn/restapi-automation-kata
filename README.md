@@ -380,6 +380,7 @@ cd restapi-automation-kata
 </ul>
 
 <h2>10. Reports</h2>
+<h3> 10.1.Cucumber Report</h3>
 <p>
   After test execution, a Cucumber HTML report is generated automatically.
 </p>
@@ -389,6 +390,29 @@ cd restapi-automation-kata
   This report provides detailed execution results, step-level status, and failure information.
 </p>
 
+<h3> 10.2.ChainTest Report(Extent Report) (Enhanced Cucumber Reporting)</h3>
+
+<p>
+  We’ve integrated <strong>ChainTest Report</strong> into this project to generate a rich HTML test report on top of the standard Cucumber output. ChainTest is a powerful reporting framework that produces both static HTML dashboards and email-friendly summary reports that help visualize test execution results in a clear, actionable format.
+</p>
+
+<h3> What It Includes</h3>
+<ul>
+  <li>
+    <strong>Static HTML Dashboard</strong> (e.g., <code>Index.html</code>) with detailed pass/fail statistics
+  </li>
+  <li>
+    <strong>Email Report</strong> (e.g., <code>Email.html</code>) suitable for CI email notifications
+  </li>
+</ul>
+
+<p>
+  Reports are generated automatically when the test suite runs with the appropriate listener configured.
+</p>
+<pre>
+target/chaintest/Index.html
+target/chaintest/Email.html
+</pre>
 <h2>11. Logging</h2>
 <p>
   Logging is handled using <strong>Log4j2</strong>.

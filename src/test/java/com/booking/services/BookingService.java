@@ -38,7 +38,6 @@ public class BookingService {
                 request
         );
     }
-
     public Response deleteBooking(int bookingId) {
         return restClient.delete(
                 BOOKING_DELETE.replace("{id}", String.valueOf(bookingId)));

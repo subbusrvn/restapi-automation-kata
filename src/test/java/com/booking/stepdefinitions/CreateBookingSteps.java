@@ -1,9 +1,9 @@
 package com.booking.stepdefinitions;
 
 import com.booking.context.TestContext;
-import com.booking.utils.BookingIdExtractor;
 import com.booking.utils.LoggerUtil;
 import com.booking.utils.excel.factory.BookingRequestFactory;
+import com.booking.validators.BookingSwaggerValidator;
 import com.booking.validators.CreateBookingResponseValidator;
 import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
@@ -32,7 +32,7 @@ public class CreateBookingSteps {
     // -------------------------
     @Given("rooms are available for booking")
     public void rooms_are_available_for_booking() {
-        log.info("****Assuming rooms are available for booking****");
+        log.info("****Rooms are available for booking****");
     }
 
     /*-------------------------
@@ -69,27 +69,8 @@ public class CreateBookingSteps {
     @Then("the response should follow the Swagger booking contract")
     public void validate_swagger_contract() {
 
-        Response response = testContext.getResponse();
-        Assert.assertEquals(200, response.getStatusCode());
-
-        JsonPath json = response.jsonPath();
-
-        // bookingid must exist
-        Assert.assertNotNull("bookingid missing", json.get("bookingid"));
-        log.info("*****Booking ID must be there:***** " + json.get("bookingid"));
-        // Swagger expects nested booking object
-        Assert.assertNotNull("Swagger violation: 'booking' object missing", json.get("booking"));
-        log.warn("***** Swagger violation: 'booking' object is missing in response *****");
-
-        // Inside booking object
-        Assert.assertNotNull(json.get("booking.roomid"));
-        Assert.assertNotNull(json.get("booking.firstname"));
-        Assert.assertNotNull(json.get("booking.lastname"));
-        Assert.assertNotNull(json.get("booking.depositpaid"));
-        Assert.assertNotNull(json.get("booking.bookingdates.checkin"));
-        Assert.assertNotNull(json.get("booking.bookingdates.checkout"));
-        Assert.assertNotNull(json.get("booking.email"));
-        Assert.assertNotNull(json.get("booking.phone"));
+        Response response = testContext.getCreateResponse();
+        BookingSwaggerValidator.validateCreateBookingSwaggerContract(response);
     }
 
 }

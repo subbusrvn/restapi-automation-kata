@@ -14,9 +14,6 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
-
-
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
 public class DeleteBookingSteps {

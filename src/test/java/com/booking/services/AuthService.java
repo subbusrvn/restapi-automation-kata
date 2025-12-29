@@ -21,7 +21,7 @@ public class AuthService {
         return restClient.post(AuthEndpoints.LOGIN, authRequest);
     }
 
-    /**
+    /*
      * Invalid Content-Type scenario – business negative case
      */
     public Response loginWithInvalidContentType(AuthRequest authRequest) {

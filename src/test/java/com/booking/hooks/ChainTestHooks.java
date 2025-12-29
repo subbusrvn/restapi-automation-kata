@@ -5,7 +5,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-import com.booking.logger.ChainTestLogger; // your custom logger
+import com.booking.logger.ChainTestLogger;
 
 public class ChainTestHooks {
 
@@ -24,8 +24,4 @@ public class ChainTestHooks {
         }
     }
 
-    @AfterAll
-    public static void afterAllScenarios() {
-
-    }
 }

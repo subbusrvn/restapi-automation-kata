@@ -175,7 +175,7 @@ of the booking API.
   #--------------------------------------------------------------------
   # Booking API - Response data structure validation with Swagger Response
   # --------------------------------------------------------------------
-  @create @positive @sanity @regression
+  @create @positive @sanity @regression @swaggerValidationCheck
   Scenario Outline: Validate booking creation response against Swagger contract
     Given login with valid credentials
     When a guest creates a booking with "<dataset>"

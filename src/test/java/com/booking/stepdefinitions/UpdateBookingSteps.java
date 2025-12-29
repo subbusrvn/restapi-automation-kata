@@ -7,7 +7,6 @@ import com.booking.services.BookingService;
 import com.booking.utils.LoggerUtil;
 import com.booking.utils.*;
 import com.booking.utils.excel.factory.BookingRequestFactory;
-import com.booking.validators.CreateBookingResponseValidator;
 import com.booking.validators.UpdateBookingResponseValidator;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -15,7 +14,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
 
 import java.util.Map;
 

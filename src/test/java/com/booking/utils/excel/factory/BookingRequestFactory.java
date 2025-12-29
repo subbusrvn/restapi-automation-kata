@@ -7,7 +7,6 @@ public class BookingRequestFactory {
     private BookingRequestFactory() {
         // utility class
     }
-
     public static BookingRequest createFromExcel(String dataset) {
         return BookingRequestBuilder.build(dataset);
     }
