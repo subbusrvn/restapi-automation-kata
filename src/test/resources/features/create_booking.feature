@@ -83,7 +83,7 @@ of the booking API.
 
     Examples:
       | dataset                | bookingoutcome  |
-      | EMAIL_VALID            | created |
+      | EMAIL_VALID            | created  |
       | EMAIL_EMPTY            | rejected |
       | EMAIL_INVALID_FORMAT   | rejected |
       | EMAIL_NO_DOMAIN        | rejected |
