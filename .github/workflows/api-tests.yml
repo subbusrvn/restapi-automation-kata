@@ -1,9 +1,11 @@
 name: API Automation Tests
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:    # Manual trigger
   push:
-    branches: [ main ]
+    branches: [ main ]  # Trigger on push to main
+  schedule:
+    - cron: '0 */2 * * *'  # Runs every 2 hours at minute 0
 
 jobs:
   test:
@@ -94,6 +96,7 @@ jobs:
           if-no-files-found: warn
 
           # 8️⃣ Send Test Execution Email (Zoho SMTP)
+
       - name: Send Test Execution Email
         if: always()
         uses: dawidd6/action-send-mail@v3
