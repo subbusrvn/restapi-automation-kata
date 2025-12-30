@@ -3,8 +3,10 @@ package com.booking.stepdefinitions;
 import com.booking.context.TestContext;
 import com.booking.models.booking.BookingRequest;
 import com.booking.services.BookingService;
+import com.booking.utils.BookingIdExtractor;
 import com.booking.utils.LoggerUtil;
 import com.booking.utils.excel.factory.BookingRequestFactory;
+import com.booking.validators.CreateBookingResponseValidator;
 import com.booking.validators.DeleteBookingResponseValidator;
 import com.booking.validators.UpdateBookingResponseValidator;
 import io.cucumber.java.en.Given;
@@ -28,10 +30,8 @@ public class EndToEndBookingSteps {
         this.bookingService = new BookingService();
     }
 
-
     @When("a guest creates a booking with {string}")
     public void create_booking(String dataset) {
-
 
         BookingRequest createRequest = BookingRequestFactory.createFromExcel(dataset);
         Response createResponse = bookingService.createBooking(createRequest);
@@ -39,7 +39,6 @@ public class EndToEndBookingSteps {
         createResponse.then().log().all();
 
         Assert.assertEquals("Booking creation failed", 201, createResponse.getStatusCode());
-
         Integer bookingId = createResponse.jsonPath().get("bookingid");
         if (bookingId == null) {
             throw new IllegalStateException("Booking ID is null. Response: " + createResponse.getBody().asString());
@@ -54,21 +53,10 @@ public class EndToEndBookingSteps {
         log.info("****Created Booking ID: {} ****", bookingId);
     }
 
-    @Then("the room reservation is confirmed")
-    public void the_room_reservation_is_confirmed() {
-
+    @Then("the booking reservation should be{string}")
+    public void the_room_reservation_is_confirmed(String bookingoutcome) {
         Response createResponse = testContext.getCreateResponse();
-        Assert.assertNotNull("Create response is null", createResponse);
-
-        int actualStatusCode = createResponse.getStatusCode();
-        log.info("****Actual Status Code:**** {}", actualStatusCode);
-
-
-        Assert.assertEquals("Booking should be created successfully", 201, actualStatusCode);
-        Integer bookingId = createResponse.jsonPath().getInt("bookingid");
-        Assert.assertNotNull("Booking ID should be generated", bookingId);
-        testContext.setBookingId(bookingId);
-        log.info("****Confirmed Booking ID:**** {}", bookingId);
+        CreateBookingResponseValidator.validateRoomReservation(createResponse, bookingoutcome, testContext);
     }
 
     @Then("a booking reference is generated")
@@ -127,10 +115,10 @@ public class EndToEndBookingSteps {
 
     @When("the guest retrieves the booking by ID")
     public void the_guest_retrieves_the_booking_by_id() {
-        //testContext.setResponse(testContext.getGetUpdatedBookingResponse());
-        testContext.setResponse(testContext.getCreateResponse());
-        testContext.getBookingId();
-        log.info("*****Updated Booking Id is retrived*****{}", testContext.getBookingId());
+        Response response = bookingService.getBookingById(testContext.getBookingId());
+        testContext.setResponse(response);
+        log.info("*****Updated Booking Id is retrived*****{}", response.getStatusCode());
+        log.info("*****Updated Booking Id is retrived*****{}", response.asPrettyString());
     }
 
     @Then("the booking details should match the created booking")
@@ -142,10 +130,24 @@ public class EndToEndBookingSteps {
         JsonPath actual = response.jsonPath();
 
         Assert.assertEquals(expected.getFirstname(), actual.getString("firstname"));
+        log.info("***** After wrong Auth updated: Actual Firstname", actual.getString("firstname"));
+        log.info("***** After wrong Auth updated: Expected Firstname", expected.getFirstname());
+
         Assert.assertEquals(expected.getLastname(), actual.getString("lastname"));
+        log.info("***** After wrong Auth updated: Lastname", actual.getString("lastname"));
+        log.info("***** After wrong Auth updated: Expected LastName", expected.getLastname());
+
         Assert.assertEquals(expected.getDepositpaid(), actual.getBoolean("depositpaid"));
+        log.info("***** After wrong Auth updated: Actual DepositPaid", actual.getString("depositpaid"));
+        log.info("***** After wrong Auth updated: Expected DepositPaid", expected.getDepositpaid());
+
         Assert.assertEquals(expected.getBookingdates().getCheckin(), actual.getString("bookingdates.checkin"));
+        log.info("***** After wrong Auth updated: Actual Bookingdates", actual.getString("bookingdates.checkin"));
+        log.info("***** After wrong Auth updated: Expected Bookingdates", expected.getBookingdates().getCheckin());
+
         Assert.assertEquals(expected.getBookingdates().getCheckout(), actual.getString("bookingdates.checkout"));
+        log.info("***** After wrong Auth updated: Actual Bookingdates checkin", actual.getString("bookingdates.checkout"));
+        log.info("***** After wrong Auth updated: Expected Bookingdates checkout", expected.getBookingdates().getCheckout());
     }
 
     @When("the guest updates the booking with {string}")

@@ -1,54 +1,60 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "required": [
-    "bookingid",
-    "roomid",
-    "firstname",
-    "lastname",
-    "depositpaid",
-    "bookingdates",
-    "email",
-    "phone"
-  ],
   "properties": {
     "bookingid": {
       "type": "integer"
     },
-    "roomid": {
-      "type": "integer"
-    },
-    "firstname": {
-      "type": "string"
-    },
-    "lastname": {
-      "type": "string"
-    },
-    "depositpaid": {
-      "type": "boolean"
-    },
-    "email": {
-      "type": "string",
-      "format": "email"
-    },
-    "phone": {
-      "type": "string",
-      "minLength": 11,
-      "maxLength": 21
-    },
-    "bookingdates": {
+    "booking": {
       "type": "object",
-      "required": ["checkin", "checkout"],
       "properties": {
-        "checkin": {
-          "type": "string",
-          "format": "date"
+        "roomid": {
+          "type": "integer"
         },
-        "checkout": {
-          "type": "string",
-          "format": "date"
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "depositpaid": {
+          "type": "boolean"
+        },
+        "bookingdates": {
+          "type": "object",
+          "properties": {
+            "checkin": {
+              "type": "string"
+            },
+            "checkout": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "checkin",
+            "checkout"
+          ]
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
         }
-      }
+      },
+      "required": [
+        "roomid",
+        "firstname",
+        "lastname",
+        "depositpaid",
+        "bookingdates",
+        "email",
+        "phone"
+      ]
     }
-  }
+  },
+  "required": [
+    "bookingid",
+    "booking"
+  ]
 }

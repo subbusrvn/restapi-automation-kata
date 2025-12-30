@@ -24,7 +24,7 @@ public class CreateBookingResponseValidator {
         log.info("*****Create Booking Failed*****{}", actualStatusCode);
         //Expected 200
         // In apiwe are getting 201
-        if (actualStatusCode != 201) {
+        if (actualStatusCode != 200) {
             log.error("*****Create Booking Failed*****");
             log.error("*****Expected Status Code: 200 *****, Actual: {}", actualStatusCode);
             log.error("*****Response Body*****:\n{}", response.asPrettyString());
@@ -39,6 +39,46 @@ public class CreateBookingResponseValidator {
     }
 
     public static void validateFailure(Response response) {
+        int actualStatusCode = response.getStatusCode();
+
+        if (actualStatusCode != 400) {
+            log.error("*****Expected failure but received different status code*****");
+            log.error("*****Expected Status Code: 400*****, Actual: {}", actualStatusCode);
+            log.error("*****Response Body*****:\n{}", response.asPrettyString());
+        }
+        Assert.assertEquals(400, response.getStatusCode());
+        log.info("*****Failure response validated successfully with status code 400*****");
+
+    }
+
+    public static void validateRoomReservation(Response response, String bookingoutcome, TestContext context) {
+        log.info("Validating Create Booking response. Expected outcome: {}", bookingoutcome);
+        if ("created".equalsIgnoreCase(bookingoutcome)) {
+            validateRoomReservationStatusCode(response, context);
+        } else {
+            validateRoomReservationFailure(response);
+        }
+    }
+    public static void validateRoomReservationStatusCode(Response response, TestContext context) {
+        int actualStatusCode = response.getStatusCode();
+        log.info("*****Create Booking Failed*****{}", actualStatusCode);
+        //Expected 200
+        // In apiwe are getting 201
+        if (actualStatusCode != 201) {
+            log.error("*****Create Booking Failed*****");
+            log.error("*****Expected Status Code: 200 *****, Actual: {}", actualStatusCode);
+            log.error("*****Response Body*****:\n{}", response.asPrettyString());
+        }
+        Assert.assertEquals(201, response.getStatusCode());
+        Integer bookingId = BookingIdExtractor.extract(response);
+        Assert.assertTrue("*****Invalid bookingId received*****", bookingId != null && bookingId > 0);
+        Assert.assertTrue(bookingId > 0);
+        context.setBookingId(bookingId);
+        log.info("*****Booking created successfully. BookingId set in context*****: {}", bookingId);
+
+    }
+
+    public static void validateRoomReservationFailure(Response response) {
         int actualStatusCode = response.getStatusCode();
 
         if (actualStatusCode != 400) {

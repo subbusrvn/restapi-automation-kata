@@ -148,39 +148,38 @@ of the booking API.
  # ------------------------------------------------------------------
  # Booking Creation – Success Flow - Response Data,Schema Validation
  # -------------------------------------------------------------------
-  @create @positive @sanity @regression
+  @create @positive @sanity @regression @createRetest
   Scenario Outline: A guest book a room successfully and receives a valid booking schema details from system.
     When a guest tries to book a room with "<dataset>"
-    Then the room reservation is confirmed
-    And the booking details are returned correctly
+    Then the booking reservation should be"<bookingoutcome>"
+    And the booking details should be as per schema
 
     Examples:
-      | dataset                    |
-      | SCHEMA_VALIDATION          |
+      | dataset                    |  bookingoutcome                    |
+      | SCHEMA_VALIDATION          |  created                             |
 
  # ------------------------------------------------------------------
  # Booking Creation – Validate all the response data
  # -------------------------------------------------------------------
-  @create @positive @sanity @regression
+  @create @positive @sanity @regression @createRetest
   Scenario Outline: A guest books a room successfully and receives a valid booking  details from system.
     When a guest tries to book a room with "<dataset>"
-    Then the room reservation is confirmed
-    And a booking reference is generated
+    Then the booking reservation should be"<bookingoutcome>"
     And the booking details returned should be correct
 
     Examples:
-      | dataset        |
-      | BOOKING_VALID  |
+      | dataset        |  bookingoutcome                    |
+      | BOOKING_VALID  |  created                           |
 
   #--------------------------------------------------------------------
   # Booking API - Response data structure validation with Swagger Response
   # --------------------------------------------------------------------
-  @create @positive @sanity @regression @swaggerValidationCheck
+  @create @positive @sanity @regression @createRetest
   Scenario Outline: Validate booking creation response against Swagger contract
-    Given login with valid credentials
-    When a guest creates a booking with "<dataset>"
+    When a guest tries to book a room with "<dataset>"
+    Then the booking reservation should be"<bookingoutcome>"
     Then the response should follow the Swagger booking contract
 
     Examples:
-      | dataset              |
-      | SWAGGER_VALIDATION   |
+      | dataset              | bookingoutcome |
+      | SWAGGER_VALIDATION   | created        |

@@ -7,6 +7,7 @@ import com.booking.utils.TokenManager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.response.Response;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
@@ -39,19 +40,17 @@ public class GetBookingSteps {
         TokenManager.setToken(nonExistinBookingID);
         log.info("************After set the token to Null******{}", nonExistinBookingID);
     }
-/*
-    @When("the guest retrieves the booking by booked id")
-    public void the_guest_retrieves_the_booking_by_id() {
-        testContext.setResponse(testContext.getCreateResponse());
-        log.info("*****Updated Booking Id is retrived*****{}", testContext.getBookingId());
-    }
 
-    @Then("the system Will not show the booking dettails, Since the user has no authorization")
+    @Then("the booking retrieval should be unauthorized")
     public void the_system_will_not_show_booking_details() {
-        testContext.getBookingId();
-        Assert.assertNotNull("Booking Id is not null",testContext.getBookingId());
-        log.info("*****Updated Booking Id is retrived*****{}", testContext.getBookingId());
+        Response response = testContext.getResponse();
+        int statusCode = response.getStatusCode();
+
+        log.info("*****Updated Booking Id is retrived*****{}", statusCode);
+        Assert.assertTrue(
+                "Expected 401" + statusCode,
+                statusCode == 401
+        );
     }
 
- */
 }
