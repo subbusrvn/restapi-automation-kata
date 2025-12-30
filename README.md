@@ -444,6 +444,10 @@ target/chaintest/Email.html
   <li>Missing validations</li>
   <li>Schema mismatches</li>
   <li>Inconsistent error messages</li>
+
+<a href="https://docs.google.com/spreadsheets/d/1ZBe-pOIDCGirSx6NcQij8g251fds4ogIofQyB94mGCQ/edit?gid=0#range=A2">
+  Kata Hotel Room Booking Endpoints - Open Bug List
+</a>
 </ul>
 <p>
   These issues highlight gaps in the API and demonstrate the effectiveness of the test coverage.

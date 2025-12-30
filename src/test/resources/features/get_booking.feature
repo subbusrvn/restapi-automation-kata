@@ -24,7 +24,7 @@ Feature: Hotel Room Booking Management System – GET Endpoints
 #-----------------------------------------------------------------------------------------------------
 #Negative cases : Create room booking and get the booked id without user access(No token access)
 #-----------------------------------------------------------------------------------------------------
-  @get @negative @regression @test
+  @get @negative @regression
   Scenario Outline: Get the booked id with user access
     When a guest tries to book a room with "<dataset>"
     Then the booking reservation should be"<bookingoutcome>"
@@ -39,7 +39,7 @@ Feature: Hotel Room Booking Management System – GET Endpoints
 #-----------------------------------------------------------------------------------------------------
 #Negative cases : Get the non existing booking id
 #-----------------------------------------------------------------------------------------------------
-  @get @negative @regression @test
+  @get @negative @regression
   Scenario Outline: Get the non existing booked id
     When a guest tries to book a room with "<dataset>"
     Then the booking reservation should be"<bookingoutcome>"

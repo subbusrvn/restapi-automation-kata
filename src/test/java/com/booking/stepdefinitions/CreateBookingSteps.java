@@ -46,15 +46,6 @@ public class CreateBookingSteps {
        Response response = bookingService.createBooking(request);
         testContext.setCreateResponse(response);
     }
-/*
-    @When("the booking reservation confirmed {string}")
-    public void submit_booking_reseration(String dataset) {
-
-        BookingRequest request = BookingRequestFactory.createFromExcel(dataset);
-        Response response = bookingService.createBooking(request);
-        testContext.setResponse(response);
-    }
-*/
     /*-------------------------
      * Then Steps
      *-------------------------

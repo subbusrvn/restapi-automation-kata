@@ -19,8 +19,6 @@ Feature: Hotel Room Booking Management System – End to End Booking
 
   And a booking exists
   When the guest retrieves the booking by ID
-  #Then the booking details should match the created booking
-
   When the guest updates the booking with "<updateDataset>"
   Then the booking update should be successful
 
