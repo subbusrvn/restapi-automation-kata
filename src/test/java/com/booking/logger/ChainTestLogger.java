@@ -1,20 +1,25 @@
 package com.booking.logger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
 
 public class ChainTestLogger {
+    private static final Logger log = LoggerFactory.getLogger(ChainTestLogger.class);
+
 
     public static void startScenario(String name) {
-        System.out.println("────────── START SCENARIO: " + name + " ──────────");
-        System.out.println("START TIME: " + LocalDateTime.now());
+        log.info("────────── START SCENARIO: " + name + " ──────────");
+        log.info("START TIME: " + LocalDateTime.now());
     }
 
     public static void log(String message) {
-        System.out.println("[LOG] " + message);
+        log.info("[LOG] " + message);
     }
 
     public static void endScenario() {
-        System.out.println("────────── END SCENARIO ──────────");
-        System.out.println();
+        log.info("────────── END SCENARIO ──────────");
+
     }
 }
