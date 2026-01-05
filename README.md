@@ -171,27 +171,28 @@ restapi-automation-kata/
  └── src
      └── test
          ├── java
-         │   ├── client
-         │   ├── config
-         │   ├── context
-         │   ├── endpoints
-         │   ├── hooks
-         │   ├── models
-         │   ├── runners
-         │   ├── services
-         │   ├── stepdefinitions
-         │   ├── utils
-         │   │    ├── excel
-         │   │    │    ├── factory
-         │   │    │    └── utility
-         │   │    ├── AuthRequestFactory
-         │   │    ├── BookingIdExtractor
-         │   │    ├── LoggerUtil
-         │   │    ├── PatchBookingRequestBuilder
-         │   │    ├── PutBookingRequestBuilder
-         │   │    ├── SafeParser
-         │   │    └── TokenManager
-         │   └── validator
+         │  ├──com.booking
+         │     ├── client
+         │     ├── config
+         │     ├── context
+         │     ├── endpoints
+         │     ├── hooks
+         │     ├── models
+         │     ├── runners
+         │     ├── services
+         │     ├── stepdefinitions
+         │     ├── utils
+         │     │    ├── excel
+         │     │    │    ├── factory
+         │     │    │    └── utility
+         │     │    ├── AuthRequestFactory
+         │     │    ├── BookingIdExtractor
+         │     │    ├── LoggerUtil
+         │     │    ├── PatchBookingRequestBuilder
+         │     │    ├── PutBookingRequestBuilder
+         │     │    ├── SafeParser
+         │     │    └── TokenManager
+         │     └── validator
          └── resources
              ├── config.properties     
              ├── feature
